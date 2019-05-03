@@ -16,11 +16,9 @@
                                 <div class="col-md-6">
                                     <input type="text" class="form-control @error('matricula') is-invalid @enderror" name="matricula" value="{{ old('matricula', strval($aeronave->matricula)) }}" autocomplete="matricula" autofocus>
         
-                                    @error('matricula')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    @if ($errors->has('matricula'))
+                                        <em>{{ $errors->first('matricula') }}</em>
+                                    @endif
                                 </div>
                             </div>
 
