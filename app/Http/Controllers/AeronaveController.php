@@ -50,17 +50,9 @@ class AeronaveController extends Controller
             'marca'=> 'required',
             'num_lugares' => 'integer|required',	
             'conta_horas'=> 'integer|required',	
-            'preco_hora'=> 'required|numeric',
-            'modelo' => 'required'      
+            'preco_hora'=> 'required|numeric'      
         ], [
-            'matricula.required'=>'A matricula deve ser preenchida',
-            'marca.required'=> ' A marca deve ser preenchida',
-            'num_lugares.required' => 'Os lugares deve ser preenchido',	
-            'conta_horas.required'=> 'As horas deve ser preenchido ',	
-            'preco_hora.required'=> 'O preco deve ser preenchido',
-            'modelo.required' => 'O modelo deve ser preenchido',
-            'num_lugares.integer' => 'Deve ser um numero inteiro',
-            'conta_horas.integer'=> 'Deve ser um numero inteiro',  
+            'matricula.required'=>'A matricula deve ser preenchida'
         ]);
 
         Aeronave::create($aeronave);
@@ -101,7 +93,24 @@ class AeronaveController extends Controller
      */
     public function update(Request $request, Aeronave $aeronave)
     {
-       // TODO
+        if ($request->has('cancel')) {
+            return redirect()->action('AeronaveController@index');
+        }
+
+        $aeronaveEdit = validateInput($request);
+
+        $aeronave->fill($aeronaveEdit);
+        $aeronave->save();
+
+        return redirect()->action('AeronaveController@index');
+    }
+
+    function validateInput($request) {
+        return $request->validate([
+
+        ],[
+
+        ]);
     }
 
     /**
