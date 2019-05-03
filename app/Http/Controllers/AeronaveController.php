@@ -51,8 +51,8 @@ class AeronaveController extends Controller
             'num_lugares' => 'integer|required',	
             'conta_horas'=> 'integer|required',	
             'preco_hora'=> 'required|numeric'      
-        ], 
-        ['matricula.required'=>'A matricula deve ser preenchida'
+        ], [
+            'matricula.required'=>'A matricula deve ser preenchida'
         ]);
 
         Aeronave::create($aeronave);
