@@ -50,9 +50,17 @@ class AeronaveController extends Controller
             'marca'=> 'required',
             'num_lugares' => 'integer|required',	
             'conta_horas'=> 'integer|required',	
-            'preco_hora'=> 'required|numeric'      
+            'preco_hora'=> 'required|numeric',
+            'modelo' => 'required'      
         ], [
-            'matricula.required'=>'A matricula deve ser preenchida'
+            'matricula.required'=>'A matricula deve ser preenchida',
+            'marca.required'=> ' A marca deve ser preenchida',
+            'num_lugares.required' => 'Os lugares deve ser preenchido',	
+            'conta_horas.required'=> 'As horas deve ser preenchido ',	
+            'preco_hora.required'=> 'O preco deve ser preenchido',
+            'modelo.required' => 'O modelo deve ser preenchido',
+            'num_lugares.integer' => 'Deve ser um numero inteiro',
+            'conta_horas.integer'=> 'Deve ser um numero inteiro',  
         ]);
 
         Aeronave::create($aeronave);
