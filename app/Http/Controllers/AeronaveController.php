@@ -44,7 +44,7 @@ class AeronaveController extends Controller
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
-
+        
         $aeronave = $request->validate([
             'matricula'=>'required|unique',
             'marca'=> 'required',
