@@ -61,6 +61,7 @@ class AeronaveController extends Controller
             'modelo.required' => 'O modelo deve ser preenchido',
             'num_lugares.integer' => 'Deve ser um numero inteiro',
             'conta_horas.integer'=> 'Deve ser um numero inteiro',  
+            'preco_hora.numeric'=> 'Deve ser um valor numerico decimal'  
         ]);
 
         Aeronave::create($aeronave);
@@ -105,20 +106,29 @@ class AeronaveController extends Controller
             return redirect()->action('AeronaveController@index');
         }
 
-        $aeronaveEdit = validateInput($request);
+        $aeronaveEdit = $request->validate([
+            'matricula'=>'required|unique',
+            'marca'=> 'required',
+            'num_lugares' => 'integer|required',	
+            'conta_horas'=> 'integer|required',	
+            'preco_hora'=> 'required|numeric',
+            'modelo' => 'required'      
+        ], [
+            'matricula.required'=>'A matricula deve ser preenchida',
+            'marca.required'=> ' A marca deve ser preenchida',
+            'num_lugares.required' => 'Os lugares deve ser preenchido',	
+            'conta_horas.required'=> 'As horas deve ser preenchido ',	
+            'preco_hora.required'=> 'O preco deve ser preenchido',
+            'modelo.required' => 'O modelo deve ser preenchido',
+            'num_lugares.integer' => 'Deve ser um numero inteiro',
+            'conta_horas.integer'=> 'Deve ser um numero inteiro',
+            'preco_hora.numeric'=> 'Deve ser um valor numerico decimal'  
+        ]);
 
         $aeronave->fill($aeronaveEdit);
         $aeronave->save();
 
         return redirect()->action('AeronaveController@index');
-    }
-
-    function validateInput($request) {
-        return $request->validate([
-
-        ],[
-
-        ]);
     }
 
     /**
