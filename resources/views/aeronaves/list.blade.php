@@ -8,7 +8,7 @@
                 <div class="card-header">{{ $title }}</div>
                     <div class="card-body">
                         <a class="btn btn-primary" href="{{ action('AeronaveController@create') }}">Adicionar aeronave</a>
-                        <br>
+                        
                         @if (count($aeronaves))
                         <table class="table table-striped">
                             <thead>

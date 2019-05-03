@@ -30,7 +30,7 @@ class AeronaveController extends Controller
         $title = 'Inserir nova aeronave';
         $aeronave = new Aeronave();
 
-        return view('aeronaves.add', compact('title', 'aeronave'));
+        return view('aeronaves.add-edit', compact('title', 'aeronave'));
     }
 
     /**
@@ -45,14 +45,18 @@ class AeronaveController extends Controller
             return redirect()->action('AeronaveController@index');
         }
 
-        $user = $request->validate([
-
-        ], [
-
+        $aeronave = $request->validate([
+            'matricula'=>'required|unique',
+            'marca'=> 'required',
+            'num_lugares' => 'integer|required',	
+            'conta_horas'=> 'integer|required',	
+            'preco_hora'=> 'required|numeric'      
+        ], 
+        ['matricula.required'=>'A matricula deve ser preenchida'
         ]);
 
-        User::create($user);
-
+        Aeronave::create($aeronave);
+        
         return redirect()->action('AeronaveController@index');
     }
 
@@ -64,7 +68,7 @@ class AeronaveController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -73,9 +77,12 @@ class AeronaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($matricula)
     {
-        //
+        $title = "Editar Aeronave";
+        $aeronave = Aeronave::findOrFail($matricula);
+
+        return view('aeronaves.add-edit', compact('title', 'aeronave'));
     }
 
     /**
@@ -87,7 +94,7 @@ class AeronaveController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
     }
 
     /**
