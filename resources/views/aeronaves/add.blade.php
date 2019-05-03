@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ $title }}</div>
                     <div class="card-body">
-                        <form action="{{ action('AeronaveController@store') }}" >
+                        <form action="{{ action('AeronaveController@store') }}" method="post">
                             @csrf
 
                             @include('aeronaves.partials.add-edit')
