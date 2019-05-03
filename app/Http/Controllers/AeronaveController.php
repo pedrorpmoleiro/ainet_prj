@@ -30,7 +30,7 @@ class AeronaveController extends Controller
         $title = 'Inserir nova aeronave';
         $aeronave = new Aeronave();
 
-        return view('aeronaves.add-edit', compact('title', 'aeronave'));
+        return view('aeronaves.add', compact('title', 'aeronave'));
     }
 
     /**
@@ -68,7 +68,7 @@ class AeronaveController extends Controller
      */
     public function show($id)
     {
-        //
+        // NAO IMPLEMENTAR
     }
 
     /**
@@ -77,12 +77,11 @@ class AeronaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($matricula)
+    public function edit(Aeronave $aeronave)
     {
         $title = "Editar Aeronave";
-        $aeronave = Aeronave::findOrFail($matricula);
 
-        return view('aeronaves.add-edit', compact('title', 'aeronave'));
+        return view('aeronaves.edit', compact('title', 'aeronave'));
     }
 
     /**
@@ -92,9 +91,9 @@ class AeronaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Aeronave $aeronave)
     {
-       
+       // TODO
     }
 
     /**
@@ -103,8 +102,10 @@ class AeronaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Aeronave $aeronave)
     {
-        //
+        $aeronave->delete();
+
+        return redirect()->action('AeronaveController@index');
     }
 }
