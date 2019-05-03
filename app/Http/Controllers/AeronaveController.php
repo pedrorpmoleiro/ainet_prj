@@ -93,7 +93,24 @@ class AeronaveController extends Controller
      */
     public function update(Request $request, Aeronave $aeronave)
     {
-       // TODO
+        if ($request->has('cancel')) {
+            return redirect()->action('AeronaveController@index');
+        }
+
+        $aeronaveEdit = validateInput($request);
+
+        $aeronave->fill($aeronaveEdit);
+        $aeronave->save();
+
+        return redirect()->action('AeronaveController@index');
+    }
+
+    function validateInput($request) {
+        return $request->validate([
+
+        ],[
+
+        ]);
     }
 
     /**
