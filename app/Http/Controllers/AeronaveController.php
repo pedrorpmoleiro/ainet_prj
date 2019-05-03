@@ -68,7 +68,7 @@ class AeronaveController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
