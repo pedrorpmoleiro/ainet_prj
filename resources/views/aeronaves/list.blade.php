@@ -3,11 +3,11 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ $title }}</div>
                     <div class="card-body">
-                        <a class="btn btn-primary" href="{{ action('AeronaveController@create') }}">Adicionar aeronave</a>
+                        <a class="btn btn-primary mb-4" href="{{ action('AeronaveController@create') }}">Adicionar aeronave</a>
                         
                         @if (count($aeronaves))
                         <table class="table table-striped">
@@ -33,10 +33,10 @@
                                     <td>{{ $aeronave->preco_hora }}</td>
                                     <td>
                                         <div class="row justify-content-center">
-                                            <a class="btn btn-xs btn-primary" href="{{ action('AeronaveController@edit', ['aeronave' => $aeronave->matricula]) }}">Editar</a>
+                                            <a class="btn btn-xs btn-primary  mr-1" href="{{ action('AeronaveController@edit', ['aeronave' => $aeronave->matricula]) }}">Editar</a>
                                             <form action="{{ action('AeronaveController@destroy', ['aeronave' => $aeronave->matricula]) }}" method="POST" role="form" class="inline">
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-xs btn-danger">Eliminar</button>
+                                                <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
                                             </form>
                                         </div>
                                     </td>

@@ -14,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $socios = User::all();
-        $title = 'Socios';
+        $socios = User::paginate(12);
+        $title = 'Sócios';
 
         return view('socios.list', compact('title', 'socios'));
     }
@@ -27,7 +27,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $title = 'Inserir novo sócio';
+        $socio = new User();
+
+        return view('socios.add', compact('title', 'socio'));
     }
 
     /**
@@ -58,9 +61,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $socio)
     {
-        //
+        $title = "Editar Sócio";
+
+        return view('socios.edit', compact('title', 'socio'));
     }
 
     /**
@@ -70,7 +75,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $socio)
     {
         //
     }
@@ -81,7 +86,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $socio)
     {
         //
     }
