@@ -13,7 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->action('HomeController@index');
 });
 
 Auth::routes();
@@ -26,12 +26,12 @@ Route::patch('/password', function () {return view('welcome');});
 
 Route::resource('aeronaves', 'AeronaveController')->except(['show']);
 
-Route::get('/socios', function () {return view('welcome');});
-Route::get('/socios/{socio}/edit', function () {return view('welcome');});
-Route::get('/socios/create', function () {return view('welcome');});
-Route::post('/socios', function () {return view('welcome');});
-Route::put('/socios/{socio}', function () {return view('welcome');});
-Route::delete('/socios/{socio}', function () {return view('welcome');});
+Route::get('/socios', 'UserController@index');
+Route::get('/socios/{socio}/edit', 'UserController@edit');
+Route::get('/socios/create', 'UserController@create');
+Route::post('/socios', 'UserController@store');
+Route::put('/socios/{socio}', 'UserController@update');
+Route::delete('/socios/{socio}', 'UserController@destroy');
 Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
 Route::patch('/socios/reset_quotas', function () {return view('welcome');});
 Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
