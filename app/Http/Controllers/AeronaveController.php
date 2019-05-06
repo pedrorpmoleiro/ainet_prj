@@ -46,7 +46,7 @@ class AeronaveController extends Controller
         }
         
         $aeronave = $request->validate([
-            'matricula'=>'required|unique',
+            'matricula'=>'required|unique:aeronaves,matricula',
             'marca'=> 'required',
             'num_lugares' => 'integer|required',	
             'conta_horas'=> 'integer|required',	
