@@ -8,6 +8,7 @@
                     <div class="card-header">{{ $title }}</div>
                     <div class="card-body">
                         <form action="{{ action('UserController@update') }}" method="post">
+                            @method('put')
                             @csrf
 
                             <input type="hidden" name="id" value="{{ $socio->id }}">

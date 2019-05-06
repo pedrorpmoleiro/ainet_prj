@@ -88,6 +88,8 @@ class UserController extends Controller
      */
     public function destroy(User $socio)
     {
-        //
+        $socio->delete();
+
+        return redirect()->action('UserController@index');
     }
 }

@@ -29,29 +29,18 @@
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    
-                    <nav class="navbar">
-                        <a class="navbar-brand" href="{{ url('/') }}">
-                            {{ config('app.name', 'Laravel') }}
-                        </a>
-                        <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"><span class="dark-blue-text"><i class="fas fa-bars fa-1x"></i></span></button>
-
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ url('/') }}">Home</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ action('AeronaveController@index') }}">Aeronaves</a>
-                                </li>
-                                <!-- SO ADMINISTRACAO -->
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ action('UserController@index') }}">Socios</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-
+                    <ul class="navbar-nav mr-auto">
+                        <li class ="nav-item">
+                            <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('AeronaveController@index') }}">Aeronaves</a>
+                        </li>
+                        <!-- SO ADMINISTRACAO -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('UserController@index') }}">Socios</a>
+                        </li>
+                    </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
