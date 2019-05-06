@@ -38,7 +38,10 @@
                         </li>
                         <!-- SO ADMINISTRACAO -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ action('UserController@index') }}">Socios</a>
+                            <a class="nav-link" href="{{ action('UserController@index') }}">Sócios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ action('MovimentoController@index') }}">Movimentos</a>
                         </li>
                     </ul>
                     <!-- Right Side Of Navbar -->

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Movimento;
 
-class UserController extends Controller
+class MovimentoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $socios = User::paginate(12);
-        $title = 'Sócios';
+        $movimentos = Movimento::paginate(24);
+        $title = "Movimentos";
 
-        return view('socios.list', compact('title', 'socios'));
+        return view('movimentos.list', compact('title', 'movimentos'));
     }
 
     /**
@@ -27,10 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $title = 'Inserir novo sócio';
-        $socio = new User();
-
-        return view('socios.add', compact('title', 'socio'));
+        //
     }
 
     /**
@@ -61,11 +58,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $socio)
+    public function edit(Movimento $movimento)
     {
-        $title = "Editar Sócio";
-
-        return view('socios.edit', compact('title', 'socio'));
+        //
     }
 
     /**
@@ -75,7 +70,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $socio)
+    public function update(Request $request, Movimento $movimento)
     {
         //
     }
@@ -86,25 +81,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $socio)
+    public function destroy(Movimento $movimento)
     {
-        $socio->delete();
-
-        return redirect()->action('UserController@index');
-    }
-
-    public function resetQuotas()
-    {
-
-    }
-
-    public function desativarSemQuotas() 
-    {
-
-    }
-
-    public function sendActivationEmail() 
-    {
-
+        //
     }
 }
