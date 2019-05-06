@@ -55,12 +55,12 @@ class AeronaveController extends Controller
         ], [
             'matricula.required'=>'A matricula deve ser preenchida',
             'marca.required'=> ' A marca deve ser preenchida',
-            'num_lugares.required' => 'Os lugares deve ser preenchido',	
-            'conta_horas.required'=> 'As horas deve ser preenchido ',	
+            'num_lugares.required' => 'Os lugares deve ser preenchidos',	
+            'conta_horas.required'=> 'As horas devem ser preenchidas',	
             'preco_hora.required'=> 'O preco deve ser preenchido',
             'modelo.required' => 'O modelo deve ser preenchido',
             'num_lugares.integer' => 'Deve ser um numero inteiro',
-            'conta_horas.integer'=> 'Deve ser um numero inteiro',  
+            'conta_horas.integer'=> 'Deve ser um numero inteiro',
             'preco_hora.numeric'=> 'Deve ser um valor numerico decimal'  
         ]);
 

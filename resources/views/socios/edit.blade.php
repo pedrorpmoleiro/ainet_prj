@@ -12,6 +12,7 @@
                             @csrf
 
                             <input type="hidden" name="id" value="{{ $socio->id }}">
+                            <input type="hidden" name="password" value="{{ $socio->password }}">
 
                             @include('socios.partials.add-edit')
 
