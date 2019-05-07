@@ -27,7 +27,9 @@ class MovimentoController extends Controller
      */
     public function create()
     {
-        //
+        $title='Inserir novo movimento';
+        $movimento= new Movimento();
+        return view('movimentos.add', compact('title', 'movimento'));
     }
 
     /**
@@ -38,7 +40,10 @@ class MovimentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->has('cancel')) {
+            return redirect()->action('MovimentoController@index');
+        }
+     //   $movimento=$request->validate()
     }
 
     /**
@@ -60,7 +65,9 @@ class MovimentoController extends Controller
      */
     public function edit(Movimento $movimento)
     {
-        //
+        $title = "Editar Movimento";
+
+        return view('movimentos.edit', compact('title', 'movimento'));
     }
 
     /**
