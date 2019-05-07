@@ -20,7 +20,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/email/verify/{id}', function () {return view('welcome');});
+Route::get('/email/verify/{id}', 'UserController@validateEmail');
 Route::get('/password', function () {return view('welcome');});
 Route::patch('/password', function () {return view('welcome');});
 
@@ -29,9 +29,9 @@ Route::resource('aeronaves', 'AeronaveController')->except(['show']);
 Route::resource('socios', 'UserController')->except(['show']);
 Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
 Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
-Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
+Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio');
 Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
-Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendActivationEmail');
+Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
 
 Route::resource('movimentos', 'MovimentoController')->except(['show']);
 

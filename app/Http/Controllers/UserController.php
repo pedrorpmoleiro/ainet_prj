@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\ValidationNotifier;
+use App\Mail\ActivationNotifier;
+use App\Mail\ReActivationNotifier;
 
 class UserController extends Controller
 {
@@ -55,7 +56,7 @@ class UserController extends Controller
             'sexo'=>'required',
             'data_nascimento'=>'required|date',
             'nif'=>'required|unique:users,nif|integer',
-            'telefone'=>'required|unique:users,telefone|integer',
+            'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/',
             'endereco'=>'required',
             'tipo_socio'=>'required'
         ], [
@@ -70,11 +71,11 @@ class UserController extends Controller
             'data_nascimento.required'=>'A data de nascimento deve ser preenchida',
             'data_nascimento.date'=>'O formato da data está inválido',
             'nif.required'=>'O NIF deve ser preenchido',
-            'nif.uniquei'=>'Este NIF já se encontra registado',
+            'nif.unique'=>'Este NIF já se encontra registado',
             'nif.integer'=>'O NIF tem que ser um número inteiro',
             'telefone.required'=>'O número de telefone deve ser preenchido',
             'telefone.unique'=>'Este número de telefone já se encontra registado',
-            'telefone.integer'=>'O número de telefone deve ser um número inteiro',
+            'telefone.regex'=>'O formato número de telefone não é válido',
             'endereco.required'=>'O endereço deve ser preenchido',
             'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido'
         ]);
@@ -85,7 +86,8 @@ class UserController extends Controller
 
         User::create($socio);
 
-        $this->sendActivationEmail($socio['num_socio']);
+        $socio = User::where('num_socio', $num_socio)->first();
+        Mail::to($socio)->send(new ActivationNotifier($socio));
 
         return redirect()->action('UserController@index');
     }
@@ -129,30 +131,33 @@ class UserController extends Controller
 
         $socioEdit = $request->validate([
             'name'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'email'=>'required|email',
+            'email'=>'required|email|unique:users,email',
             'nome_informal'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             'sexo'=>'required',
-            'data_nascimento'=>'required|date_format:d/m/Y',
-            'nif'=>'required|unique|integer',
-            'telefone'=>'required|unique|integer',
-            'endereco'=>'required'
+            'data_nascimento'=>'required|date',
+            'nif'=>'required|unique:users,nif|integer',
+            'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/',
+            'endereco'=>'required',
+            'tipo_socio'=>'required'
         ], [
             'name.required'=>'O nome deve ser preeenchido',
             'name.regex'=>'O nome não deve conter números',
             'email.required'=>'O email deve ser preenchido',
             'email.email'=>'O formato do email não é válido',
+            'email.unique'=>'Este email já se encontra registado',
             'nome_informal.required'=>'O nome deve ser preenchido',
             'nome_informal.regex'=>'O nome não deve conter números',
             'sexo.required'=>'O género tem que ser definido',
             'data_nascimento.required'=>'A data de nascimento deve ser preenchida',
-            'data_nascimento.date_format'=>'O formato da data está inválido',
+            'data_nascimento.date'=>'O formato da data está inválido',
             'nif.required'=>'O NIF deve ser preenchido',
-            'nif.uniquei'=>'Este NIF já se encontra registado',
+            'nif.unique'=>'Este NIF já se encontra registado',
             'nif.integer'=>'O NIF tem que ser um número inteiro',
             'telefone.required'=>'O número de telefone deve ser preenchido',
             'telefone.unique'=>'Este número de telefone já se encontra registado',
-            'telefone.integer'=>'O número de telefone deve ser um número inteiro',
-            'endereco.required'=>'O endereço deve ser preenchido'
+            'telefone.regex'=>'O formato número de telefone não é válido',
+            'endereco.required'=>'O endereço deve ser preenchido',
+            'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido'
         ]);
 
         $socio->fill($socioEdit);
@@ -184,10 +189,20 @@ class UserController extends Controller
 
     }
 
-    public function sendActivationEmail($num_socio) 
+    public function validateEmail(User $user)
     {
-        $socio = User::where('num_socio', $num_socio)->first();
 
-        Mail::to($socio)->send(new ValidationNotifier);
+    }
+
+    public function ativarSocio(User $socio)
+    {
+
+    }
+
+    public function sendReActivationEmail(User $socio) 
+    {
+        Mail::to($socio)->send(new ReActivationNotifier($socio));
+
+        return redirect()->action('UserController@index');
     }
 }
