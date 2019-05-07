@@ -36,17 +36,18 @@
                                         <a class="btn btn-xs btn-primary  mr-1" href="{{ action('AeronaveController@edit', ['aeronave' => $aeronave->matricula]) }}">Editar</a>
                                         <form action="{{ action('AeronaveController@destroy', ['aeronave' => $aeronave->matricula]) }}" method="POST" role="form" class="inline">
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                @else
-                    <h2>Não foram encontradas aeronaves</h2>
-                @endif
+                                                <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    @else
+                        <h2>Não foram encontradas aeronaves</h2>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

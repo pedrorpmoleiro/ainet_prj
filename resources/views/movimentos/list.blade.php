@@ -10,44 +10,45 @@
                     <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
 
                     @if (count($movimentos))
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Data</th>
-                                <th>Hora Descolagem</th>
-                                <th>Hora Aterragem</th>
-                                <th>Aeronave</th>    
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($movimentos as $movimento)
-                            <tr>
-                                <td>{{ $movimento->id }}</td>
-                                <td>{{ $movimento->data }}</td>
-                                <td>{{ $movimento->hora_descolagem }}</td>
-                                <td>{{ $movimento->hora_aterragem }}</td>
-                                <td>{{ $movimento->aeronave }}</td>           
-                                <td>
-                                    <div class="row justify-content-center">
-                                        <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
-                                        <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}" method="POST" role="form" class="inline">
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="row justify-content-center">
-                    {{ $movimentos->links() }}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Data</th>
+                                    <th>Hora Descolagem</th>
+                                    <th>Hora Aterragem</th>
+                                    <th>Aeronave</th>    
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($movimentos as $movimento)
+                                    <tr>
+                                        <td>{{ $movimento->id }}</td>
+                                        <td>{{ $movimento->data }}</td>
+                                        <td>{{ $movimento->hora_descolagem }}</td>
+                                        <td>{{ $movimento->hora_aterragem }}</td>
+                                        <td>{{ $movimento->aeronave }}</td>           
+                                        <td>
+                                            <div class="row justify-content-center">
+                                                <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
+                                                <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}" method="POST" role="form" class="inline">
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="row justify-content-center">
+                            {{ $movimentos->links() }}
+                        </div>
+                    @else
+                        <h2>Não foram encontrados movimentos</h2>
+                    @endif
                 </div>
-                @else
-                    <h2>Não foram encontrados movimentos</h2>
-                @endif
             </div>
         </div>
     </div>

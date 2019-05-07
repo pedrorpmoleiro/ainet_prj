@@ -199,6 +199,16 @@ class UserController extends Controller
 
     }
 
+    public function alterarPassword()
+    {
+
+    }
+
+    public function patchPassword()
+    {
+        
+    }
+
     public function sendReActivationEmail(User $socio) 
     {
         Mail::to($socio)->send(new ReActivationNotifier($socio));

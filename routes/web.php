@@ -21,8 +21,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/email/verify/{id}', 'UserController@validateEmail');
-Route::get('/password', function () {return view('welcome');});
-Route::patch('/password', function () {return view('welcome');});
+Route::get('/password', 'UserController@alterarPassword');
+Route::patch('/password', 'UserController@patchPassword');
 
 Route::resource('aeronaves', 'AeronaveController')->except(['show']);
 

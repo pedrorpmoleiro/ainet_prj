@@ -122,7 +122,7 @@
     <label for="classe_certificado_piloto" class="col-md-4 col-form-label text-md-right">Classe certificado piloto</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('classe_certificado_piloto') is-invalid @enderror" name="classe_certificado_piloto" value="{{ old('classe_certificado_piloto', strval($movimento->classe_certificado_piloto)) }}" autofocus>
+        <input type="text" class="form-control @error('classe_certificado_piloto') is-invalid @enderror" name="classe_certificado_piloto" value="{{ old('classe_certificado_piloto', strval($movimento->classe_certificado_piloto)) }}">
 
         @error('classe_certificado_piloto')
             <span class="invalid-feedback" role="alert">
@@ -153,7 +153,7 @@
     <label for="aerodromo_partida" class="col-md-4 col-form-label text-md-right"> Aerodromo Partida</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('aerodromo_partida') is-invalid @enderror" name="aerodromo_partida" value="{{ old('aerodromo_partida', strval($movimento->aerodromo_partida)) }}" autofocus>
+        <input type="text" class="form-control @error('aerodromo_partida') is-invalid @enderror" name="aerodromo_partida" value="{{ old('aerodromo_partida', strval($movimento->aerodromo_partida)) }}">
 
         @error('aerodromo_partida')
             <span class="invalid-feedback" role="alert">
@@ -166,7 +166,7 @@
     <label for="aerodromo_chegada" class="col-md-4 col-form-label text-md-right"> Aerodromo Partida</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('aerodromo_chegada') is-invalid @enderror" name="aerodromo_chegada" value="{{ old('aerodromo_chegada', strval($movimento->aerodromo_chegada)) }}" autofocus>
+        <input type="text" class="form-control @error('aerodromo_chegada') is-invalid @enderror" name="aerodromo_chegada" value="{{ old('aerodromo_chegada', strval($movimento->aerodromo_chegada)) }}">
 
         @error('aerodromo_chegada')
             <span class="invalid-feedback" role="alert">
@@ -266,7 +266,7 @@
     <label for="num_recibo" class="col-md-4 col-form-label text-md-right"> Número de Recibo</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('num_recibo') is-invalid @enderror" name="num_recibo" value="{{ old('num_recibo', strval($movimento->num_recibo)) }}" autofocus>
+        <input type="text" class="form-control @error('num_recibo') is-invalid @enderror" name="num_recibo" value="{{ old('num_recibo', strval($movimento->num_recibo)) }}">
 
         @error('num_recibo')
             <span class="invalid-feedback" role="alert">
@@ -308,7 +308,7 @@
     <label for="num_licenca_instrutor" class="col-md-4 col-form-label text-md-right"> Tipo Licenca</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('num_licenca_instrutor') is-invalid @enderror" name="num_licenca_instrutor" value="{{ old('num_licenca_instrutor', strval($movimento->num_licenca_instrutor)) }}" autofocus>
+        <input type="text" class="form-control @error('num_licenca_instrutor') is-invalid @enderror" name="num_licenca_instrutor" value="{{ old('num_licenca_instrutor', strval($movimento->num_licenca_instrutor)) }}">
 
         @error('num_licenca_instrutor')
             <span class="invalid-feedback" role="alert">
@@ -335,7 +335,7 @@
     <label for="tipo_licenca_instrutor" class="col-md-4 col-form-label text-md-right"> Tipo Licenca</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('tipo_licenca_instrutor') is-invalid @enderror" name="tipo_licenca_instrutor" value="{{ old('tipo_licenca_instrutor', strval($movimento->tipo_licenca_instrutor)) }}" autofocus>
+        <input type="text" class="form-control @error('tipo_licenca_instrutor') is-invalid @enderror" name="tipo_licenca_instrutor" value="{{ old('tipo_licenca_instrutor', strval($movimento->tipo_licenca_instrutor)) }}">
 
         @error('tipo_licenca_instrutor')
             <span class="invalid-feedback" role="alert">
@@ -349,7 +349,7 @@
     <label for="num_certificado_instrutor" class="col-md-4 col-form-label text-md-right"> Tipo Licenca</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('num_certificado_instrutor') is-invalid @enderror" name="num_certificado_instrutor" value="{{ old('num_certificado_instrutor', strval($movimento->num_certificado_instrutor)) }}" autofocus>
+        <input type="text" class="form-control @error('num_certificado_instrutor') is-invalid @enderror" name="num_certificado_instrutor" value="{{ old('num_certificado_instrutor', strval($movimento->num_certificado_instrutor)) }}">
 
         @error('num_certificado_instrutor')
             <span class="invalid-feedback" role="alert">
@@ -376,7 +376,7 @@
     <label for="classe_certificado_instrutor" class="col-md-4 col-form-label text-md-right"> Tipo Licenca</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('classe_certificado_instrutor') is-invalid @enderror" name="classe_certificado_instrutor" value="{{ old('classe_certificado_instrutor', strval($movimento->classe_certificado_instrutor)) }}" autofocus>
+        <input type="text" class="form-control @error('classe_certificado_instrutor') is-invalid @enderror" name="classe_certificado_instrutor" value="{{ old('classe_certificado_instrutor', strval($movimento->classe_certificado_instrutor)) }}">
 
         @error('classe_certificado_instrutor')
             <span class="invalid-feedback" role="alert">

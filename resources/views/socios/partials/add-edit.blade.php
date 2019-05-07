@@ -125,7 +125,7 @@
         
         <input type="radio" name="tipo_socio" value="A" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'A' ? 'checked' : '' }}>Aeromodelista
 
-        @error('direcao')
+        @error('tipo_socio')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
