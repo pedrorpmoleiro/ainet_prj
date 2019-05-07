@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ $title }}</div>
                     <div class="card-body">
-                        <form action="{{ action('UserController@update') }}" method="post">
+                        <form action="{{ action('UserController@update', ['socio'=>$socio->id]) }}" method="post">
                             @method('put')
                             @csrf
 

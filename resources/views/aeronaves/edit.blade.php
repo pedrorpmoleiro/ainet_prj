@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">{{ $title }}</div>
                     <div class="card-body">
-                        <form action="{{ action('AeronaveController@update') }}" method="post">
+                        <form action="{{ action('AeronaveController@update', ['aeronave'=>$aeronave->matricula]) }}" method="post">
                             @method('put')
                             @csrf
                             
