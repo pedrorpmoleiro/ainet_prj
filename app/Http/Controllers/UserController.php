@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ActivationNotifier;
 use App\Mail\ReActivationNotifier;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -201,12 +204,31 @@ class UserController extends Controller
 
     public function alterarPassword()
     {
+        $title = 'Alterar a senha';
 
+        return view('socios.alterPassword', compact('title'));
     }
 
-    public function patchPassword()
+    public function patchPassword(Request $request)
     {
-        
+        $data = $request->validate([
+            'passwordNew'=>'required|regex:/^\S*(?=\S{8,})\S*$/',
+            'passwordNewConfirm'=>'required|same:passwordNew'
+        ],[
+            'passwordNew.required'=>'Este campo é obrigatório',
+            'passwordNew.regex'=>'A senha tem que ter 8 caracteres no minimo',
+            'passwordNewConfirm.required'=>'Este campo é obrigatório',
+            'passwordNewConfirm.same'=>'Esta senha não é igual à do campo "Nova Senha"'
+        ]);
+
+        $user = Auth::user();
+
+        $user->password = Hash::make($request->input('passwordNew'));
+        $user->password_inicial = 0;
+
+        $user->save();
+
+        return redirect()->action('HomeController@index');
     }
 
     public function sendReActivationEmail(User $socio) 

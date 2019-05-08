@@ -11,7 +11,7 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <h3>Após o registro verifique o seu email.</h3>
+                        <h3 class="row justify-content-center mb-4">Após o registro verifique o seu email!</h3>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Nome Completo</label>

@@ -102,8 +102,10 @@
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                                 <button type="submit" class="btn btn-default" name="cancel">Cancel</button>
-                                @if ($socio->id == Auth::user()->id)
-                                    <a class="btn btn-default" href="{{ action('UserController@alterarPassword') }}">Alterar Senha</a>
+                                @if(Auth::check())
+                                    @if ($socio->id == Auth::user()->id)
+                                        <a class="btn btn-default" href="{{ action('UserController@alterarPassword') }}">Alterar Senha</a>
+                                    @endif
                                 @endif
                             </div>
                         </div>

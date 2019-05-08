@@ -24,7 +24,7 @@
                                 <h3>Valide o seu Email</h3>
                                 <p>
                                     Caro {{ $socio_name }}, <br>
-                                    A sua conta foi criado, por favor clique no link abaixo para validara o seu email e efetue o login. A sua senha é a sua data de nascimento com o formato dia/mes/ano.
+                                    A sua conta foi criado, por favor clique no link abaixo para validara o seu email e efetue o login. A sua senha é a sua data de nascimento com o formato 'ano-mes-dia'.
                                 </p>
                                 <a class="btn btn-primary" href="{{ action('UserController@validateEmail', ['id', $socio_id]) }}">Validar Email</a>
                             </div>
