@@ -16,7 +16,7 @@ Route::get('/', function () {
     return redirect()->action('HomeController@index');
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -29,7 +29,7 @@ Route::resource('aeronaves', 'AeronaveController')->except(['show']);
 Route::resource('socios', 'UserController')->except(['show']);
 Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
 Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
-Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio');
+Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
 Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
 Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
 

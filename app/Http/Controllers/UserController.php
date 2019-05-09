@@ -182,6 +182,11 @@ class UserController extends Controller
         return redirect()->action('UserController@index');
     }
 
+    public function setQuota() 
+    {
+
+    }
+
     public function resetQuotas()
     {
 
