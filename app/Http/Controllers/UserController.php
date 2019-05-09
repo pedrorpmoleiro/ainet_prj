@@ -90,7 +90,8 @@ class UserController extends Controller
         User::create($socio);
 
         $socio = User::where('num_socio', $num_socio)->first();
-        Mail::to($socio)->send(new ActivationNotifier($socio));
+        //Mail::to($socio)->send(new ActivationNotifier($socio));
+        $socio->sendEmailVerificationNotification();
 
         return redirect()->action('UserController@index');
     }
