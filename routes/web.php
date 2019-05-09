@@ -18,22 +18,30 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true, 'register' => false]);
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/password', 'UserController@alterarPassword');
+    Route::patch('/password', 'UserController@patchPassword');
+    
+    Route::middleware(['isAtivo', 'isPasswordInicial'])->group(function () {
+        Route::resource('aeronaves', 'AeronaveController')->except(['show']);
+        Route::resource('movimentos', 'MovimentoController')->except(['show']);
+    
+        Route::get('/socios/{socio}/edit', 'UserController@edit');
+        Route::put('/socios/{socio}', 'UserController@update');
+            
+        Route::middleware(['isDirecao'])->group(function () {
+            Route::resource('socios', 'UserController')->except(['show', 'edit', 'update']);
+    
+            Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
+            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
+            Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
+            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
+            Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
+        }); 
+    });
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/email/verify/{id}', 'UserController@validateEmail');
-Route::get('/password', 'UserController@alterarPassword');
-Route::patch('/password', 'UserController@patchPassword');
-
-Route::resource('aeronaves', 'AeronaveController')->except(['show']);
-
-Route::resource('socios', 'UserController')->except(['show']);
-Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
-Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
-Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
-Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
-Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
-
-Route::resource('movimentos', 'MovimentoController')->except(['show']);
 
 /*
 Route::get('/aeronaves/{aeronave}/pilotos', function () {return view('welcome');});
