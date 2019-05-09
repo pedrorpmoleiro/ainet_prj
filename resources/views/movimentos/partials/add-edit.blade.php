@@ -1,17 +1,4 @@
 <div class="form-group row">
-    <label for="aeronave" class="col-md-4 col-form-label text-md-right">Aeronave</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('aeronave') is-invalid @enderror" name="aeronave" value="{{ old('aeronave', strval($movimento->aeronave)) }}" autofocus>
-
-        @error('aeronave')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
     <label for="data" class="col-md-4 col-form-label text-md-right">Data de voo</label>
 
     <div class="col-md-6">
@@ -24,7 +11,19 @@
         @enderror
     </div>
 </div>
+<div class="form-group row">
+    <label for="aeronave" class="col-md-4 col-form-label text-md-right">Aeronave</label>
 
+    <div class="col-md-6">
+        <input type="text" class="form-control @error('aeronave') is-invalid @enderror" name="aeronave" value="{{ old('aeronave', strval($movimento->aeronave)) }}" autofocus>
+
+        @error('aeronave')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
 <div class="form-group row">
     <label for="hora_descolagem" class="col-md-4 col-form-label text-md-right">Horas Descolagem</label>
 

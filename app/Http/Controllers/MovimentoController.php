@@ -224,6 +224,7 @@ class MovimentoController extends Controller
      */
     public function destroy(Movimento $movimento)
     {
-        //
+        $movimento->delete();
+        return redirect()->action('MovimentoController@index');
     }
 }
