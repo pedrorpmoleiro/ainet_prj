@@ -19,7 +19,6 @@ Route::get('/', function () {
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/email/verify/{id}', 'VerificationController@verify');
     Route::get('/password', 'UserController@alterarPassword');
     Route::patch('/password', 'UserController@patchPassword');
     
@@ -37,7 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
             Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
-            Route::post('/socios/{socio}/send_reactivate_mail', 'VerificationController@resend');
+            Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
         }); 
     });
 });
@@ -57,7 +56,3 @@ Route::get('/pendentes', function () {return view('welcome');});
 
 Route::get('/aeronaves/{aeronave}/linha_temporal', function () {return view('welcome');});
 */
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

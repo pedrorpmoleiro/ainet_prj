@@ -87,11 +87,11 @@ class UserController extends Controller
         $socio['num_socio'] = ++$num_socio;
         $socio['password'] = Hash::make($socio['data_nascimento']);
 
-        User::create($socio);
+        $user = User::create($socio);
 
-        $socio = User::where('num_socio', $num_socio)->first();
+        //$socio = User::where('num_socio', $num_socio)->first();
         //Mail::to($socio)->send(new ActivationNotifier($socio));
-        $socio->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
         return redirect()->action('UserController@index');
     }
@@ -198,11 +198,6 @@ class UserController extends Controller
 
     }
 
-    public function validateEmail(User $user)
-    {
-
-    }
-
     public function ativarSocio(User $socio)
     {
 
@@ -234,13 +229,14 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->action('HomeController@index');
+        return redirect()->back();
     }
 
     public function sendReActivationEmail(User $socio) 
     {
-        Mail::to($socio)->send(new ReActivationNotifier($socio));
+        // Mail::to($socio)->send(new ReActivationNotifier($socio));
+        $socio->sendEmailVerificationNotification();
 
-        return redirect()->action('UserController@index');
+        return redirect()->back();
     }
 }
