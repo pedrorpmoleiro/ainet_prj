@@ -8,7 +8,7 @@
                 <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
                     <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
-
+                    
                     @if (count($movimentos))
                         <table class="table table-striped">
                             <thead>
@@ -34,6 +34,7 @@
                                                 <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
                                                 <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}" method="POST" role="form" class="inline">
                                                     @method('DELETE')
+                                                    @csrf
                                                     <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
                                                 </form>
                                             </div>

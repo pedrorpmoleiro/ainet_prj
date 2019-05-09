@@ -89,84 +89,6 @@
         @enderror
     </div>
 </div>
-<div class="form-group row">
-    <label for="num_certificado_piloto" class="col-md-4 col-form-label text-md-right">Número de Certificado</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('num_certificado_piloto') is-invalid @enderror" name="num_certificado_piloto" value="{{ old('num_certificado_piloto', strval($movimento->num_certificado_piloto)) }}">
-
-        @error('num_certificado_piloto')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="num_licenca_piloto" class="col-md-4 col-form-label text-md-right">Número de Licenca Piloto</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('num_licenca_piloto') is-invalid @enderror" name="num_licenca_piloto" value="{{ old('num_licenca_piloto', strval($movimento->num_licenca_piloto)) }}">
-
-        @error('num_licenca_piloto')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="validade_licenca_piloto" class="col-md-4 col-form-label text-md-right">Validade licenca piloto</label>
-
-    <div class="col-md-6">
-        <input type="date" class="form-control @error('validade_licenca_piloto') is-invalid @enderror" name="validade_licenca_piloto" value="{{ old('validade_licenca_piloto', strval($movimento->validade_licenca_piloto)) }}">
-
-        @error('validade_licenca_piloto')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="tipo_licenca_piloto" class="col-md-4 col-form-label text-md-right">Tipo Licenca Piloto</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('tipo_licenca_piloto') is-invalid @enderror" name="tipo_licenca_piloto" value="{{ old('tipo_licenca_piloto', strval($movimento->tipo_licenca_piloto)) }}">
-
-        @error('tipo_licenca_piloto')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="validade_certificado_piloto" class="col-md-4 col-form-label text-md-right">Validade certificado piloto</label>
-
-    <div class="col-md-6">
-        <input type="date" class="form-control @error('validade_certificado_piloto') is-invalid @enderror" name="validade_certificado_piloto" value="{{ old('validade_certificado_piloto', strval($movimento->validade_certificado_piloto)) }}">
-
-        @error('validade_certificado_piloto')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="classe_certificado_piloto" class="col-md-4 col-form-label text-md-right">Classe certificado piloto</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('classe_certificado_piloto') is-invalid @enderror" name="classe_certificado_piloto" value="{{ old('classe_certificado_piloto', strval($movimento->classe_certificado_piloto)) }}">
-
-        @error('classe_certificado_piloto')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
 <!-- NATURAEZA  -->
 <div class="form-group row">
     <label for="natureza" class="col-md-4 col-form-label text-md-right">Natureza </label>
@@ -185,30 +107,26 @@
         @enderror
     </div>
 </div>
-<div class="form-group row">
+<div  class="form-group row">
     <label for="aerodromo_partida" class="col-md-4 col-form-label text-md-right"> Aerodromo Partida</label>
-
     <div class="col-md-6">
-        <input type="text" class="form-control @error('aerodromo_partida') is-invalid @enderror" name="aerodromo_partida" value="{{ old('aerodromo_partida', strval($movimento->aerodromo_partida)) }}">
-
-        @error('aerodromo_partida')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+        <select class="form-control" name="aerodromo_partida">
+            @foreach($aerodromos as $aerodromo)
+                    <option {{ old('aerodromo_partida', strval($movimento->aerodromo_partida)) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
+            @endforeach
+        </select>
     </div>
 </div>
+
 <div class="form-group row">
-    <label for="aerodromo_chegada" class="col-md-4 col-form-label text-md-right"> Aerodromo Partida</label>
+    <label for="aerodromo_chegada" class="col-md-4 col-form-label text-md-right"> Aerodromo Chegada</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('aerodromo_chegada') is-invalid @enderror" name="aerodromo_chegada" value="{{ old('aerodromo_chegada', strval($movimento->aerodromo_chegada)) }}">
-
-        @error('aerodromo_chegada')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+    <select class="form-control" name="aerodromo_chegada">
+            @foreach($aerodromos as $aerodromo)
+                    <option {{ old('aerodromo_chegada', strval($movimento->aerodromo_chegada)) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
+            @endforeach
+        </select>
     </div>
 </div>
 <div class="form-group row">
@@ -313,22 +231,7 @@
 </div>
 <!-- si for DE INSTRUCAO  -->
 <div class="form-group row">
-    <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
-
-    <div class="col-md-6">
-        <input type="radio" name="tipo_instrucao" value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo Comando <br>
-        
-        <input type="radio" name="tipo_instrucao" value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}> Solo
-
-        @error('tipo_instrucao')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número de Socio</label>
+    <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('instrutor_id') is-invalid @enderror" name="instrutor_id" value="{{ old('instrutor_id', strval($movimento->instrutor_id)) }}">
@@ -340,81 +243,16 @@
         @enderror
     </div>
 </div>
-<div class="form-group row">
-    <label for="num_licenca_instrutor" class="col-md-4 col-form-label text-md-right"> Número licenca instrutor</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('num_licenca_instrutor') is-invalid @enderror" name="num_licenca_instrutor" value="{{ old('num_licenca_instrutor', strval($movimento->num_licenca_instrutor)) }}">
-
-        @error('num_licenca_instrutor')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="validade_licenca_instrutor" class="col-md-4 col-form-label text-md-right">Validade certificado instructor</label>
-
-    <div class="col-md-6">
-        <input type="date" class="form-control @error('validade_licenca_instrutor') is-invalid @enderror" name="validade_licenca_instrutor" value="{{ old('validade_licenca_instrutor', strval($movimento->validade_licenca_instrutor)) }}">
-
-        @error('validade_licenca_instrutor')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
 
 <div class="form-group row">
-    <label for="tipo_licenca_instrutor" class="col-md-4 col-form-label text-md-right"> Tipo Licenca</label>
+    <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('tipo_licenca_instrutor') is-invalid @enderror" name="tipo_licenca_instrutor" value="{{ old('tipo_licenca_instrutor', strval($movimento->tipo_licenca_instrutor)) }}">
+        <input type="radio" name="tipo_instrucao" value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo Comando <br>
+        
+        <input type="radio" name="tipo_instrucao" value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}> Solo
 
-        @error('tipo_licenca_instrutor')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="num_certificado_instrutor" class="col-md-4 col-form-label text-md-right"> Número de certificado instrutor</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('num_certificado_instrutor') is-invalid @enderror" name="num_certificado_instrutor" value="{{ old('num_certificado_instrutor', strval($movimento->num_certificado_instrutor)) }}">
-
-        @error('num_certificado_instrutor')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="validade_certificado_instrutor" class="col-md-4 col-form-label text-md-right">Validade certificado instructor</label>
-
-    <div class="col-md-6">
-        <input type="date" class="form-control @error('validade_certificado_instrutor') is-invalid @enderror" name="validade_certificado_instrutor" value="{{ old('validade_certificado_instrutor', strval($movimento->validade_certificado_instrutor)) }}">
-
-        @error('validade_certificado_instrutor')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-<div class="form-group row">
-    <label for="classe_certificado_instrutor" class="col-md-4 col-form-label text-md-right"> Classe certificado instrutor </label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('classe_certificado_instrutor') is-invalid @enderror" name="classe_certificado_instrutor" value="{{ old('classe_certificado_instrutor', strval($movimento->classe_certificado_instrutor)) }}">
-
-        @error('classe_certificado_instrutor')
+        @error('tipo_instrucao')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
