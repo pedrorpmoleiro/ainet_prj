@@ -11,6 +11,7 @@ use App\Mail\ReActivationNotifier;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class UserController extends Controller
 {
@@ -115,6 +116,11 @@ class UserController extends Controller
      */
     public function edit(User $socio)
     {
+        if(Auth::user()->direcao == 0 || Auth::user()->id != $socio->id) {
+
+            throw new AccessDeniedHttpException('Unauthorized.');
+        }
+
         $title = "Editar Sócio";
 
         return view('socios.edit', compact('title', 'socio'));

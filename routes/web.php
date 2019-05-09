@@ -22,7 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/password', 'UserController@alterarPassword');
     Route::patch('/password', 'UserController@patchPassword');
     
-    Route::middleware(['isAtivo', 'isPasswordInicial'])->group(function () {
+    Route::middleware(['isAtivo'])->group(function () {
         Route::resource('aeronaves', 'AeronaveController')->except(['show']);
         Route::resource('movimentos', 'MovimentoController')->except(['show']);
     
