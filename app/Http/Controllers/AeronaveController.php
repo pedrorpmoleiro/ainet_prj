@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreAeronave;
+use App\Http\Requests\UpdateAeronave;
 use App\Aeronave;
 
 class AeronaveController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $aeronaves = Aeronave::all();
@@ -20,11 +16,6 @@ class AeronaveController extends Controller
         return view('aeronaves.list', compact('title', 'aeronaves'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $title = 'Inserir nova aeronave';
@@ -33,59 +24,24 @@ class AeronaveController extends Controller
         return view('aeronaves.add', compact('title', 'aeronave'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreAeronave $request)
     {
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
-        
-        $aeronave = $request->validate([
-            'matricula'=>'required|unique:aeronaves,matricula',
-            'marca'=> 'required',
-            'num_lugares' => 'integer|required',	
-            'conta_horas'=> 'integer|required',	
-            'preco_hora'=> 'required|numeric',
-            'modelo' => 'required'      
-        ], [
-            'matricula.required'=>'A matricula deve ser preenchida',
-            'marca.required'=> ' A marca deve ser preenchida',
-            'num_lugares.required' => 'Os lugares deve ser preenchidos',	
-            'conta_horas.required'=> 'As horas devem ser preenchidas',	
-            'preco_hora.required'=> 'O preco deve ser preenchido',
-            'modelo.required' => 'O modelo deve ser preenchido',
-            'num_lugares.integer' => 'Deve ser um numero inteiro',
-            'conta_horas.integer'=> 'Deve ser um numero inteiro',
-            'preco_hora.numeric'=> 'Deve ser um valor numerico decimal'  
-        ]);
+
+        $aeronave = $request->validated();
 
         Aeronave::create($aeronave);
         
         return redirect()->action('AeronaveController@index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         // NAO IMPLEMENTAR
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Aeronave $aeronave)
     {
         $title = "Editar Aeronave";
@@ -93,37 +49,15 @@ class AeronaveController extends Controller
         return view('aeronaves.edit', compact('title', 'aeronave'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Aeronave $aeronave)
+    public function update(UpdateAeronave $request, Aeronave $aeronave)
     {
         if ($request->has('cancel')) {
             return redirect()->action('AeronaveController@index');
         }
 
-        $aeronaveEdit = $request->validate([
-            'matricula'=>'required|unique',
-            'marca'=> 'required',
-            'num_lugares' => 'integer|required',	
-            'conta_horas'=> 'integer|required',	
-            'preco_hora'=> 'required|numeric',
-            'modelo' => 'required'      
-        ], [
-            'matricula.required'=>'A matricula deve ser preenchida',
-            'marca.required'=> ' A marca deve ser preenchida',
-            'num_lugares.required' => 'Os lugares deve ser preenchido',	
-            'conta_horas.required'=> 'As horas deve ser preenchido ',	
-            'preco_hora.required'=> 'O preco deve ser preenchido',
-            'modelo.required' => 'O modelo deve ser preenchido',
-            'num_lugares.integer' => 'Deve ser um numero inteiro',
-            'conta_horas.integer'=> 'Deve ser um numero inteiro',
-            'preco_hora.numeric'=> 'Deve ser um valor numerico decimal'  
-        ]);
+        $aeronaveEdit = $request->validated();
+
+        $aeronaveEdit['matricula'] = $aeronave->matricula;
 
         $aeronave->fill($aeronaveEdit);
         $aeronave->save();
@@ -131,12 +65,6 @@ class AeronaveController extends Controller
         return redirect()->action('AeronaveController@index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Aeronave $aeronave)
     {
         $aeronave->delete();
