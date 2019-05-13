@@ -273,3 +273,18 @@
     </div>
 </div>
 
+<div class="form-group row mb-0">
+        <div class="col-md-8 offset-md-4">
+                <button type="submit" class="btn btn-primary" onclick="mostrar()">Mostrar Instrucao</button>
+        </div>
+</div>
+
+<script>
+function mostrar(value){
+        var ins=document.getElementById('instrucao');
+        ins.style.display = (ins.style.display == 'none') ? 'block' : 'none';
+}
+</script>
+<div id="instrucao">
+
+</div>
