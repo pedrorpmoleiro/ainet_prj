@@ -1,3 +1,16 @@
+<script>
+function mostrar(){
+        var ins=document.getElementById('instrucao');
+        ins.style.display = (ins.style.display == 'none') ? 'block' : 'none';
+}
+</script>
+<div class="form-group row">
+        <label for="Tipo Voo:" class="col-md-4 col-form-label text-md-right">Tipo Voo: </label>
+
+        <div class="col-md-6">
+                 <input  type="checkbox"  onclick ="mostrar()"> Voo de instrucao<br>
+        </div>
+</div>
 <div class="form-group row">
     <label for="data" class="col-md-4 col-form-label text-md-right">Data de voo</label>
 
@@ -230,35 +243,7 @@
     </div>
 </div>
 <!-- si for DE INSTRUCAO  -->
-<div class="form-group row">
-    <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
 
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('instrutor_id') is-invalid @enderror" name="instrutor_id" value="{{ old('instrutor_id', strval($movimento->instrutor_id)) }}">
-
-        @error('instrutor_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
-
-    <div class="col-md-6">
-        <input type="radio" name="tipo_instrucao" value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo Comando <br>
-        
-        <input type="radio" name="tipo_instrucao" value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}> Solo
-
-        @error('tipo_instrucao')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
-    </div>
-</div>
 <div class="form-group row">
     <label for="observacoes" class="col-md-4 col-form-label text-md-right"> Observacoes</label>
     <div class="col-md-6">
@@ -273,18 +258,34 @@
     </div>
 </div>
 
-<div class="form-group row mb-0">
-        <div class="col-md-8 offset-md-4">
-                <button type="submit" class="btn btn-primary" onclick="mostrar()">Mostrar Instrucao</button>
+<div id="instrucao" style="display:none;">
+    <div class="form-group row">
+        <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
+
+        <div class="col-md-6">
+            <input type="text" class="form-control @error('instrutor_id') is-invalid @enderror" name="instrutor_id" value="{{ old('instrutor_id', strval($movimento->instrutor_id)) }}">
+
+            @error('instrutor_id')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
-</div>
+    </div>
 
-<script>
-function mostrar(value){
-        var ins=document.getElementById('instrucao');
-        ins.style.display = (ins.style.display == 'none') ? 'block' : 'none';
-}
-</script>
-<div id="instrucao">
+    <div class="form-group row">
+        <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
 
+        <div class="col-md-6">
+            <input type="radio" name="tipo_instrucao" value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo Comando <br>
+            
+            <input type="radio" name="tipo_instrucao" value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}> Solo
+
+            @error('tipo_instrucao')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+    </div>
 </div>
