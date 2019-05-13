@@ -21,13 +21,15 @@ Auth::routes(['verify' => true, 'register' => false]);
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/password', 'UserController@alterarPassword');
     Route::patch('/password', 'UserController@patchPassword');
-    
-    Route::middleware(['isAtivo', 'isPasswordInicial'])->group(function () {
-        Route::resource('aeronaves', 'AeronaveController')->except(['show']);
-        Route::resource('movimentos', 'MovimentoController')->except(['show']);
-    
+
+    Route::middleware(['can:update,socio'])->group(function () {
         Route::get('/socios/{socio}/edit', 'UserController@edit');
         Route::put('/socios/{socio}', 'UserController@update');
+    });
+
+    Route::middleware(['isAtivo'])->group(function () {
+        Route::resource('aeronaves', 'AeronaveController')->except(['show']);
+        Route::resource('movimentos', 'MovimentoController')->except(['show']);
             
         Route::middleware(['isDirecao'])->group(function () {
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update']);
@@ -37,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
             Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
-        }); 
+        });
     });
 });
 

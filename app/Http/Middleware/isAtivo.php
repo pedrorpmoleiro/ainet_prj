@@ -16,7 +16,7 @@ class isAtivo
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->ativo == 1) {
+        if ($request->user() && $request->user()->ativo == 1 && $request->user()->password_inicial == 0) {
             
             return $next($request);
         }

@@ -33,16 +33,19 @@
                         <li class ="nav-item">
                             <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name', 'Laravel') }}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ action('AeronaveController@index') }}">Aeronaves</a>
-                        </li>
-                        <!-- SO ADMINISTRACAO -->
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ action('UserController@index') }}">Sócios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ action('MovimentoController@index') }}">Movimentos</a>
-                        </li>
+                        @if (Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ action('AeronaveController@index') }}">Aeronaves</a>
+                            </li>
+                            @can ('direcao')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ action('UserController@index') }}">Sócios</a>
+                                </li>
+                            @endcan
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ action('MovimentoController@index') }}">Movimentos</a>
+                            </li>
+                        @endif
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
