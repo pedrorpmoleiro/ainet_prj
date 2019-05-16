@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Rules\PasswordMatch;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class ChangePassword extends FormRequest
 {
@@ -27,7 +26,7 @@ class ChangePassword extends FormRequest
     {
         return [
             'old_password'=>['required', new PasswordMatch],
-            'password'=>'required|regex:/^\S*(?=\S{8,})\S*$/|different:old_password',
+            'password'=>'required|regex:/^\S*(?=\S{8,})\S*$/|different:old_password|same:password_confirmation',
             'password_confirmation'=>'required|same:password'
         ];
     }
@@ -40,6 +39,7 @@ class ChangePassword extends FormRequest
             'password.regex'=>'A senha tem que ter 8 caracteres no minimo',
             'password.different'=>'A nova senha deve ser diferente da senha antiga',
             'password_confirmation.required'=>'Este campo é obrigatório',
+            'password.same'=>'Esta senha não é igual à do campo "Nova Senha"',
             'password_confirmation.same'=>'Esta senha não é igual à do campo "Nova Senha"'
         ];
     }
