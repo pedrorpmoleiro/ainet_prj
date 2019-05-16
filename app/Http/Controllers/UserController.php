@@ -119,10 +119,9 @@ class UserController extends Controller
 
         return redirect()->back();
     }
-    public function licenca(){
-        $user=User::where('user_id',Auth::user()->id);
+    public function licenca(User $piloto){
         $title='Liceca';
-        return view('socios.licenca',compact('title'));
+        return view('socios.licenca',compact('title','piloto'));
     }
     public function certificado(){
 
