@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePassword;
 use App\Http\Requests\StoreSocio;
 use App\Http\Requests\UpdateSocio;
-use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -106,21 +106,13 @@ class UserController extends Controller
         return view('socios.alterPassword', compact('title'));
     }
 
-    public function patchPassword(Request $request)
+    public function patchPassword(ChangePassword $request)
     {
-        $data = $request->validate([
-            'passwordNew'=>'required|regex:/^\S*(?=\S{8,})\S*$/',
-            'passwordNewConfirm'=>'required|same:passwordNew'
-        ],[
-            'passwordNew.required'=>'Este campo é obrigatório',
-            'passwordNew.regex'=>'A senha tem que ter 8 caracteres no minimo',
-            'passwordNewConfirm.required'=>'Este campo é obrigatório',
-            'passwordNewConfirm.same'=>'Esta senha não é igual à do campo "Nova Senha"'
-        ]);
+        $request->validated();
 
         $user = Auth::user();
 
-        $user->password = Hash::make($request->input('passwordNew'));
+        $user->password = Hash::make($request->input('new_password'));
         $user->password_inicial = 0;
 
         $user->save();

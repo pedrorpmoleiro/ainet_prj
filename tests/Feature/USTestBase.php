@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
 use App\User;
-use App\Models\Aeronave;
+use App\Aeronave;
 
 class USTestBase extends TestCase
 {

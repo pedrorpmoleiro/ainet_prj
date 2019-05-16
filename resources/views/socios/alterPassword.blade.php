@@ -12,12 +12,26 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="passwordNew" class="col-md-4 col-form-label text-md-right">Nova senha</label>
+                            <label for="old_password" class="col-md-4 col-form-label text-md-right">Senha Antiga</label>
 
                             <div class="col-md-6">
-                                <input id="passwordNew" type="password" class="form-control @error('passwordNew') is-invalid @enderror" name="passwordNew" value="{{ old('passwordNew') }}" required>
+                                <input id="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" name="old_password" value="{{ old('old_password') }}" required>
 
-                                @error('passwordNew')
+                                @error('old_password')
+                                <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="new_password" class="col-md-4 col-form-label text-md-right">Nova senha</label>
+
+                            <div class="col-md-6">
+                                <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" value="{{ old('new_password') }}" required>
+
+                                @error('new_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -26,12 +40,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="passwordNewConfirm" class="col-md-4 col-form-label text-md-right">Confirme a nova senha</label>
+                            <label for="new_password_confirm" class="col-md-4 col-form-label text-md-right">Confirme a nova senha</label>
 
                             <div class="col-md-6">
-                                <input id="passwordNewConfirm" type="password" class="form-control @error('passwordNewConfirm') is-invalid @enderror" name="passwordNewConfirm" value="{{ old('passwordNewConfirm') }}" required>
+                                <input id="new_password_confirm" type="password" class="form-control @error('new_password_confirm') is-invalid @enderror" name="new_password_confirm" value="{{ old('new_password_confirm') }}" required>
 
-                                @error('passwordNewConfirm')
+                                @error('new_password_confirm')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
