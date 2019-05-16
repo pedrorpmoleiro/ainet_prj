@@ -11,7 +11,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">Licenca</label>
 
                             <div class="col-md-6">
-                                <a href="storage/app/docs_piloto/licenca_{{$piloto->id}}.pdf">click_me</a>
+                                <a target="_blank" href={{Storage::get("app/docs_piloto/licenca_$piloto->id.pdf")}}>click_me</a>
                             </div>
                         </div>
 
