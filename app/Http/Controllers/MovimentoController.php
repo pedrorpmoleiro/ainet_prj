@@ -8,12 +8,13 @@ use App\Movimento;
 use App\Aerodromo;
 use App\User;
 use App\Aeronave;
+use Illuminate\Support\Facades\Auth;
 
 class MovimentoController extends Controller
 {
     public function index()
     {
-        $movimentos = Movimento::where('piloto_id',Auth::user()->id)->paginate(24);
+        $movimentos = Movimento::where('piloto_id',Auth::user()->id)->where('confirmado',0)->paginate(24);
         $title = "Movimentos";
 
         return view('movimentos.list', compact('title', 'movimentos'));
