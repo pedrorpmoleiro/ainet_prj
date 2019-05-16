@@ -24,6 +24,6 @@ class UserPolicy
     }
 
     public  function licenca (User $user, User $piloto) {
-        return ($user->direcao == 1) || $user->id == piloto->id;
+        return ($user->direcao == 1) || $user->id == $piloto->id;
     }
 }
