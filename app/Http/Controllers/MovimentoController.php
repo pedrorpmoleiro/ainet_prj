@@ -13,7 +13,7 @@ class MovimentoController extends Controller
 {
     public function index()
     {
-        $movimentos = Movimento::paginate(24);
+        $movimentos = Movimento::where('piloto_id',Auth::user()->id)->paginate(24);
         $title = "Movimentos";
 
         return view('movimentos.list', compact('title', 'movimentos'));
