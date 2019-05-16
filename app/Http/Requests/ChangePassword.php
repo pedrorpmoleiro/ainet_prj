@@ -27,8 +27,8 @@ class ChangePassword extends FormRequest
     {
         return [
             'old_password'=>['required', new PasswordMatch],
-            'new_password'=>'required|regex:/^\S*(?=\S{8,})\S*$/|different:old_password',
-            'new_password_confirm'=>'required|same:new_password'
+            'password'=>'required|regex:/^\S*(?=\S{8,})\S*$/|different:old_password',
+            'password_confirmation'=>'required|same:password'
         ];
     }
 
@@ -36,11 +36,11 @@ class ChangePassword extends FormRequest
     {
         return [
             'old_password.required'=>'Este campo é obrigatório',
-            'new_password.required'=>'Este campo é obrigatório',
-            'new_password.regex'=>'A senha tem que ter 8 caracteres no minimo',
-            'new_password.different'=>'A nova senha deve ser diferente da senha antiga',
-            'new_password_confirm.required'=>'Este campo é obrigatório',
-            'new_password_confirm.same'=>'Esta senha não é igual à do campo "Nova Senha"'
+            'password.required'=>'Este campo é obrigatório',
+            'password.regex'=>'A senha tem que ter 8 caracteres no minimo',
+            'password.different'=>'A nova senha deve ser diferente da senha antiga',
+            'password_confirmation.required'=>'Este campo é obrigatório',
+            'password_confirmation.same'=>'Esta senha não é igual à do campo "Nova Senha"'
         ];
     }
 }

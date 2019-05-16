@@ -26,12 +26,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="new_password" class="col-md-4 col-form-label text-md-right">Nova senha</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">Nova senha</label>
 
                             <div class="col-md-6">
-                                <input id="new_password" type="password" class="form-control @error('new_password') is-invalid @enderror" name="new_password" value="{{ old('new_password') }}" required>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required>
 
-                                @error('new_password')
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -40,12 +40,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="new_password_confirm" class="col-md-4 col-form-label text-md-right">Confirme a nova senha</label>
+                            <label for="password_confirmation" class="col-md-4 col-form-label text-md-right">Confirme a nova senha</label>
 
                             <div class="col-md-6">
-                                <input id="new_password_confirm" type="password" class="form-control @error('new_password_confirm') is-invalid @enderror" name="new_password_confirm" value="{{ old('new_password_confirm') }}" required>
+                                <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" value="{{ old('password_confirmation') }}" required>
 
-                                @error('new_password_confirm')
+                                @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

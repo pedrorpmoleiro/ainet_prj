@@ -26,6 +26,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::middleware(['can:update,socio'])->group(function () {
             Route::get('/socios/{socio}/edit', 'UserController@edit');
             Route::put('/socios/{socio}', 'UserController@update');
+        });
+
+        Route::middleware(['can:licenca,piloto'])->group(function () {
             Route::get('/pilotos/{piloto}/certificado','UserController@certificado');
             Route::get('/pilotos/{piloto}/licenca','UserController@licenca');
         });

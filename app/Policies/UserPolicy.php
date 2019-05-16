@@ -22,4 +22,8 @@ class UserPolicy
     public function update (User $user, User $socio) {
         return ($user->direcao == 1) || $user->id == $socio->id;
     }
+
+    public  function licenca (User $user, User $piloto) {
+        return ($user->direcao == 1) || $user->id == piloto->id;
+    }
 }

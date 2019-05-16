@@ -112,7 +112,7 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        $user->password = Hash::make($request->input('new_password'));
+        $user->password = Hash::make($request->input('password'));
         $user->password_inicial = 0;
 
         $user->save();
