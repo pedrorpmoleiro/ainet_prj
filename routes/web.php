@@ -22,12 +22,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/password', 'UserController@alterarPassword');
     Route::patch('/password', 'UserController@patchPassword');
 
-    Route::middleware(['can:update,socio'])->group(function () {
-        Route::get('/socios/{socio}/edit', 'UserController@edit');
-        Route::put('/socios/{socio}', 'UserController@update');
-    });
-
     Route::middleware(['isAtivo'])->group(function () {
+        Route::middleware(['can:update,socio'])->group(function () {
+            Route::get('/socios/{socio}/edit', 'UserController@edit');
+            Route::put('/socios/{socio}', 'UserController@update');
+        });
+
         Route::resource('aeronaves', 'AeronaveController')->except(['show']);
         Route::resource('movimentos', 'MovimentoController')->except(['show']);
             

@@ -6,18 +6,16 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class US04Test extends USTestBase
+class FreshDBSeedTest extends USTestBase
 {
     protected function setUp(): void
     {
+        USTestBase::$forceSeedWithinTest = true;
         parent::setUp();
-        $this->seedNormalUsers();
     }
 
-    public function testLogoutSucesso()
+   public function testRebuildInitialDataOnDataBase()
     {
-        $this->actingAs($this->normalUser)->post('/logout')
-            ->assertLocation("/");
-        $this->assertGuest();
+        $this->assertTrue(true);
     }
 }
