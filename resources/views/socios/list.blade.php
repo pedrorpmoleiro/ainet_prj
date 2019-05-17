@@ -11,6 +11,7 @@
                         <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
                     @endcan
                     @if (count($socios))
+                            @include('socios.partials.filtros')
                         <table class="table table-striped">
                             <thead>
                                 <tr>
@@ -71,7 +72,7 @@
                             </tbody>
                         </table>
                         <div class="row justify-content-center">
-                            {{ $socios->links() }}
+                            {{ $socios->appends($_GET)->links() }}
                         </div>
                     @else
                         <h2>Não foram encontrados sócios</h2>
