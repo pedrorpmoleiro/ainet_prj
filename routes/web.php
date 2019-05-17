@@ -36,10 +36,11 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::get('/pilotos/{piloto}/licenca','UserController@licenca');
         });
 
-        Route::resource('aeronaves', 'AeronaveController')->except(['show']);
+        Route::resource('aeronaves', 'AeronaveController')->only(['index']);
         Route::resource('movimentos', 'MovimentoController')->except(['show']);
 
         Route::middleware(['isDirecao'])->group(function () {
+            Route::resource('aeronaves', 'AeronaveController')->except(['show', 'index']);
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update', 'index']);
 
             Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
