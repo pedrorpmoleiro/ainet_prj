@@ -32,7 +32,8 @@ class StoreSocio extends FormRequest
             'nif'=>'required|unique:users,nif|integer',
             'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/',
             'endereco'=>'required',
-            'tipo_socio'=>'required'
+            'tipo_socio'=>'required',
+            'file_foto'=>'nullable|image'
         ];
     }
 
@@ -56,7 +57,8 @@ class StoreSocio extends FormRequest
             'telefone.unique'=>'Este número de telefone já se encontra registado',
             'telefone.regex'=>'O formato número de telefone não é válido',
             'endereco.required'=>'O endereço deve ser preenchido',
-            'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido'
+            'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido',
+            'file_foto.image'=>'O ficheiro não é uma imagem ou é de um formato não suportado'
         ];
     }
 }

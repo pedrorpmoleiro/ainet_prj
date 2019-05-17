@@ -32,7 +32,8 @@ class UpdateSocio extends FormRequest
             'nif'=>'required|integer',
             'telefone'=>'required|regex:/^\+?\d{3}(?: ?\d+)*$/',
             'endereco'=>'required',
-            'tipo_socio'=>'required'
+            'tipo_socio'=>'required',
+            'file_foto'=>'nullable|image'
         ];
     }
 
@@ -53,7 +54,8 @@ class UpdateSocio extends FormRequest
             'telefone.required'=>'O número de telefone deve ser preenchido',
             'telefone.regex'=>'O formato número de telefone não é válido',
             'endereco.required'=>'O endereço deve ser preenchido',
-            'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido'
+            'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido',
+            'file_foto.image'=>'O ficheiro não é uma imagem ou é de um formato não suportado'
         ];
     }
 }

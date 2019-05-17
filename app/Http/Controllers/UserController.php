@@ -66,6 +66,10 @@ class UserController extends Controller
 
         $socioEdit = $request->validated();
 
+        dd($socio['file_foto']);
+
+        $request->profile_picture->storeAs('fotos', $socio->id.'_pic.jpg');
+
         $socio->fill($socioEdit);
         $socio->save();
 
@@ -119,11 +123,21 @@ class UserController extends Controller
 
         return redirect()->back();
     }
-    public function licenca(User $piloto){
-        $title='Liceca';
-        return view('socios.licenca',compact('title','piloto'));
-    }
-    public function certificado(){
 
+    public function sendReActivationEmail(User $socio)
+    {
+        $socio->sendEmailVerificationNotification();
+
+        return redirect()->back();
+    }
+
+    public function licenca(User $piloto)
+    {
+        return response()->file(storage_path("app/docs_piloto/licenca_$piloto->id.pdf", "licenca.pdf", [], null));
+    }
+
+    public function certificado(User $piloto)
+    {
+        return response()->file(storage_path("app/docs_piloto/certificado_$piloto->id.pdf", "certificado.pdf", [], null));
     }
 }

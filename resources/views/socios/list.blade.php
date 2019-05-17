@@ -12,6 +12,7 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>Foto</th>
                                     <th>Número de Sócio</th>
                                     <th>Nome</th>
                                     <th>Género</th>
@@ -24,6 +25,13 @@
                             <tbody>
                                 @foreach($socios as $socio)
                                     <tr>
+                                        <td>
+                                            @if ($socio->foto_url)
+                                                <img class="img rounded mx-auto d-block border border-secondary" width="50" src="{{ asset("storage/fotos/$socio->foto_url") }}">
+                                            @else
+                                                <img class="img rounded mx-auto d-block border border-secondary" width="50" src="{{ asset("storage/avatar_placeholder.png") }}">
+                                            @endif
+                                        </td>
                                         <td>{{ $socio->num_socio }}</td>
                                         <td>{{ $socio->nome_informal }}</td>
                                         <td>{{ $socio->sexo }}</td>
@@ -34,11 +42,12 @@
                                             <div class="row justify-content-center">
                                                 <a class="btn btn-xs btn-primary mr-1" href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
 
+                                                <!--
                                                 <form action="{{ action('UserController@sendReActivationEmail', ['socio' => $socio->id]) }}" method="post">
                                                     @csrf
                                                     <button type="submit" class="btn btn-xs btn-primary mr-1">Enviar mail reativação</button>
                                                 </form>
-
+                                                -->
                                                 <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
                                                     @method('DELETE')
                                                     @csrf

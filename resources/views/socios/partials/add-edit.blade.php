@@ -49,12 +49,6 @@
         <input type="radio" name="sexo" value="M" {{ old('sexo', strval($socio->sexo)) == 'M' ? 'checked' : '' }}>Masculino<br>
         
         <input type="radio" name="sexo" value="F" {{ old('sexo', strval($socio->sexo)) == 'F' ? 'checked' : '' }}>Feminino
-        
-        @error('sexo')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
     </div>
 </div>
 
@@ -124,11 +118,13 @@
         <input type="radio" name="tipo_socio" value="NP" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'NP' ? 'checked' : '' }}>Não Piloto<br>
         
         <input type="radio" name="tipo_socio" value="A" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'A' ? 'checked' : '' }}>Aeromodelista
+    </div>
+</div>
 
-        @error('tipo_socio')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+<div class="form-group row">
+    <label for="file_foto" class="col-md-4 col-form-label text-md-right">Foto de Perfil</label>
+
+    <div class="col-md-6">
+        <input id="file_foto" type="file" class="form-control-file" name="file_foto" accept="image/*">
     </div>
 </div>
