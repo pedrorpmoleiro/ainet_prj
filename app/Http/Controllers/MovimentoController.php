@@ -8,16 +8,50 @@ use App\Movimento;
 use App\Aerodromo;
 use App\User;
 use App\Aeronave;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class MovimentoController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $movimentos = Movimento::where('piloto_id',Auth::user()->id)->where('confirmado',0)->paginate(24);
-        $title = "Movimentos";
+        $title="Movimentos";
+        $movimentos=Movimento::orderBy('id');
+        $query=$request->query();
+        $filters=$query;
 
-        return view('movimentos.list', compact('title', 'movimentos'));
+        foreach ($query as $name => $value) {
+            $$name = $value;
+        }
+        if(isset($id)){
+            $movimentos=$movimentos->where('id',$id);
+        }
+        if(isset($piloto)){
+            $movimentos=$movimentos->where('piloto_id',$piloto);
+        }
+        if(isset($aeronave)){
+            $movimentos=$movimentos->where('aeronave',$aeronave);
+        }
+        if(isset($data_inf)){
+            if($filter_day=='posterior'){
+                $movimentos=$movimentos->where('data','>',$data_inf);
+            }
+            else{
+                if($filter_day=='anterior'){
+                    $movimentos=$movimentos->where('data','<',$data_inf);
+                }else{
+                    if(isset($data_sup)){
+                        $movimentos=$movimentos->where('data','between',$data_inf)->where('data',$data_sup);
+                    }
+                }
+            }
+        }
+        if(isset($data_inf)){
+
+        }
+        $movimentos=$movimentos->paginate(24);
+        return view('movimentos.list', compact('title', 'movimentos','filters'));
+
     }
 
     public function create()
@@ -88,4 +122,5 @@ class MovimentoController extends Controller
 
         return redirect()->action('MovimentoController@index');
     }
+
 }

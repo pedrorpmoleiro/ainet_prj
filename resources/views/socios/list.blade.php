@@ -8,7 +8,6 @@
                 <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
                     <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
-
                     @if (count($socios))
                         <table class="table table-striped">
                             <thead>
