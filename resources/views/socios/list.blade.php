@@ -7,7 +7,9 @@
             <div class="card">
                 <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
-                    <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
+                    @can('direcao')
+                        <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
+                    @endcan
                     @if (count($socios))
                         <table class="table table-striped">
                             <thead>
@@ -15,11 +17,13 @@
                                     <th>Foto</th>
                                     <th>Número de Sócio</th>
                                     <th>Nome</th>
-                                    <th>Género</th>
-                                    <th>Data de Nascimento</th>
                                     <th>Email</th>
-                                    <th>NIF</th>
-                                    <th>Ações</th>
+                                    <th>Nº de telefone</th>
+                                    <th>Nº de Licença</th>
+                                    <th>Direção</th>
+                                    @can('direcao')
+                                        <th>Ações</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,27 +38,34 @@
                                         </td>
                                         <td>{{ $socio->num_socio }}</td>
                                         <td>{{ $socio->nome_informal }}</td>
-                                        <td>{{ $socio->sexo }}</td>
-                                        <td>{{ $socio->data_nascimento }}</td>
                                         <td>{{ $socio->email }}</td>
-                                        <td>{{ $socio->nif }}</td>
+                                        <td>{{ $socio->telefone }}</td>
                                         <td>
-                                            <div class="row justify-content-center">
-                                                <a class="btn btn-xs btn-primary mr-1" href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
-
-                                                <!--
-                                                <form action="{{ action('UserController@sendReActivationEmail', ['socio' => $socio->id]) }}" method="post">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-xs btn-primary mr-1">Enviar mail reativação</button>
-                                                </form>
-                                                -->
-                                                <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
-                                                    @method('DELETE')
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
-                                                </form>
-                                            </div>
+                                            @if ($socio->num_licenca)
+                                                {{ $socio->num_licenca }}
+                                            @else
+                                                N/A
+                                            @endif
                                         </td>
+                                        <td>
+                                            @if ($socio->direcao == 1)
+                                                Sim
+                                            @else
+                                                Não
+                                            @endif
+                                        </td>
+                                        @can('direcao')
+                                            <td>
+                                                <div class="row justify-content-center">
+                                                    <a class="btn btn-xs btn-primary mr-1" href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
+                                                    <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                                    </form>
+                                                </div>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

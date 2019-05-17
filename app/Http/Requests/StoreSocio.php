@@ -29,7 +29,7 @@ class StoreSocio extends FormRequest
             'nome_informal'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             'sexo'=>'required',
             'data_nascimento'=>'required|date',
-            'nif'=>'required|unique:users,nif|integer',
+            'nif'=>'required|unique:users,nif|numeric|max:999999999',
             'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/',
             'endereco'=>'required',
             'tipo_socio'=>'required',

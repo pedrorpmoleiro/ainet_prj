@@ -7,8 +7,9 @@
             <div class="card">
                 <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
-                    <a class="btn btn-primary mb-4" href="{{ action('AeronaveController@create') }}">Adicionar aeronave</a>
-                        
+                    @can('direcao')
+                        <a class="btn btn-primary mb-4" href="{{ action('AeronaveController@create') }}">Adicionar aeronave</a>
+                    @endcan
                     @if (count($aeronaves))
                     <table class="table table-striped">
                         <thead>
@@ -19,7 +20,9 @@
                                 <th>Número de Lugares</th>
                                 <th>Horas de Voo</th>
                                 <th>Preço por Hora</th>
-                                <th>Ações</th>
+                                @can('direcao')
+                                    <th>Ações</th>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -31,15 +34,18 @@
                                 <td>{{ $aeronave->num_lugares }}</td>
                                 <td>{{ $aeronave->conta_horas }}</td>
                                 <td>{{ $aeronave->preco_hora }}</td>
-                                <td>
-                                    <div class="row justify-content-center">
-                                        <a class="btn btn-xs btn-primary  mr-1" href="{{ action('AeronaveController@edit', ['aeronave' => $aeronave->matricula]) }}">Editar</a>
-                                        <form action="{{ action('AeronaveController@destroy', ['aeronave' => $aeronave->matricula]) }}" method="POST" role="form" class="inline">
-                                            @method('DELETE')
+                                @can('direcao')
+                                    <td>
+                                        <div class="row justify-content-center">
+                                            <a class="btn btn-xs btn-primary  mr-1" href="{{ action('AeronaveController@edit', ['aeronave' => $aeronave->matricula]) }}">Editar</a>
+                                            <form action="{{ action('AeronaveController@destroy', ['aeronave' => $aeronave->matricula]) }}" method="POST" role="form" class="inline">
+                                                @method('DELETE')
+
                                                 <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
                                             </form>
                                         </div>
                                     </td>
+                                @endcan
                                 </tr>
                             @endforeach
                         </tbody>

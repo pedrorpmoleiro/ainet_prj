@@ -13,7 +13,12 @@ class UserController extends Controller
 {
     public function index()
     {
-        $socios = User::paginate(24);
+        if (Auth::user()->direcao) {
+            $socios = User::paginate(24);
+        } else {
+            $socios = User::where('ativo', 1)->paginate(24);
+        }
+
         $title = 'Sócios';
 
         return view('socios.list', compact('title', 'socios'));
@@ -66,9 +71,13 @@ class UserController extends Controller
 
         $socioEdit = $request->validated();
 
-        dd($socio['file_foto']);
+//        $request->profile_picture->storeAs('fotos', $socio->id.'_pic.jpg');
 
-        $request->profile_picture->storeAs('fotos', $socio->id.'_pic.jpg');
+        $keys = array_keys($socioEdit, null, true);
+
+        foreach ($keys as $key) {
+            unset($socioEdit[$key]);
+        }
 
         $socio->fill($socioEdit);
         $socio->save();

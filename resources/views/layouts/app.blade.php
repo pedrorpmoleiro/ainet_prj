@@ -37,11 +37,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ action('AeronaveController@index') }}">Aeronaves</a>
                             </li>
-                            @can ('direcao')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ action('UserController@index') }}">Sócios</a>
-                                </li>
-                            @endcan
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ action('UserController@index') }}">Sócios</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ action('MovimentoController@index') }}">Movimentos</a>
                             </li>
