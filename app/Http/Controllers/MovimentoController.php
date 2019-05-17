@@ -18,21 +18,42 @@ class MovimentoController extends Controller
         $title="Movimentos";
         $movimentos=Movimento::orderBy('id');
         $query=$request->query();
-        $filters=$query;
+      //  $filters=$query;
+        $filters=['id'=>'','piloto'=>'','aeronave'=>'','instrutor'=>'','natureza'=>'','confirmado'=>''
+        ,'data_inf'=>'','data_sup'=>'','filter_day'=>""
+        ];
 
         foreach ($query as $name => $value) {
             $$name = $value;
         }
+
         if(isset($id)){
+            $filters['id']=$id;
             $movimentos=$movimentos->where('id',$id);
         }
         if(isset($piloto)){
+            $filters['piloto']=$piloto;
             $movimentos=$movimentos->where('piloto_id',$piloto);
         }
         if(isset($aeronave)){
+            $filters['aeronave']=$aeronave;
             $movimentos=$movimentos->where('aeronave',$aeronave);
         }
+        if(isset($instrutor)){
+            $filters['instrutor']=$instrutor;
+            $movimentos=$movimentos->where('instrutor_id',$instrutor);
+        }
+        if(isset($natureza)){
+            $filters['natureza']=$natureza;
+            $movimentos=$movimentos->where('natureza',$natureza);
+        }
+        if(isset($confirmado)){
+            $filters['confirmado']=$confirmado;
+            $movimentos=$movimentos->where('confirmado',$confirmado);
+        }
         if(isset($data_inf)){
+            $filters['filter_day']=$filter_day;
+            $filters['data_inf']=$data_inf;
             if($filter_day=='posterior'){
                 $movimentos=$movimentos->where('data','>',$data_inf);
             }
@@ -41,14 +62,13 @@ class MovimentoController extends Controller
                     $movimentos=$movimentos->where('data','<',$data_inf);
                 }else{
                     if(isset($data_sup)){
-                        $movimentos=$movimentos->where('data','between',$data_inf)->where('data',$data_sup);
+                        $filters['data_sup']=$data_sup;
+                        $movimentos=$movimentos->where('data','>',$data_inf)->where('data','<',$data_sup);
                     }
                 }
             }
         }
-        if(isset($data_inf)){
 
-        }
         $movimentos=$movimentos->paginate(24);
         return view('movimentos.list', compact('title', 'movimentos','filters'));
 
