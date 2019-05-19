@@ -1,6 +1,4 @@
 <?php
-//use Symfony\Component\Routing\Annotation\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,8 +19,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
-    Route::get('/password', 'UserController@alterarPassword');
-    Route::patch('/password', 'UserController@patchPassword');
+    Route::get('/password', 'UserController@alterarPassword')->name('password.change');
+    Route::patch('/password', 'UserController@patchPassword')->name('password.patch');
 
     Route::middleware(['isAtivo'])->group(function () {
         Route::resource('socios', 'UserController')->only(['index']);
@@ -32,8 +30,8 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
         });
 
         Route::middleware(['can:licenca,piloto'])->group(function () {
-            Route::get('/pilotos/{piloto}/certificado','UserController@certificado');
-            Route::get('/pilotos/{piloto}/licenca','UserController@licenca');
+            Route::get('/pilotos/{piloto}/certificado','UserController@certificado')->name('piloto.certificado');
+            Route::get('/pilotos/{piloto}/licenca','UserController@licenca')->name('piloto.licenca');
         });
 
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
@@ -47,7 +45,7 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
             Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
-            Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail');
+            Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail')->name('socio.reSendMail');
         });
     });
 });

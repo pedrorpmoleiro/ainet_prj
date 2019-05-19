@@ -18,57 +18,62 @@ class MovimentoController extends Controller
         $movimentos=Movimento::orderBy('id');
         $query=$request->query();
       //  $filters=$query;
-        $filters=['id'=>'','piloto'=>'','aeronave'=>'','instrutor'=>'','natureza'=>'','confirmado'=>''
-        ,'data_inf'=>'','data_sup'=>'','filter_day'=>""
+        $filters=[
+            'id'=>'','piloto'=>'','aeronave'=>'','instrutor'=>'','natureza'=>'','confirmado'=>'',
+            'data_inf'=>'','data_sup'=>'','filter_day'=>''
         ];
 
         foreach ($query as $name => $value) {
             $$name = $value;
         }
 
-        if(isset($id)){
+        if(isset($id)) {
             $filters['id']=$id;
             $movimentos=$movimentos->where('id',$id);
         }
-        if(isset($piloto)){
+        if(isset($piloto)) {
             $filters['piloto']=$piloto;
             $movimentos=$movimentos->where('piloto_id',$piloto);
         }
-        if(isset($aeronave)){
+        if(isset($aeronave)) {
             $filters['aeronave']=$aeronave;
             $movimentos=$movimentos->where('aeronave',$aeronave);
         }
-        if(isset($instrutor)){
+        if(isset($instrutor)) {
             $filters['instrutor']=$instrutor;
             $movimentos=$movimentos->where('instrutor_id',$instrutor);
         }
-        if(isset($natureza)){
+        if(isset($natureza)) {
             $filters['natureza']=$natureza;
             $movimentos=$movimentos->where('natureza',$natureza);
         }
-        if(isset($confirmado)){
+        if(isset($confirmado)) {
             $filters['confirmado']=$confirmado;
             $movimentos=$movimentos->where('confirmado',$confirmado);
         }
-        if(isset($data_inf)){
+        if(isset($data_inf)) {
             $filters['filter_day']=$filter_day;
             $filters['data_inf']=$data_inf;
-            if($filter_day=='posterior'){
+            if($filter_day=='posterior') {
                 $movimentos=$movimentos->where('data','>',$data_inf);
-            }
-            else{
-                if($filter_day=='anterior'){
+            } else {
+                if($filter_day=='anterior') {
                     $movimentos=$movimentos->where('data','<',$data_inf);
-                }else{
-                    if(isset($data_sup)){
-                        $filters['data_sup']=$data_sup;
-                        $movimentos=$movimentos->where('data','>',$data_inf)->where('data','<',$data_sup);
+                } else {
+                    if($filter_day=='data') {
+                        $movimentos=$movimentos->where('data', $data_inf);
+                    } else {
+                        if(isset($data_sup)) {
+                            $filters['data_sup']=$data_sup;
+                            $movimentos=$movimentos->where('data','>',$data_inf)->where('data','<',$data_sup);
+                        }
                     }
                 }
             }
         }
 
         $movimentos=$movimentos->paginate(24);
+
         return view('movimentos.list', compact('title', 'movimentos','filters'));
 
     }

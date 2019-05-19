@@ -1,15 +1,17 @@
 <script>
-function mostrar(){
+    function mostrar()
+    {
         var ins=document.getElementById('instrucao');
         ins.style.display = (ins.style.display == 'none') ? 'block' : 'none';
-}
+    }
 </script>
-<div class="form-group row">
-        <label for="Tipo Voo:" class="col-md-4 col-form-label text-md-right">Tipo Voo: </label>
 
-        <div class="col-md-6">
-                 <input  type="checkbox"  onclick ="mostrar()"> Voo de instrucao<br>
-        </div>
+<div class="form-group row">
+    <label for="Tipo Voo:" class="col-md-4 col-form-label text-md-right">Tipo Voo: </label>
+
+    <div class="col-md-6">
+        <input  type="checkbox"  onclick ="mostrar()"> Voo de instrucao<br>
+    </div>
 </div>
 <div class="form-group row">
     <label for="data" class="col-md-4 col-form-label text-md-right">Data de voo</label>
@@ -102,7 +104,6 @@ function mostrar(){
         @enderror
     </div>
 </div>
-<!-- NATURAEZA  -->
 <div class="form-group row">
     <label for="natureza" class="col-md-4 col-form-label text-md-right">Natureza </label>
 
@@ -155,7 +156,6 @@ function mostrar(){
         @enderror
     </div>
 </div>
-
 <div class="form-group row">
     <label for="num_descolagens" class="col-md-4 col-form-label text-md-right">Número Descolagens</label>
 
@@ -208,8 +208,6 @@ function mostrar(){
         @enderror
     </div>
 </div>
-
-<!-- MODO PAGAMENTO  -->
 <div class="form-group row">
     <label for="modo_pagamento" class="col-md-4 col-form-label text-md-right">Modo Pagamento </label>
 
@@ -243,7 +241,6 @@ function mostrar(){
     </div>
 </div>
 <!-- si for DE INSTRUCAO  -->
-
 <div class="form-group row">
     <label for="observacoes" class="col-md-4 col-form-label text-md-right"> Observacoes</label>
     <div class="col-md-6">

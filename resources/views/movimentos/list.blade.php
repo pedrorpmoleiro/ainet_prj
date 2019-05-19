@@ -2,16 +2,20 @@
 
 @section('content')
 <div class="container">
+    <div class="mb-2">
+        <h2>{{ $title }}</h2>
+    </div>
+
+    @include('movimentos.partials.filtros')
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
                     @can('direcao')
                         <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
                     @endcan
                     @if (count($movimentos))
-                        @include('movimentos.partials.filtros')
                         <table class="table table-striped">
                             <thead>
                                 <tr>
