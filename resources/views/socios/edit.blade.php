@@ -2,10 +2,13 @@
 
 @section('content')
 <div class="container">
+    <div class="mb-2">
+        <h2>{{ $title }}</h2>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
                     <form action="{{ action('UserController@update', ['socio'=>$socio->id]) }}" method="post">
                         @method('put')

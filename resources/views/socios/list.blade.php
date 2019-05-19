@@ -2,16 +2,22 @@
 
 @section('content')
 <div class="container">
+    <div class="mb-2">
+        <h2>{{ $title }}</h2>
+    </div>
+
+    @if (count($socios))
+        @include('socios.partials.filtros')
+    @endif
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">{{ $title }}</div>
                 <div class="card-body">
                     @can('direcao')
                         <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
                     @endcan
                     @if (count($socios))
-                            @include('socios.partials.filtros')
                         <table class="table table-striped">
                             <thead>
                                 <tr>

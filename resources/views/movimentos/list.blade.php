@@ -6,7 +6,9 @@
         <h2>{{ $title }}</h2>
     </div>
 
-    @include('movimentos.partials.filtros')
+    @if (count($movimentos))
+        @include('movimentos.partials.filtros')
+    @endif
 
     <div class="row justify-content-center">
         <div class="col-md-12">

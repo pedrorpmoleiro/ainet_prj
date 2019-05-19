@@ -17,28 +17,32 @@ class UserController extends Controller
         $socios=User::orderBy('id');
         $query=$request->query();
         $title = 'Sócios';
-        $filters=['num_socio'=>'','nome_informal'=>'','email'=>'','tipo'=>'','direcao'=>'','quotas_pagas'=>'','ativo'=>''
+        $filters=[
+            'num_socio'=>'','nome_informal'=>'','email'=>'','tipo'=>'',
+            'direcao'=>'','quotas_pagas'=>'','ativo'=>''
         ];
+
         foreach ($query as $name => $value) {
             $$name = $value;
         }
-        if(isset($num_socio)){
+
+        if(isset($num_socio)) {
             $filters['num_socio']=$num_socio;
             $socios=$socios->where('num_socio',$num_socio);
         }
-        if(isset($nome_informal)){
+        if(isset($nome_informal)) {
             $filters['nome_informal']=$nome_informal;
             $socios=$socios->where('nome_informal',$nome_informal);
         }
-        if(isset($email)){
+        if(isset($email)) {
             $filters['email']=$email;
             $socios=$socios->where('email',$email);
         }
-        if(isset($tipo)){
+        if(isset($tipo)) {
             $filters['tipo']=$tipo;
             $socios=$socios->where('tipo_socio',$tipo);
         }
-        if(isset($direcao)){
+        if(isset($direcao)) {
             $filters['direcao']=$direcao;
             $socios=$socios->where('direcao',$direcao);
         }
@@ -46,11 +50,13 @@ class UserController extends Controller
             $filters['quotas_pagas']=$quotas_pagas;
             $socios=$socios->where('quotas_pagas',$quotas_pagas);
         }
-        if(isset($ativo)){
+        if(isset($ativo)) {
             $filters['ativo']=$ativo;
             $socios=$socios->where('ativo',$ativo);
         }
+
         $socios=$socios->paginate(24);
+
         return view('socios.list', compact('title', 'socios','filters'));
     }
 
