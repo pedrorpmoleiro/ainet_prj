@@ -8,20 +8,50 @@ use App\Http\Requests\UpdateSocio;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        if (Auth::user()->direcao) {
-            $socios = User::paginate(24);
-        } else {
-            $socios = User::where('ativo', 1)->paginate(24);
-        }
-
+        $socios=User::orderBy('id');
+        $query=$request->query();
         $title = 'Sócios';
-
-        return view('socios.list', compact('title', 'socios'));
+        $filters=['num_socio'=>'','nome_informal'=>'','email'=>'','tipo'=>'','direcao'=>'','quotas_pagas'=>'','ativo'=>''
+        ];
+        foreach ($query as $name => $value) {
+            $$name = $value;
+        }
+        if(isset($num_socio)){
+            $filters['num_socio']=$num_socio;
+            $socios=$socios->where('num_socio',$num_socio);
+        }
+        if(isset($nome_informal)){
+            $filters['nome_informal']=$nome_informal;
+            $socios=$socios->where('nome_informal',$nome_informal);
+        }
+        if(isset($email)){
+            $filters['email']=$email;
+            $socios=$socios->where('email',$email);
+        }
+        if(isset($tipo)){
+            $filters['tipo']=$tipo;
+            $socios=$socios->where('tipo_socio',$tipo);
+        }
+        if(isset($direcao)){
+            $filters['direcao']=$direcao;
+            $socios=$socios->where('direcao',$direcao);
+        }
+        if(isset($quotas_pagas)) {
+            $filters['quotas_pagas']=$quotas_pagas;
+            $socios=$socios->where('quotas_pagas',$quotas_pagas);
+        }
+        if(isset($ativo)){
+            $filters['ativo']=$ativo;
+            $socios=$socios->where('ativo',$ativo);
+        }
+        $socios=$socios->paginate(24);
+        return view('socios.list', compact('title', 'socios','filters'));
     }
 
     public function create()
