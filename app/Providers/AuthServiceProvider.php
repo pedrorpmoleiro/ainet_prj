@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('piloto', function ($user) {
-            return $user->tipo_socio == 'P';
+            return $user->tipo_socio == 'P' || $user->direcao == 1;
         });
     }
 }

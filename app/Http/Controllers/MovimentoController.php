@@ -9,7 +9,6 @@ use App\Aerodromo;
 use App\User;
 use App\Aeronave;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class MovimentoController extends Controller
 {

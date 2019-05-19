@@ -51,17 +51,20 @@
                             </div>
                         </div>
 
-                        @can ('direcao')
+                        @can('piloto')
                             <!-- INSTRUTOR RADIO -->
                             <div class="form-group row">
                                 <label for="instrutor" class="col-md-4 col-form-label text-md-right">Instrutor</label>
 
                                 <div class="col-md-6">
                                     <input type="radio" name="instrutor" value="1" {{ old('instrutor', strval($socio->instrutor)) == '1' ? 'checked' : '' }}>Sim<br>
-        
+
                                     <input type="radio" name="instrutor" value="0" {{ old('instrutor', strval($socio->instrutor)) == '0' ? 'checked' : '' }}>Não
                                 </div>
                             </div>
+                        @endcan
+
+                        @can ('direcao')
                             <!-- ALUNO RADIO -->
                             <div class="form-group row">
                                 <label for="aluno" class="col-md-4 col-form-label text-md-right">Aluno</label>
