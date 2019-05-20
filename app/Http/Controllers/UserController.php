@@ -54,6 +54,7 @@ class UserController extends Controller
             $filters['quotas_pagas']=$quotas_pagas;
             $socios=$socios->where('quotas_pagas',$quotas_pagas);
         }
+<<<<<<< Updated upstream
         if (Auth::user()->direcao == 1) {
             if(isset($ativo)) {
                 $filters['ativo']=$ativo;
@@ -61,6 +62,11 @@ class UserController extends Controller
             }
         } else {
             $socios = $socios->where('ativo', 1);
+=======
+        if(isset($ativo)) {
+            $filters['ativo']=$ativo;
+            if($ativo!='A') $socios=$socios->where('ativo',$ativo);
+>>>>>>> Stashed changes
         }
 
 
