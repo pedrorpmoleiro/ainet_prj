@@ -70,6 +70,7 @@ class UserController extends Controller
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+            if($ativo!='A') $socios=$socios->where('ativo',$ativo);
         }
 
 
