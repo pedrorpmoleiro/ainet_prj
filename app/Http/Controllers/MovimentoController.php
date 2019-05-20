@@ -90,20 +90,20 @@ class MovimentoController extends Controller
         $title='Inserir novo movimento';
         $movimento= new Movimento();
         $aerodromos= Aerodromo::all();
+        $aeronaves=User::find(Auth::user()->id)->aeronaves;
+        //var_dump($aeronaves);
 
-        return view('movimentos.add', compact('title', 'movimento','aerodromos'));
+        return view('movimentos.add', compact('title', 'movimento','aerodromos','aeronaves'));
     }
 
     public function store(StoreMovimento $request)
     {
+        var_dump($request);
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
-
         $movimento=$request->validated();
-
-        $user=User::find($movimento['piloto_id']);
-
+        $user=User::find(Auth::user()->id);
         $movimento['num_licenca_piloto']= $user['num_licenca'];
         $movimento['validade_licenca_piloto']=$user['validade_licenca'];
         $movimento['tipo_licenca_piloto']=$user['tipo_licenca'];
@@ -129,8 +129,10 @@ class MovimentoController extends Controller
     public function edit(Movimento $movimento)
     {
         $title = "Editar Movimento";
-        
-        return view('movimentos.edit', compact('title', 'movimento'));
+        $aerodromos= Aerodromo::all();
+        $aeronaves=User::find(Auth::user()->id)->aeronaves;
+        var_dump($movimento->hora_descolagem);
+        return view('movimentos.edit', compact('title', 'movimento','aeronaves','aerodromos'));
     }
 
     public function update(UpdateMovimento $request, Movimento $movimento)
@@ -140,9 +142,12 @@ class MovimentoController extends Controller
         }
         
         $movimentoE=$request->validated();
-
-        Movimento::fill($movimentoE);
-        Movimento::save();
+        $movimento->fill($movimentoE);
+        $movimento['hora_descolagem']=$movimento['data'].' '.$movimento['hora_descolagem'];
+        $movimento['hora_aterragem']=$movimento['data'].' '.$movimento['hora_aterragem'];
+        $movimento['tempo_voo']=$movimento['conta_horas_fim']-$movimento['conta_horas_inicio'];
+        $movimento['preco_voo']= $movimento['tempo_voo'] * Aeronave::find($movimento['aeronave'])->preco_hora;
+        $movimento->save();
 
         return redirect()->action('MovimentoController@index');
     }

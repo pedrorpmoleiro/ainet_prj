@@ -39,7 +39,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
     public function aeronaves(){
-        return $this->belongsToMany('App\Aeronave','aeronaves_pilotos');
+        return $this->belongsToMany('App\Aeronave','aeronaves_pilotos','piloto_id','matricula');
     }
     public function movimentos(){
         return $this->hasMany('App\Movimento');

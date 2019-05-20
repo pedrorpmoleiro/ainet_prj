@@ -30,20 +30,18 @@
     <label for="aeronave" class="col-md-4 col-form-label text-md-right">Aeronave</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('aeronave') is-invalid @enderror" name="aeronave" value="{{ old('aeronave', strval($movimento->aeronave)) }}" autofocus>
-
-        @error('aeronave')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+        <select class="form-control" name="aeronave">
+            @foreach($aeronaves as $aeronave)
+                <option {{ old('aeronave', strval($movimento->aeronave)) == $aeronave->matricula ? 'selected' : '' }} value="{{ $aeronave->matricula}}"> {{$aeronave->matricula}}</option>
+            @endforeach
+        </select>
     </div>
 </div>
 <div class="form-group row">
-    <label for="hora_descolagem" class="col-md-4 col-form-label text-md-right">Horas Descolagem</label>
+    <label for="hora_descolagem" class="col-md-4 col-form-label text-md-right">Hora Descolagem</label>
 
     <div class="col-md-6">
-        <input type="time" class="form-control @error('hora_descolagem') is-invalid @enderror" name="hora_descolagem" value="{{ old('hora_descolagem', date('h:j:s',strtotime($movimento->hora_descolagem))) }}">
+        <input type="time" class="form-control @error('hora_descolagem') is-invalid @enderror" name="hora_descolagem" value="{{ old('hora_descolagem', date('H:j:s',strtotime($movimento->hora_descolagem))) }}">
 
         @error('hora_descolagem')
             <span class="invalid-feedback" role="alert">
@@ -56,7 +54,7 @@
     <label for="hora_aterragem" class="col-md-4 col-form-label text-md-right">Hora Aterragem</label>
 
     <div class="col-md-6">
-        <input type="time" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem" value="{{ old('hora_aterragem', date('h:j:s',strtotime($movimento->hora_aterragem))) }}">
+        <input type="time" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem" value="{{ old('hora_aterragem', date('H:j:s',strtotime($movimento->hora_aterragem))) }}">
         @error('hora_aterragem')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -91,19 +89,14 @@
         @enderror
     </div>
 </div>
-<div class="form-group row">
+<!--div class="form-group row">
     <label for="piloto_id" class="col-md-4 col-form-label text-md-right">Número de Piloto</label>
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('piloto_id') is-invalid @enderror" name="piloto_id" value="{{ old('piloto_id', strval($movimento->piloto_id)) }}">
 
-        @error('piloto_id')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
     </div>
-</div>
+</div-->
 <div class="form-group row">
     <label for="natureza" class="col-md-4 col-form-label text-md-right">Natureza </label>
 
