@@ -16,14 +16,15 @@
                             </div>
                             <div class="form-group mr-2">
                                 <select class="form-control" name="tipo">
+                                    <option @if($filters['tipo'] == "T" || $filters['tipo'] == "Todos")selected @endif value="T">Todos</option>
                                     <option @if($filters['tipo'] == "A" || $filters['tipo'] == "Aeromodelista")selected @endif value="A">Aeromodelista</option>
                                     <option @if($filters['tipo'] == "NP" || $filters['tipo'] == "Não Piloto")selected @endif value="NP">Não Piloto</option>
                                     <option @if($filters['tipo'] == "P" || $filters['tipo'] == "Piloto")selected @endif value="P">Piloto</option>
-                                    <option @if($filters['tipo'] == "T" || $filters['tipo'] == "Todos")selected @endif value="T">Todos</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row ml-2">
+<<<<<<< Updated upstream
                             @can('direcao')
                                 <div  class="form-group mr-2">
                                     <select class="form-control" name="direcao">
@@ -32,13 +33,24 @@
                                     </select>
                                 </div>
                             @endcan
+=======
+                            <div  class="form-group mr-2">
+                                <select class="form-control" name="direcao">
+                                    <option @if($filters['direcao'] == "1" || $filters['direcao'] == "Sim")selected @endif value="1">Sim</option>
+                                    <option @if($filters['direcao'] == "0" || $filters['direcao'] == "Não")selected @endif value="0">Não</option>
+                                    <option @if($filters['direcao'] == "A" || $filters['direcao'] == "Ambos")selected @endif value="A">Ambos</option>
+                                </select>
+                            </div>
+>>>>>>> Stashed changes
                             <div class="form-group mr-2">
                                 <input type="text" class="form-control" placeholder="Quotas pagas" name="quotas_pagas">
                             </div>
                             <div  class="form-group mr-2">
                                 <select class="form-control" name="ativo">
-                                    <option value="1">Ativo</option>
-                                    <option value="0">Desativado</option>
+                                    <option @if($filters['ativo'] == "1" || $filters['ativo'] == "Ativo")selected @endif  value="1">Ativo</option>
+                                    <option @if($filters['ativo'] == "0" || $filters['ativo'] == "Desativado")selected @endif value="0">Desativado</option>
+                                    <option @if($filters['ativo'] == "A" || $filters['ativo'] == "Ambos")selected @endif value="A">Ambos</option>
+
                                 </select>
                             </div>
                         </div>

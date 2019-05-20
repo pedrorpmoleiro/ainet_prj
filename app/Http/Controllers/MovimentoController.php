@@ -46,11 +46,11 @@ class MovimentoController extends Controller
         }
         if(isset($natureza)) {
             $filters['natureza']=$natureza;
-            $movimentos=$movimentos->where('natureza',$natureza);
+            if($natureza!="Todos")$movimentos=$movimentos->where('natureza',$natureza);
         }
         if(isset($confirmado)) {
             $filters['confirmado']=$confirmado;
-            $movimentos=$movimentos->where('confirmado',$confirmado);
+            if($confirmado!='A')$movimentos=$movimentos->where('confirmado',$confirmado);
         }
         if(isset($data_inf)) {
             $filters['filter_day']=$filter_day;
@@ -74,7 +74,6 @@ class MovimentoController extends Controller
         }
         if(isset($meus_movimentos)){
             $filters['meus_movimentos']=$meus_movimentos;
-            var_dump(  $filters['meus_movimentos']);
             if($meus_movimentos=='S'){
                 $movimentos=$movimentos->where('piloto_id',Auth::user()->id);
             }
