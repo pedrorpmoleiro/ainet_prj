@@ -10,8 +10,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ action('UserController@update', ['socio'=>$socio->id]) }}" method="post">
-                        @method('put')
+                    <form action="{{ action('UserController@update', ['socio'=>$socio->id]) }}" method="post" enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
 
                         <input type="hidden" name="id" value="{{ $socio->id }}">
@@ -19,43 +19,41 @@
 
                         @include('socios.partials.add-edit')
 
-                        <!-- QUOTA PAGA RADIO -->
                         <div class="form-group row">
                             <label for="quota_paga" class="col-md-4 col-form-label text-md-right">Quota Paga</label>
 
                             <div class="col-md-6">
-                                <input type="radio" name="quota_paga" value="1" {{ old('quota_paga', strval($socio->quota_paga)) == '1' ? 'checked' : '' }}>Sim<br>
-        
-                                <input type="radio" name="quota_paga" value="0" {{ old('quota_paga', strval($socio->quota_paga)) == '0' ? 'checked' : '' }}>Não
-
+                                @if ($socio->quota_paga)
+                                    <p>Sim</p>
+                                @else
+                                    <p>Não</p>
+                                @endif
                             </div>
                         </div>
-                        <!-- DIRECAO RADIO -->
                         <div class="form-group row">
                             <label for="direcao" class="col-md-4 col-form-label text-md-right">Direção</label>
 
                             <div class="col-md-6">
-                                <input type="radio" name="direcao" value="1" {{ old('direcao', strval($socio->direcao)) == '1' ? 'checked' : '' }}>Sim<br>
-        
-                                <input type="radio" name="direcao" value="0" {{ old('direcao', strval($socio->direcao)) == '0' ? 'checked' : '' }}>Não
-
+                                @if ($socio->direcao)
+                                    <p>Sim</p>
+                                @else
+                                    <p>Não</p>
+                                @endif
                             </div>
                         </div>
-
-                        <!-- ATIVO -->
                         <div class="form-group row">
                             <label for="ativo" class="col-md-4 col-form-label text-md-right">Ativo</label>
 
                             <div class="col-md-6">
-                                <input type="radio" name="ativo" value="1" {{ old('ativo', strval($socio->ativo)) == '1' ? 'checked' : '' }}>Sim<br>
-
-                                <input type="radio" name="ativo" value="0" {{ old('ativo', strval($socio->ativo)) == '0' ? 'checked' : '' }}>Não
-
+                                @if ($socio->ativo)
+                                    <p>Sim</p>
+                                @else
+                                    <p>Não</p>
+                                @endif
                             </div>
                         </div>
 
                         @can('piloto')
-                            <!-- INSTRUTOR RADIO -->
                             <div class="form-group row">
                                 <label for="instrutor" class="col-md-4 col-form-label text-md-right">Instrutor</label>
 
@@ -65,10 +63,10 @@
                                     <input type="radio" name="instrutor" value="0" {{ old('instrutor', strval($socio->instrutor)) == '0' ? 'checked' : '' }}>Não
                                 </div>
                             </div>
+
                         @endcan
 
                         @can ('direcao')
-                            <!-- ALUNO RADIO -->
                             <div class="form-group row">
                                 <label for="aluno" class="col-md-4 col-form-label text-md-right">Aluno</label>
 
@@ -83,7 +81,9 @@
 
                         <div class="form-group row mb-2">
                             <div class="col-md-8 offset-md-4">
-                                <a class="btn btn-link" href="{{ action('UserController@sendReActivationEmail', ['socio'=>$socio->id]) }}">Reenviar email de validação</a>
+                                @if ($socio->ativo == 0)
+                                    <a class="btn btn-link" href="{{ action('UserController@sendReActivationEmail', ['socio'=>$socio->id]) }}">Reenviar email de validação</a>
+                                @endif
 
                                 @if ($socio->id == Auth::user()->id)
                                     <a class="btn btn-link" href="{{ action('UserController@alterarPassword') }}">Alterar Senha</a>

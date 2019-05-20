@@ -113,11 +113,22 @@
     <label for="tipo_socio" class="col-md-4 col-form-label text-md-right">Tipo de Sócio</label>
 
     <div class="col-md-6">
-        <input type="radio" name="tipo_socio" value="P" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'P' ? 'checked' : '' }}>Piloto<br>
-        
-        <input type="radio" name="tipo_socio" value="NP" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'NP' ? 'checked' : '' }}>Não Piloto<br>
-        
-        <input type="radio" name="tipo_socio" value="A" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'A' ? 'checked' : '' }}>Aeromodelista
+        @if(Auth::user()->direcao)
+            <input type="radio" name="tipo_socio" value="P" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'P' ? 'checked' : '' }}>Piloto<br>
+
+            <input type="radio" name="tipo_socio" value="NP" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'NP' ? 'checked' : '' }}>Não Piloto<br>
+
+            <input type="radio" name="tipo_socio" value="A" {{ old('tipo_socio', strval($socio->tipo_socio)) == 'A' ? 'checked' : '' }}>Aeromodelista
+        @else
+            @if ($socio->tipo_socio == 'P')
+                <p>Piloto</p>
+            @elseif ($socio->tipo_socio == 'NP')
+                <p>Não piloto</p>
+            @else
+                <p>Aeromodelista</p>
+            @endif
+        @endif
+
     </div>
 </div>
 

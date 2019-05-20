@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ action('MovimentoController@update', ['movimento'=>$movimento->matricula]) }}" method="post">
-                        @method('put')
+                        @method('PUT')
                         @csrf
                             
                         @include('movimentos.partials.add-edit')

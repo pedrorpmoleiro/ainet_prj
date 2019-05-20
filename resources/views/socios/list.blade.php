@@ -78,7 +78,7 @@
                             </tbody>
                         </table>
                         <div class="row justify-content-center">
-                            {{ $socios->appends($_GET)->links() }}
+                            {{ $socios->appends($filters)->links() }}
                         </div>
                     @else
                         <h2>Não foram encontrados sócios</h2>
