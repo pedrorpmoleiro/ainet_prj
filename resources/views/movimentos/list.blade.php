@@ -90,7 +90,7 @@
                                         </td>
                                         <td>{{ $movimento->observacoes }}</td>
 
-                                        @can('piloto')
+                                        @if(Auth::user()->direcao||Auth::user()->id==$movimento->piloto_id)
                                             <td>
                                                 <div class="row justify-content-center">
                                                     <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
@@ -101,7 +101,7 @@
                                                     </form>
                                                 </div>
                                             </td>
-                                        @endcan
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
