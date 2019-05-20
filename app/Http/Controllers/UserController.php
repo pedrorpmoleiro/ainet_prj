@@ -66,6 +66,9 @@ class UserController extends Controller
         if(isset($ativo)) {
             $filters['ativo']=$ativo;
             if($ativo!='A') $socios=$socios->where('ativo',$ativo);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
 
