@@ -40,21 +40,16 @@ class UserController extends Controller
         }
         if(isset($tipo)) {
             $filters['tipo']=$tipo;
-            if($tipo!='T'){
-                $socios=$socios->where('tipo_socio',$tipo);
-            }
+            $socios=$socios->where('tipo_socio',$tipo);
         }
         if(isset($direcao)) {
             $filters['direcao']=$direcao;
-            if($direcao!='A'){
-                $socios=$socios->where('direcao',$direcao);
-            }
+            $socios=$socios->where('direcao',$direcao);
         }
         if(isset($quotas_pagas)) {
             $filters['quotas_pagas']=$quotas_pagas;
             $socios=$socios->where('quotas_pagas',$quotas_pagas);
         }
-<<<<<<< Updated upstream
         if (Auth::user()->direcao == 1) {
             if(isset($ativo)) {
                 $filters['ativo']=$ativo;
@@ -62,14 +57,6 @@ class UserController extends Controller
             }
         } else {
             $socios = $socios->where('ativo', 1);
-=======
-        if(isset($ativo)) {
-            $filters['ativo']=$ativo;
-            if($ativo!='A') $socios=$socios->where('ativo',$ativo);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         }
 
 
@@ -160,7 +147,7 @@ class UserController extends Controller
         return redirect()->action('UserController@index');
     }
 
-    public function setQuota() 
+    public function setQuota()
     {
 
     }
@@ -170,7 +157,7 @@ class UserController extends Controller
 
     }
 
-    public function desativarSemQuotas() 
+    public function desativarSemQuotas()
     {
 
     }
