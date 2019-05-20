@@ -32,11 +32,11 @@ class UserController extends Controller
         }
         if(isset($nome_informal)) {
             $filters['nome_informal']=$nome_informal;
-            $socios=$socios->where('nome_informal',$nome_informal);
+            $socios=$socios->where('nome_informal', 'like', '%'.$nome_informal.'%');
         }
         if(isset($email)) {
             $filters['email']=$email;
-            $socios=$socios->where('email',$email);
+            $socios=$socios->where('email', 'like', '%'.$email.'%');
         }
         if(isset($tipo)) {
             $filters['tipo']=$tipo;
@@ -52,10 +52,15 @@ class UserController extends Controller
             $filters['quotas_pagas']=$quotas_pagas;
             $socios=$socios->where('quotas_pagas',$quotas_pagas);
         }
-        if(isset($ativo)) {
-            $filters['ativo']=$ativo;
-            $socios=$socios->where('ativo',$ativo);
+        if (Auth::user()->direcao == 1) {
+            if(isset($ativo)) {
+                $filters['ativo']=$ativo;
+                $socios=$socios->where('ativo',$ativo);
+            }
+        } else {
+            $socios = $socios->where('ativo', 1);
         }
+
 
         $socios=$socios->paginate(24);
 
@@ -84,6 +89,14 @@ class UserController extends Controller
 
         $user = User::create($socio);
 
+        $foto = null;
+        if (isset($socio['file_foto'])) {
+            $path = $socio['file_foto']->storeAs('public/fotos', $user->id.'_pic.jpg');
+            $foto = basename($path);
+            $user->foto_url = $foto;
+            $user->save();
+        }
+
         $user->sendEmailVerificationNotification();
 
         return redirect()->action('UserController@index');
@@ -109,7 +122,11 @@ class UserController extends Controller
 
         $socioEdit = $request->validated();
 
-//        $request->profile_picture->storeAs('fotos', $socio->id.'_pic.jpg');
+        $foto = null;
+        if (isset($socioEdit['file_foto'])) {
+            $path = $socioEdit['file_foto']->storeAs('public/fotos', $socio->id.'_pic.jpg');
+            $foto = basename($path);
+        }
 
         $keys = array_keys($socioEdit, null, true);
 
@@ -118,6 +135,8 @@ class UserController extends Controller
         }
 
         $socio->fill($socioEdit);
+        $socio->foto_url = $foto ?? $socio['file_foto'];
+
         $socio->save();
 
         return redirect()->action('UserController@index');

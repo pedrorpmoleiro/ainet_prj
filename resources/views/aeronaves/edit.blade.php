@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <form action="{{ action('AeronaveController@update', ['aeronave'=>$aeronave->matricula]) }}" method="post">
-                        @method('put')
+                        @method('PUT')
                         @csrf
                             
                         @include('aeronaves.partials.add-edit')

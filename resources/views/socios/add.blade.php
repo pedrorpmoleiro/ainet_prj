@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ action('UserController@store') }}" method="post">
+                    <form action="{{ action('UserController@store') }}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         @include('socios.partials.add-edit')
