@@ -24,7 +24,6 @@
                             </div>
                         </div>
                         <div class="row ml-2">
-<<<<<<< Updated upstream
                             @can('direcao')
                                 <div  class="form-group mr-2">
                                     <select class="form-control" name="direcao">
@@ -33,7 +32,6 @@
                                     </select>
                                 </div>
                             @endcan
-=======
                             <div  class="form-group mr-2">
                                 <select class="form-control" name="direcao">
                                     <option @if($filters['direcao'] == "1" || $filters['direcao'] == "Sim")selected @endif value="1">Sim</option>
@@ -41,7 +39,6 @@
                                     <option @if($filters['direcao'] == "A" || $filters['direcao'] == "Ambos")selected @endif value="A">Ambos</option>
                                 </select>
                             </div>
->>>>>>> Stashed changes
                             <div class="form-group mr-2">
                                 <input type="text" class="form-control" placeholder="Quotas pagas" name="quotas_pagas">
                             </div>

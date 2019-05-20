@@ -59,8 +59,8 @@
                             <div  class="form-group mr-2">
                                 <select class="form-control" name="confirmado">
                                     <option @if($filters['confirmado'] == "1" || $filters['meus_movimentos'] == "Confirmados")selected @endif value="1">Confirmados</option>
-                                    <option @if($filters['confirmado'] == "0" || $filters['meus_movimentos'] == "Ñão Confirmados")selected @endif value="0">Ñão Confirmados</option>
-                                    <option @if($filters['confirmado'] == "A" || $filters['meus_movimentos'] == "Ambos")selected @endif value="0">Ambos</option>
+                                    <option @if($filters['confirmado'] == "0" || $filters['meus_movimentos'] == "Não Confirmados") selected @endif value="0">Não Confirmados</option>
+                                    <option @if($filters['confirmado'] == "A" || $filters['meus_movimentos'] == "Ambos")selected @endif value="A">Ambos</option>
                                 </select>
                             </div>
                             <div  class="form-group mr-2">

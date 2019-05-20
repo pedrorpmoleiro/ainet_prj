@@ -107,7 +107,7 @@
                             </tbody>
                         </table>
                         <div class="row justify-content-center">
-                            {{ $movimentos->appends($filtros)->links() }}
+                            {{ $movimentos->appends($filters)->links() }}
                         </div>
                     @else
                         <h2>Não foram encontrados movimentos</h2>
