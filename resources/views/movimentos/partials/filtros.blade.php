@@ -57,14 +57,14 @@
                             </div>
                             <div  class="form-group mr-2">
                                 <select class="form-control" name="confirmado">
-                                    <option value="1">Confirmados</option>
-                                    <option value="0">Ñão Confirmados</option>
+                                    <option @if($filters['confirmado'] == "1" || $filters['meus_movimentos'] == "Confirmados")selected @endif value="1">Confirmados</option>
+                                    <option @if($filters['confirmado'] == "0" || $filters['meus_movimentos'] == "Ñão Confirmados")selected @endif value="0">Ñão Confirmados</option>
                                 </select>
                             </div>
                             <div  class="form-group mr-2">
                                 <select class="form-control" name="meus_movimentos">
-                                    <option value="N">Todos</option>
-                                    <option value="S">Meus Movimentos</option>
+                                    <option @if($filters['meus_movimentos'] == "N" || $filters['meus_movimentos'] == "Todos")selected @endif value="N">Todos</option>
+                                    <option @if($filters['meus_movimentos'] == "S" || $filters['meus_movimentos'] == "Meus Movimentos" )selected @endif value="S">Meus Movimentos</option>
                                 </select>
                             </div>
                         </div>

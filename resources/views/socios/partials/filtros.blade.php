@@ -16,9 +16,10 @@
                             </div>
                             <div class="form-group mr-2">
                                 <select class="form-control" name="tipo">
-                                    <option value="A">Aeromodelista</option>
-                                    <option value="NP">Não Piloto</option>
-                                    <option value="P">Piloto</option>
+                                    <option @if($filters['tipo'] == "A" || $filters['tipo'] == "Aeromodelista")selected @endif value="A">Aeromodelista</option>
+                                    <option @if($filters['tipo'] == "NP" || $filters['tipo'] == "Não Piloto")selected @endif value="NP">Não Piloto</option>
+                                    <option @if($filters['tipo'] == "P" || $filters['tipo'] == "Piloto")selected @endif value="P">Piloto</option>
+                                    <option @if($filters['tipo'] == "T" || $filters['tipo'] == "Todos")selected @endif value="T">Todos</option>
                                 </select>
                             </div>
                         </div>

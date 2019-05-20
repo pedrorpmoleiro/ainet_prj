@@ -40,7 +40,9 @@ class UserController extends Controller
         }
         if(isset($tipo)) {
             $filters['tipo']=$tipo;
-            $socios=$socios->where('tipo_socio',$tipo);
+            if($tipo!='T'){
+                $socios=$socios->where('tipo_socio',$tipo);
+            }
         }
         if(isset($direcao)) {
             $filters['direcao']=$direcao;

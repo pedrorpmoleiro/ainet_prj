@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    @can('direcao')
+                    @can('piloto')
                         <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
                     @endcan
                     @if (count($movimentos))
@@ -42,7 +42,7 @@
                                     <th>Nome do Instrutor</th>
                                     <th>Confirmado</th>
                                     <th>Observações</th>
-                                    @can('direcao')
+                                    @can('piloto')
                                         <th>Ações</th>
                                     @endcan
                                 </tr>
@@ -90,7 +90,7 @@
                                         </td>
                                         <td>{{ $movimento->observacoes }}</td>
 
-                                        @can('direcao')
+                                        @can('piloto')
                                             <td>
                                                 <div class="row justify-content-center">
                                                     <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>

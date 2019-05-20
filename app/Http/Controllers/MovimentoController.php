@@ -9,6 +9,7 @@ use App\Aerodromo;
 use App\User;
 use App\Aeronave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MovimentoController extends Controller
 {
@@ -20,7 +21,7 @@ class MovimentoController extends Controller
       //  $filters=$query;
         $filters=[
             'id'=>'','piloto'=>'','aeronave'=>'','instrutor'=>'','natureza'=>'','confirmado'=>'',
-            'data_inf'=>'','data_sup'=>'','filter_day'=>''
+            'data_inf'=>'','data_sup'=>'','filter_day'=>'','meus_movimentos'=>''
         ];
 
         foreach ($query as $name => $value) {
@@ -69,6 +70,13 @@ class MovimentoController extends Controller
                         }
                     }
                 }
+            }
+        }
+        if(isset($meus_movimentos)){
+            $filters['meus_movimentos']=$meus_movimentos;
+            var_dump(  $filters['meus_movimentos']);
+            if($meus_movimentos=='S'){
+                $movimentos=$movimentos->where('piloto_id',Auth::user()->id);
             }
         }
 
