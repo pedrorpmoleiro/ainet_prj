@@ -44,9 +44,7 @@ class UserController extends Controller
         }
         if(isset($direcao)) {
             $filters['direcao']=$direcao;
-            if($direcao!='A'){
-                $socios=$socios->where('direcao',$direcao);
-            }
+            $socios=$socios->where('direcao',$direcao);
         }
         if(isset($quotas_pagas)) {
             $filters['quotas_pagas']=$quotas_pagas;
