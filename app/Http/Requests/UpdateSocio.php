@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class UpdateSocio extends FormRequest
 {
@@ -26,17 +27,37 @@ class UpdateSocio extends FormRequest
     {
         $id = (int) $this->route()->parameters()['socio']->id;
 
+        $queryLicenca = DB::select('select code from tipos_licencas');
+        $listLicenca = [];
+        foreach ($queryLicenca as $line) {
+            $listLicenca[] = $line->code;
+        }
+
+        $queryCertificado = DB::select('select code from classes_certificados');
+        $listCertificado = [];
+        foreach ($queryCertificado as $line) {
+            $listCertificado[] = $line->code;
+        }
+
         return [
             'name'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             'email'=>['required','email', Rule::unique('users')->ignore($id)],
             'nome_informal'=>'required|max:40',
             'sexo'=>'nullable',
-            'data_nascimento'=>'required|date',
+            'data_nascimento'=>'required|date_format:d/m/Y',
             'nif'=> ['nullable', 'numeric', 'max:999999999', Rule::unique('users')->ignore($id)],
             'telefone'=>['nullable', 'max:20' ,'regex:/^\+?\d{3}(?: ?\d+)*$/', Rule::unique('users')->ignore($id)],
             'endereco'=>'nullable',
             'tipo_socio'=>'nullable',
-            'file_foto'=>'nullable|image'
+            'file_foto'=>'nullable|image',
+            'num_licenca'=>'nullable|max:30',
+            'tipo_licenca' =>['nullable', Rule::in($listLicenca)],
+            'validade_licenca'=>'nullable|date_format:d/m/Y',
+            'num_certificado'=>'nullable|max:30',
+            'classe_certificado'=>['nullable', Rule::in($listCertificado)],
+            'validade_certificado'=>'nullable|date_format:d/m/Y',
+            'file_licenca' => 'nullable|file|mimes:pdf',
+            'file_certificado' => 'nullable|file|mimes:pdf'
         ];
     }
 

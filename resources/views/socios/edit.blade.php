@@ -146,6 +146,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="file_licenca" class="col-md-4 col-form-label text-md-right">Alterar Licença</label>
+
+                                    <div class="col-md-6">
+                                        <input id="file_licenca" type="file" class="form-control-file" name="file_licenca" accept="application/pdf">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Numero do Certificado</label>
 
                                     <div class="col-md-6">
@@ -177,6 +184,13 @@
                                         @endif
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label for="file_certificado" class="col-md-4 col-form-label text-md-right">Alterar Certificado</label>
+
+                                    <div class="col-md-6">
+                                        <input id="file_certificado" type="file" class="form-control-file" name="file_certificado" accept="application/pdf">
+                                    </div>
+                                </div>
                             @endcan
 
                             @can ('direcao')
@@ -185,10 +199,10 @@
 
                                     <div class="col-md-6">
                                         <input type="radio" name="aluno"
-                                               value="1" {{ old('aluno', strval($socio->aluno)) == '1' ? 'checked' : '' }}>Sim<br>
+                                               value="1" {{ old('aluno', (string) $socio->aluno) == '1' ? 'checked' : '' }}>Sim<br>
 
                                         <input type="radio" name="aluno"
-                                               value="0" {{ old('aluno', strval($socio->aluno)) == '0' ? 'checked' : '' }}>Não
+                                               value="0" {{ old('aluno', (string) $socio->aluno) == '0' ? 'checked' : '' }}>Não
                                     </div>
                                 </div>
                             @endcan

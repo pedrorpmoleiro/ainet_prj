@@ -9,6 +9,7 @@ use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -48,7 +49,7 @@ class UserController extends Controller
         }
         if(isset($quotas_pagas)) {
             $filters['quotas_pagas']=$quotas_pagas;
-            $socios=$socios->where('quotas_pagas',$quotas_pagas);
+            $socios=$socios->where('quota_paga',$quotas_pagas);
         }
         if (Auth::user()->direcao == 1) {
             if(isset($ativo)) {
@@ -58,7 +59,6 @@ class UserController extends Controller
         } else {
             $socios = $socios->where('ativo', 1);
         }
-
 
         $socios=$socios->paginate(24);
 
@@ -125,10 +125,25 @@ class UserController extends Controller
             $foto = basename($path);
         }
 
+        if (isset($socioEdit['file_licenca'])) {
+            $socioEdit['file_licenca']->storeAs('docs_piloto', "licenca_$socio->id.pdf");
+        }
+
+        if (isset($socioEdit['file_certificado'])) {
+            $socioEdit['file_certificado']->storeAs('docs_piloto', "certificado_$socio->id.pdf");
+        }
+
         $keys = array_keys($socioEdit, null, true);
 
         foreach ($keys as $key) {
             unset($socioEdit[$key]);
+        }
+
+        $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
+
+        if ($socio->tipo_socio == 'P') {
+            $socioEdit['validade_licenca'] = date('Y-m-d', strtotime($socioEdit['validade_licenca'])) ?? $socioEdit['validade_licenca'];
+            $socioEdit['validade_certificado'] = date('Y-m-d', strtotime($socioEdit['validade_certificado'])) ?? $socioEdit['validade_certificado'];
         }
 
         $socio->fill($socioEdit);

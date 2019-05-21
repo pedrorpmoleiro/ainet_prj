@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreSocio extends FormRequest
 {
@@ -26,11 +27,11 @@ class StoreSocio extends FormRequest
         return [
             'name'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
             'email'=>'required|email|unique:users,email',
-            'nome_informal'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
+            'nome_informal'=>'required|max:40',
             'sexo'=>'required',
-            'data_nascimento'=>'required|date',
+            'data_nascimento'=>'required|date_format:d/m/Y',
             'nif'=>'required|unique:users,nif|numeric|max:999999999',
-            'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/',
+            'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/|max:20',
             'endereco'=>'required',
             'tipo_socio'=>'required',
             'file_foto'=>'nullable|image'
@@ -46,7 +47,7 @@ class StoreSocio extends FormRequest
             'email.email'=>'O formato do email não é válido',
             'email.unique'=>'Este email já se encontra registado',
             'nome_informal.required'=>'O nome deve ser preenchido',
-            'nome_informal.regex'=>'O nome não deve conter números',
+            'nome_informal.max'=>'O nome não pode ser maior que 40 caracteres',
             'sexo.required'=>'O género tem que ser definido',
             'data_nascimento.required'=>'A data de nascimento deve ser preenchida',
             'data_nascimento.date'=>'O formato da data está inválido',
@@ -56,6 +57,7 @@ class StoreSocio extends FormRequest
             'telefone.required'=>'O número de telefone deve ser preenchido',
             'telefone.unique'=>'Este número de telefone já se encontra registado',
             'telefone.regex'=>'O formato número de telefone não é válido',
+            'telefone.max'=>'O número de telefone não pode ter mais de 20 caracteres',
             'endereco.required'=>'O endereço deve ser preenchido',
             'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido',
             'file_foto.image'=>'O ficheiro não é uma imagem ou é de um formato não suportado'
