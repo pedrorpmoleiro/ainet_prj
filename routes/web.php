@@ -45,10 +45,10 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::resource('aeronaves', 'AeronaveController')->except(['show', 'index']);
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update', 'index']);
 
-            Route::patch('/socios/{socio}/quota', function () {return view('welcome');});
-            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas');
-            Route::patch('/socios/{socio}/ativo', function () {return view('welcome');});
-            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas');
+            Route::patch('/socios/{socio}/quota', 'UserController@setQuota')->name('socio.setQuota');
+            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socio.resetQuotas');
+            Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio')->name('socio.setAtivo');
+            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
             Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail')->name('socio.reSendMail');
         });
     });

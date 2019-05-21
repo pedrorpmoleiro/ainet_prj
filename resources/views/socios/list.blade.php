@@ -11,12 +11,21 @@
     @endif
 
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-auto">
             <div class="card">
                 <div class="card-body">
                     @can('direcao')
-                        <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
-                        <a class="btn btn-primary mb-4" href="{{ action('UserController@resetQuotas') }}">Reset de Quotas</a>
+                        <div class="row ml-1">
+                            <a class="btn btn-sm btn-primary mb-4 mr-1" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
+                            @if (count($socios))
+                                <a class="btn btn-sm btn-warning mb-4 mr-1" href="{{ action('UserController@resetQuotas') }}">Reset de Quotas</a>
+                                <form action="{{ action('UserController@desativarSemQuotas') }}" method="POST" class="inline">
+                                    @method('patch')
+
+                                    <button type="submit" class="btn btn-sm btn-warning mb-4 mr-1">Desativar sócios com quotas não pagas</button>
+                                </form>
+                            @endif
+                        </div>
                     @endcan
                     @if (count($socios))
                         <table class="table table-striped">
@@ -65,16 +74,33 @@
                                         @can('direcao')
                                             <td>
                                                 <div class="row justify-content-center">
-                                                    <a class="btn btn-xs btn-primary mr-1" href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
-                                                    <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
-                                                        @method('DELETE')
+                                                    <a class="btn btn-sm btn-primary mr-1" href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
+                                                    <form action="{{ action('UserController@setQuota', ['socio' => $socio->id]) }}" method="POST" class="inline">
+                                                        @method('patch')
                                                         @csrf
-                                                        <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                                        @if ($socio->quota_paga)
+                                                            <input type="hidden" name="quota_paga" value="0">
+                                                            <button type="submit" class="btn btn-sm btn-warning mr-1">Quota Não Paga</button>
+                                                        @else
+                                                            <input type="hidden" name="quota_paga" value="1">
+                                                            <button type="submit" class="btn btn-sm btn-warning mr-1">Pagar Quota</button>
+                                                        @endif
+                                                    </form>
+                                                    <form action="{{ action('UserController@ativarSocio', ['socio' => $socio->id]) }}" method="POST" class="inline">
+                                                        @method('patch')
+                                                        @csrf
+                                                        @if ($socio->ativo)
+                                                            <input type="hidden" name="ativo" value="0">
+                                                            <button type="submit" class="btn btn-sm btn-warning mr-1">Desativar</button>
+                                                        @else
+                                                            <input type="hidden" name="ativo" value="1">
+                                                            <button type="submit" class="btn btn-sm btn-warning mr-1">Ativar</button>
+                                                        @endif
                                                     </form>
                                                     <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                                        <button type="submit" class="btn btn-sm btn-danger  mr-1">Eliminar</button>
                                                     </form>
                                                 </div>
                                             </td>

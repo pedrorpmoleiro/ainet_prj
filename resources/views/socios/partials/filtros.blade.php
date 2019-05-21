@@ -37,7 +37,7 @@
                                         <option @if( (string) $filters['quotas_pagas'] == "0" || (string) $filters['quotas_pagas'] == "Quota Não Paga")selected @endif  value="0">Quota Não Paga</option>
                                     </select>
                                 </div>
-                            
+
                                 <div  class="form-group mr-2">
                                     <select class="form-control" name="ativo">
                                         <option @if( (string) $filters['ativo'] == "1" || (string) $filters['ativo'] == "Ativo")selected @endif  value="1">Ativo</option>
