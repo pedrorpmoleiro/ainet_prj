@@ -34,8 +34,12 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::get('/pilotos/{piloto}/licenca','UserController@licenca')->name('piloto.licenca');
         });
 
+        Route::middleware(['can:update,movimento'])->group(function () {
+            Route::resource('movimentos', 'MovimentoController')->only(['edit','update']);
+        });
+
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
-        Route::resource('movimentos', 'MovimentoController')->except(['show']);
+        Route::resource('movimentos', 'MovimentoController')->except(['show', 'edit', 'update']);
 
         Route::middleware(['isDirecao'])->group(function () {
             Route::resource('aeronaves', 'AeronaveController')->except(['show', 'index']);

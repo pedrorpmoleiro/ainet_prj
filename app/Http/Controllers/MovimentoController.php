@@ -91,9 +91,10 @@ class MovimentoController extends Controller
         $movimento= new Movimento();
         $aerodromos= Aerodromo::all();
         $aeronaves=User::find(Auth::user()->id)->aeronaves;
-        //var_dump($aeronaves);
+        $instrutores=User::where('instrutor',1)->get();
+       // var_dump($instrutores);
 
-        return view('movimentos.add', compact('title', 'movimento','aerodromos','aeronaves'));
+        return view('movimentos.add', compact('title', 'movimento','aerodromos','aeronaves','instrutores'));
     }
 
     public function store(StoreMovimento $request)
@@ -104,6 +105,7 @@ class MovimentoController extends Controller
         }
         $movimento=$request->validated();
         $user=User::find(Auth::user()->id);
+        $movimento['piloto_id']=Auth::user()->id;
         $movimento['num_licenca_piloto']= $user['num_licenca'];
         $movimento['validade_licenca_piloto']=$user['validade_licenca'];
         $movimento['tipo_licenca_piloto']=$user['tipo_licenca'];
@@ -114,6 +116,17 @@ class MovimentoController extends Controller
         $movimento['hora_aterragem']=$movimento['data'].' '.$movimento['hora_aterragem'];
         $movimento['tempo_voo']=$movimento['conta_horas_fim']-$movimento['conta_horas_inicio'];
         $movimento['preco_voo']= $movimento['tempo_voo'] * Aeronave::find($movimento['aeronave'])->preco_hora;
+        if($movimento['natureza']=='I'){
+            $instrutor=User::find($movimento['instrutor_id']);
+            $movimento['num_licenca_instrutor']=$instrutor['num_licenca'];
+            $movimento['validade_licenca_instrutor']=$instrutor['validade_licenca'];
+            $movimento['tipo_licenca_instrutor']=$instrutor['tipo_licenca'];
+            $movimento['num_certificado_instrutor']=$instrutor['num_certificado'];
+            $movimento['validade_certificado_instrutor']= $instrutor['validade_certificado'];
+            $movimento['classe_certificado_instrutor']=$instrutor['classe_certificado'];
+        }else{
+            $movimento['instrutor_id']=null;
+        }
         $movimento['confirmado']=0;
        
         Movimento::create($movimento);
@@ -131,8 +144,9 @@ class MovimentoController extends Controller
         $title = "Editar Movimento";
         $aerodromos= Aerodromo::all();
         $aeronaves=User::find(Auth::user()->id)->aeronaves;
-        var_dump($movimento->hora_descolagem);
-        return view('movimentos.edit', compact('title', 'movimento','aeronaves','aerodromos'));
+        $instrutores=User::where('instrutor',1)->get();
+        //var_dump($instrutores);
+        return view('movimentos.edit', compact('title', 'movimento','aeronaves','aerodromos','instrutores'));
     }
 
     public function update(UpdateMovimento $request, Movimento $movimento)
@@ -147,8 +161,25 @@ class MovimentoController extends Controller
         $movimento['hora_aterragem']=$movimento['data'].' '.$movimento['hora_aterragem'];
         $movimento['tempo_voo']=$movimento['conta_horas_fim']-$movimento['conta_horas_inicio'];
         $movimento['preco_voo']= $movimento['tempo_voo'] * Aeronave::find($movimento['aeronave'])->preco_hora;
+        if($movimento['natureza']=='I'){
+            $instrutor=User::find($movimento['instrutor_id']);
+            $movimento['num_licenca_instrutor']=$instrutor['num_licenca'];
+            $movimento['validade_licenca_instrutor']=$instrutor['validade_licenca'];
+            $movimento['tipo_licenca_instrutor']=$instrutor['tipo_licenca'];
+            $movimento['num_certificado_instrutor']=$instrutor['num_certificado'];
+            $movimento['validade_certificado_instrutor']= $instrutor['validade_certificado'];
+            $movimento['classe_certificado_instrutor']=$instrutor['classe_certificado'];
+        }else{
+            $movimento['instrutor_id']=null;
+            $movimento['num_licenca_instrutor']=null;
+            $movimento['validade_licenca_instrutor']=null;
+            $movimento['tipo_licenca_instrutor']=null;
+            $movimento['num_certificado_instrutor']=null;
+            $movimento['validade_certificado_instrutor']= null;
+            $movimento['classe_certificado_instrutor']=null;
+        }
+        $movimento['confirmado']=0;
         $movimento->save();
-
         return redirect()->action('MovimentoController@index');
     }
 
