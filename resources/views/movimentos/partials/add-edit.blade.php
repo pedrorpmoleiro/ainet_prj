@@ -1,18 +1,15 @@
 <script>
-    function mostrar()
+    function mostrar(value)
     {
         var ins=document.getElementById('instrucao');
-        ins.style.display = (ins.style.display == 'none') ? 'block' : 'none';
+        if(value==2){
+            ins.style.display='block';
+        }
+        else{
+            ins.style.display='none';
+        }
     }
 </script>
-
-<div class="form-group row">
-    <label for="Tipo Voo:" class="col-md-4 col-form-label text-md-right">Tipo Voo: </label>
-
-    <div class="col-md-6">
-        <input  type="checkbox"  onclick ="mostrar()"> Voo de instrucao<br>
-    </div>
-</div>
 <div class="form-group row">
     <label for="data" class="col-md-4 col-form-label text-md-right">Data de voo</label>
 
@@ -98,14 +95,14 @@
     </div>
 </div-->
 <div class="form-group row">
-    <label for="natureza" class="col-md-4 col-form-label text-md-right">Natureza </label>
+    <label for="natureza" class="col-md-4 col-form-label text-md-right" >Natureza </label>
 
     <div class="col-md-6">
-        <input type="radio" name="natureza" value="T" {{ old('natureza', strval($movimento->natureza)) == 'T' ? 'checked' : '' }}>Treino<br>
+        <input type="radio" name="natureza" value="T" {{ old('natureza', strval($movimento->natureza)) == 'T' ? 'checked' : '' }} onclick="mostrar(1);">Treino<br>
         
-        <input type="radio" name="natureza" value="I" {{ old('natureza', strval($movimento->natureza)) == 'I' ? 'checked' : '' }}>Instrução<br>
+        <input type="radio" name="natureza" value="I" {{ old('natureza', strval($movimento->natureza)) == 'I' ? 'checked' : '' }} onclick="mostrar(2);" >Instrução<br>
         
-        <input type="radio" name="natureza" value="E" {{ old('natureza', strval($movimento->natureza)) == 'E' ? 'checked' : '' }}>Especial
+        <input type="radio" name="natureza" value="E" {{ old('natureza', strval($movimento->natureza)) == 'E' ? 'checked' : '' }} onclick="mostrar(3);">Especial
 
         @error('natureza')
             <span class="invalid-feedback" role="alert">
@@ -253,13 +250,11 @@
         <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
 
         <div class="col-md-6">
-            <input type="text" class="form-control @error('instrutor_id') is-invalid @enderror" name="instrutor_id" value="{{ old('instrutor_id', strval($movimento->instrutor_id)) }}">
-
-            @error('instrutor_id')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
+            <select class="form-control" name="instrutor_id">
+                @foreach($instrutores as $instrutor)
+                    <option {{ old('instrutor_id', strval($movimento->instrutor_id)) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 
