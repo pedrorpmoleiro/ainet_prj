@@ -86,8 +86,7 @@ class UserController extends Controller
         $socio['password'] = Hash::make($socio['data_nascimento']);
 
         $user = User::create($socio);
-
-        $foto = null;
+        
         if (isset($socio['file_foto'])) {
             $path = $socio['file_foto']->storeAs('public/fotos', $user->id.'_pic.jpg');
             $foto = basename($path);
@@ -133,7 +132,7 @@ class UserController extends Controller
         }
 
         $socio->fill($socioEdit);
-        $socio->foto_url = $foto ?? $socio['file_foto'];
+        $socio->foto_url = $foto ?? $socio->foto_url;
 
         $socio->save();
 
