@@ -16,6 +16,7 @@
                 <div class="card-body">
                     @can('direcao')
                         <a class="btn btn-primary mb-4" href="{{ action('UserController@create') }}">Adicionar Sócio</a>
+                        <a class="btn btn-primary mb-4" href="{{ action('UserController@resetQuotas') }}">Reset de Quotas</a>
                     @endcan
                     @if (count($socios))
                         <table class="table table-striped">
@@ -65,6 +66,11 @@
                                             <td>
                                                 <div class="row justify-content-center">
                                                     <a class="btn btn-xs btn-primary mr-1" href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
+                                                    <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
+                                                        @method('DELETE')
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                                    </form>
                                                     <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}" method="POST" role="form" class="inline">
                                                         @method('DELETE')
                                                         @csrf
