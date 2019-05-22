@@ -41,12 +41,12 @@ class UpdateSocio extends FormRequest
 
         return [
             'name'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'email'=>"required|email|unique:users,id,$id,id",
+            'email'=>"required|email|unique:users,email,$id,id",
             'nome_informal'=>'required|max:40',
             'sexo'=>'nullable',
             'data_nascimento'=>'required|date_format:Y-m-d',
-            'nif'=> "nullable|numeric|max:999999999|unique:users,id,$id,id",
-            'telefone'=>"nullable|max:20|regex:/^\+?\d{3}(?: ?\d+)*$/|unique:users,id,$id,id",
+            'nif'=> "nullable|numeric|max:999999999|unique:users,nif,$id,id",
+            'telefone'=>"nullable|max:20|regex:/^\+?\d{3}(?: ?\d+)*$/|unique:users,telefone,$id,id",
             'endereco'=>'nullable',
             'tipo_socio'=>'nullable',
             'file_foto'=>'nullable|image',
