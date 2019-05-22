@@ -45,6 +45,5 @@
         <env name="SEED_ID_PRIMEIRO_MOVIMENTO" value="100000"/>
         <env name="SEED_REMOVE_FICHEIROS" value="0"/>
         <env name="SEED_ADD_FICHEIROS" value="0"/>
-
     </php>
 </phpunit>
