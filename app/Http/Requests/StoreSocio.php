@@ -29,7 +29,7 @@ class StoreSocio extends FormRequest
             'email'=>'required|email|unique:users,email',
             'nome_informal'=>'required|max:40',
             'sexo'=>'required',
-            'data_nascimento'=>'required|date_format:d/m/Y',
+            'data_nascimento'=>'required|date_format:Y-m-d',
             'nif'=>'required|unique:users,nif|numeric|max:999999999',
             'telefone'=>'required|unique:users,telefone|regex:/^\+?\d{3}(?: ?\d+)*$/|max:20',
             'endereco'=>'required',

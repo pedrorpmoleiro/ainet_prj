@@ -44,7 +44,7 @@ class UpdateSocio extends FormRequest
             'email'=>['required','email', Rule::unique('users')->ignore($id)],
             'nome_informal'=>'required|max:40',
             'sexo'=>'nullable',
-            'data_nascimento'=>'required|date_format:d/m/Y',
+            'data_nascimento'=>'required|date_format:Y-m-d',
             'nif'=> ['nullable', 'numeric', 'max:999999999', Rule::unique('users')->ignore($id)],
             'telefone'=>['nullable', 'max:20' ,'regex:/^\+?\d{3}(?: ?\d+)*$/', Rule::unique('users')->ignore($id)],
             'endereco'=>'nullable',
@@ -52,10 +52,10 @@ class UpdateSocio extends FormRequest
             'file_foto'=>'nullable|image',
             'num_licenca'=>'nullable|max:30',
             'tipo_licenca' =>['nullable', Rule::in($listLicenca)],
-            'validade_licenca'=>'nullable|date_format:d/m/Y',
+            'validade_licenca'=>'nullable|date_format:Y-m-d',
             'num_certificado'=>'nullable|max:30',
             'classe_certificado'=>['nullable', Rule::in($listCertificado)],
-            'validade_certificado'=>'nullable|date_format:d/m/Y',
+            'validade_certificado'=>'nullable|date_format:Y-m-d',
             'file_licenca' => 'nullable|file|mimes:pdf',
             'file_certificado' => 'nullable|file|mimes:pdf'
         ];

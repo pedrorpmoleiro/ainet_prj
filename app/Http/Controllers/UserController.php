@@ -142,8 +142,8 @@ class UserController extends Controller
         $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
 
         if ($socio->tipo_socio == 'P') {
-            $socioEdit['validade_licenca'] = date('Y-m-d', strtotime($socioEdit['validade_licenca'])) ?? $socioEdit['validade_licenca'];
-            $socioEdit['validade_certificado'] = date('Y-m-d', strtotime($socioEdit['validade_certificado'])) ?? $socioEdit['validade_certificado'];
+            $socioEdit['validade_licenca'] = date('Y-m-d', strtotime($socioEdit['validade_licenca'])) ?? $socio->validade_licenca;
+            $socioEdit['validade_certificado'] = date('Y-m-d', strtotime($socioEdit['validade_certificado'])) ?? $socio->validade_certificado;
         }
 
         $socio->fill($socioEdit);
