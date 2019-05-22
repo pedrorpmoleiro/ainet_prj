@@ -15,7 +15,9 @@
             <div class="card">
                 <div class="card-body">
                     @can('piloto')
-                        <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
+                        @cannot('direcao')
+                            <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
+                        @endcannot
                     @endcan
                     @if (count($movimentos))
                         <table class="table table-striped">
@@ -90,15 +92,20 @@
                                         </td>
                                         <td>{{ $movimento->observacoes }}</td>
 
-                                        @if(Auth::user()->direcao||Auth::user()->id==$movimento->piloto_id)
+                                        @if(Auth::user()->direcao || Auth::user()->id==$movimento->piloto_id)
                                             <td>
                                                 <div class="row justify-content-center">
-                                                    <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
-                                                    <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}" method="POST" role="form" class="inline">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
-                                                    </form>
+                                                    @if ($movimento->confirmado == 0)
+                                                        <a class="btn btn-xs btn-primary mr-1" href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
+                                                        @can('direcao')
+                                                            <p class="btn btn-xs btn-warning mr-1">Validar</p>
+                                                        @endcan
+                                                        <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}" method="POST" role="form" class="inline">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
+                                                        </form>
+                                                    @endif
                                                 </div>
                                             </td>
                                         @endif

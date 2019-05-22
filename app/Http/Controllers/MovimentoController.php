@@ -10,6 +10,7 @@ use App\User;
 use App\Aeronave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MovimentoController extends Controller
 {
@@ -90,9 +91,8 @@ class MovimentoController extends Controller
         $title='Inserir novo movimento';
         $movimento= new Movimento();
         $aerodromos= Aerodromo::all();
-        $aeronaves=User::find(Auth::user()->id)->aeronaves;
+        $aeronaves=Auth::user()->aeronaves;
         $instrutores=User::where('instrutor',1)->get();
-       // var_dump($instrutores);
 
         return view('movimentos.add', compact('title', 'movimento','aerodromos','aeronaves','instrutores'));
     }
@@ -103,8 +103,11 @@ class MovimentoController extends Controller
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
+
         $movimento=$request->validated();
-        $user=User::find(Auth::user()->id);
+
+        $user=Auth::user();
+
         $movimento['piloto_id']=Auth::user()->id;
         $movimento['num_licenca_piloto']= $user['num_licenca'];
         $movimento['validade_licenca_piloto']=$user['validade_licenca'];
@@ -114,8 +117,12 @@ class MovimentoController extends Controller
         $movimento['classe_certificado_piloto']=$user['classe_certificado'];
         $movimento['hora_descolagem']=$movimento['data'].' '.$movimento['hora_descolagem'];
         $movimento['hora_aterragem']=$movimento['data'].' '.$movimento['hora_aterragem'];
-        $movimento['tempo_voo']=$movimento['conta_horas_fim']-$movimento['conta_horas_inicio'];
-        $movimento['preco_voo']= $movimento['tempo_voo'] * Aeronave::find($movimento['aeronave'])->preco_hora;
+        $movimento['conta_horas_inicio'] = Aeronave::find($movimento['aeronave'])->conta_horas;
+
+        $movimento['tempo_voo'] = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio'])/10)*60;
+
+        $movimento['preco_voo'] = ($movimento['tempo_voo']*60) * Aeronave::find($movimento['aeronave'])->preco_hora;
+
         if($movimento['natureza']=='I'){
             $instrutor=User::find($movimento['instrutor_id']);
             $movimento['num_licenca_instrutor']=$instrutor['num_licenca'];
@@ -131,6 +138,11 @@ class MovimentoController extends Controller
 
         Movimento::create($movimento);
 
+        DB::table('aeronaves_valores')->insert([
+            'matricula' => $movimento->aeronave,
+            'unidade_conta_horas' => ''
+        ]);
+
         return redirect()->action('MovimentoController@index');
     }
 
@@ -143,7 +155,7 @@ class MovimentoController extends Controller
     {
         $title = "Editar Movimento";
         $aerodromos= Aerodromo::all();
-        $aeronaves=User::find(Auth::user()->id)->aeronaves;
+        $aeronaves=Auth::user()->aeronaves;
         $instrutores=User::where('instrutor',1)->get();
         //var_dump($instrutores);
         return view('movimentos.edit', compact('title', 'movimento','aeronaves','aerodromos','instrutores'));
@@ -159,8 +171,8 @@ class MovimentoController extends Controller
         $movimento->fill($movimentoE);
         $movimento['hora_descolagem']=$movimento['data'].' '.$movimento['hora_descolagem'];
         $movimento['hora_aterragem']=$movimento['data'].' '.$movimento['hora_aterragem'];
-        $movimento['tempo_voo']=$movimento['conta_horas_fim']-$movimento['conta_horas_inicio'];
-        $movimento['preco_voo']= $movimento['tempo_voo'] * Aeronave::find($movimento['aeronave'])->preco_hora;
+        $movimento['tempo_voo']= (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio'])/10)*60;
+        $movimento['preco_voo']= ($movimento['tempo_voo']*60) * Aeronave::find($movimento['aeronave'])->preco_hora;
         if($movimento['natureza']=='I'){
             $instrutor=User::find($movimento['instrutor_id']);
             $movimento['num_licenca_instrutor']=$instrutor['num_licenca'];

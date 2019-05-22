@@ -54,14 +54,14 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio')->name('socio.set_ativo');
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
             Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail')->name('socio.resend_mail');
+
+            Route::get('/pendentes', 'PendenteController@index')->name('pendente.index');
         });
     });
 });
 
 /*
 Route::get('/aeronaves/{aeronave}/precos_tempos', function () {return view('welcome');});
-
-Route::get('/pendentes', function () {return view('welcome');});
 
 Route::get('/aeronaves/{aeronave}/linha_temporal', function () {return view('welcome');});
 */
