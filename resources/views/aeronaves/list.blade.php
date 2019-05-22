@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="mb-2">
+    <div class="mb-4">
         <h2>{{ $title }}</h2>
     </div>
 
@@ -43,6 +43,7 @@
                                             <a class="btn btn-xs btn-primary  mr-1" href="{{ action('AeronaveController@edit', ['aeronave' => $aeronave->matricula]) }}">Editar</a>
                                             <form action="{{ action('AeronaveController@destroy', ['aeronave' => $aeronave->matricula]) }}" method="POST" role="form" class="inline">
                                                 @method('DELETE')
+                                                @csrf
 
                                                 <button type="submit" class="btn btn-xs btn-danger  mr-1">Eliminar</button>
                                             </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateAeronave extends FormRequest
 {
@@ -23,13 +24,15 @@ class UpdateAeronave extends FormRequest
      */
     public function rules()
     {
+        $matricula = (string) $this->route()->parameters()['aeronave']->matricula;
+
         return [
-            'matricula'=>'required',
-            'marca'=> 'required',
-            'num_lugares' => 'integer|required',
-            'conta_horas'=> 'integer|required',
-            'preco_hora'=> 'required|numeric',
-            'modelo' => 'required'
+            'matricula'=>"required|unique:aeronaves,matricula,$matricula,matricula|max:8",
+            'marca'=> 'required|max:40',
+            'num_lugares' => 'integer|required|min:1',
+            'conta_horas'=> 'integer|required|min:0',
+            'preco_hora'=> 'required|numeric|min:0',
+            'modelo' => 'required|max:40'
         ];
     }
 
@@ -37,6 +40,7 @@ class UpdateAeronave extends FormRequest
     {
         return [
             'matricula.required'=>'A matricula deve ser preenchida',
+            'matricula.unique'=>'Esta matricula já se encontra registada',
             'marca.required'=> ' A marca deve ser preenchida',
             'num_lugares.required' => 'Os lugares deve ser preenchidos',
             'conta_horas.required'=> 'As horas devem ser preenchidas',

@@ -24,12 +24,12 @@ class StoreAeronave extends FormRequest
     public function rules()
     {
         return [
-            'matricula'=>'required|unique:aeronaves,matricula',
-            'marca'=> 'required',
-            'num_lugares' => 'integer|required',
-            'conta_horas'=> 'integer|required',
-            'preco_hora'=> 'required|numeric',
-            'modelo' => 'required'
+            'matricula'=>'required|unique:aeronaves,matricula|max:8',
+            'marca'=> 'required|max:40',
+            'num_lugares' => 'integer|required|min:1',
+            'conta_horas'=> 'integer|required|min:0',
+            'preco_hora'=> 'required|numeric|min:0',
+            'modelo' => 'required|max:40'
         ];
     }
 

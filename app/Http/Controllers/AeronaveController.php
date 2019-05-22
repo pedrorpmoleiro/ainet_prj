@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAeronave;
 use App\Http\Requests\UpdateAeronave;
 use App\Aeronave;
+use App\Movimento;
+use App\User;
 
 class AeronaveController extends Controller
 {
@@ -60,6 +62,7 @@ class AeronaveController extends Controller
         $aeronaveEdit['matricula'] = $aeronave->matricula;
 
         $aeronave->fill($aeronaveEdit);
+
         $aeronave->save();
 
         return redirect()->action('AeronaveController@index');
@@ -67,8 +70,38 @@ class AeronaveController extends Controller
 
     public function destroy(Aeronave $aeronave)
     {
-        $aeronave->delete();
+        if (Movimento::where('aeronave', $aeronave->matricula)->count() == 0) {
+            $aeronave->forceDelete();
+        } else {
+            $aeronave->delete();
+        }
 
         return redirect()->action('AeronaveController@index');
+    }
+
+    public function pilotos(Aeronave $aeronave)
+    {
+        $title = "Pilotos Autorizados a voar a aeronave $aeronave->matricula";
+        $pilotosAeronave = $aeronave->pilotos;
+        $pilotosAeronaveIds = $aeronave->pilotos->pluck('id');
+        $pilotos = User::where('tipo_socio', 'P');
+
+        foreach ($pilotosAeronaveIds as $id) {
+            $pilotos = $pilotos->where('id', '<>', $id);
+        }
+
+        $pilotos = $pilotos->get();
+
+        return view('aeronaves.pilotos', compact('title', 'pilotosAeronave', 'pilotos', 'aeronave'));
+    }
+
+    public function addPiloto(Aeronave $aeronave, User $piloto)
+    {
+
+    }
+
+    public function removePiloto(Aeronave $aeronave, User $piloto)
+    {
+
     }
 }

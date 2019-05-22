@@ -12,7 +12,9 @@ class Aeronave extends Model
     protected $primaryKey = 'matricula';
     public $incrementing = false;
     protected $fillable = ['matricula', 'marca', 'num_lugares', 'conta_horas', 'preco_hora', 'modelo'];
-    public function pilotos(){
+
+    public function pilotos()
+    {
         return $this->belongsToMany('App\User','aeronaves_pilotos','matricula','piloto_id');
     }
 }

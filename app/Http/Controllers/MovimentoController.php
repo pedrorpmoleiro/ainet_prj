@@ -18,7 +18,7 @@ class MovimentoController extends Controller
         $title="Movimentos";
         $movimentos=Movimento::orderBy('id');
         $query=$request->query();
-      //  $filters=$query;
+        // $filters=$query;
         $filters=[
             'id'=>'','piloto'=>'','aeronave'=>'','instrutor'=>'','natureza'=>'','confirmado'=>'',
             'data_inf'=>'','data_sup'=>'','filter_day'=>'','meus_movimentos'=>''
@@ -128,7 +128,7 @@ class MovimentoController extends Controller
             $movimento['instrutor_id']=null;
         }
         $movimento['confirmado']=0;
-       
+
         Movimento::create($movimento);
 
         return redirect()->action('MovimentoController@index');
@@ -154,7 +154,7 @@ class MovimentoController extends Controller
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
-        
+
         $movimentoE=$request->validated();
         $movimento->fill($movimentoE);
         $movimento['hora_descolagem']=$movimento['data'].' '.$movimento['hora_descolagem'];

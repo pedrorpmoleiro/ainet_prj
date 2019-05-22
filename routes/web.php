@@ -12,7 +12,7 @@
 
 Route::get('/', function () {
     return redirect()->action('HomeController@index');
-});
+})->name('root');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -42,26 +42,25 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
         Route::resource('movimentos', 'MovimentoController')->except(['show', 'edit', 'update']);
 
         Route::middleware(['isDirecao'])->group(function () {
-            Route::resource('aeronaves', 'AeronaveController')->except(['show', 'index']);
+            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->except(['show', 'index']);
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update', 'index']);
 
-            Route::patch('/socios/{socio}/quota', 'UserController@setQuota')->name('socio.setQuota');
-            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socio.resetQuotas');
-            Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio')->name('socio.setAtivo');
+            Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotos')->name('aeronaves.pilotos');
+            Route::post('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@addPiloto')->name('aeronaves.add_piloto');
+            Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@removePiloto')->name('aeronaves.remove_piloto');
+
+            Route::patch('/socios/{socio}/quota', 'UserController@setQuota')->name('socio.set_quota');
+            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socio.reset_quotas');
+            Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio')->name('socio.set_ativo');
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
-            Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail')->name('socio.reSendMail');
+            Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail')->name('socio.resend_mail');
         });
     });
 });
 
 /*
-Route::get('/aeronaves/{aeronave}/pilotos', function () {return view('welcome');});
-Route::post('/aeronaves/{aeronave}/pilotos/{piloto}', function () {return view('welcome');});
-Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', function () {return view('welcome');});
 Route::get('/aeronaves/{aeronave}/precos_tempos', function () {return view('welcome');});
-*/
 
-/*
 Route::get('/pendentes', function () {return view('welcome');});
 
 Route::get('/aeronaves/{aeronave}/linha_temporal', function () {return view('welcome');});
