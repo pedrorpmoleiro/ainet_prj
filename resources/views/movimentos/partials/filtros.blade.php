@@ -83,7 +83,7 @@
                                     </option>
                                 </select>
                             </div>
-                            @can('piloto')
+                            @can('pilotoDirecao')
                                 <div class="form-group mr-2">
                                     <select class="form-control" name="meus_movimentos">
                                         <option @if($filters['meus_movimentos'] == "N" || $filters['meus_movimentos'] == "Todos")selected

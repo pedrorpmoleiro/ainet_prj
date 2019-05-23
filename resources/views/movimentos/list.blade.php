@@ -15,9 +15,7 @@
             <div class="card">
                 <div class="card-body">
                     @can('piloto')
-                        @cannot('direcao')
-                            <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
-                        @endcannot
+                        <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
                     @endcan
                     @if (count($movimentos))
                         <table class="table table-striped">

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 class MovimentoController extends Controller
 {
+
     public function index(Request $request)
     {
         $title="Movimentos";
@@ -94,18 +95,19 @@ class MovimentoController extends Controller
         $aeronaves=Auth::user()->aeronaves;
         $instrutores=User::where('instrutor',1)->get();
 
+
         return view('movimentos.add', compact('title', 'movimento','aerodromos','aeronaves','instrutores'));
     }
 
     public function store(StoreMovimento $request)
     {
-        var_dump($request);
+        //dd($request);
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
-
+        $resolver=$request->input('resolver');
+        dd($resolver);
         $movimento=$request->validated();
-
         $user=Auth::user();
 
         $movimento['piloto_id']=Auth::user()->id;
@@ -117,11 +119,18 @@ class MovimentoController extends Controller
         $movimento['classe_certificado_piloto']=$user['classe_certificado'];
         $movimento['hora_descolagem']=$movimento['data'].' '.$movimento['hora_descolagem'];
         $movimento['hora_aterragem']=$movimento['data'].' '.$movimento['hora_aterragem'];
-        $movimento['conta_horas_inicio'] = Aeronave::find($movimento['aeronave'])->conta_horas;
+        $ultMovimento=Movimento::where('aeronave','D-EAYV')->orderBy('conta_horas_fim','desc')->first();
+
+        if($ultMovimento->conta_horas_fim >$movimento['conta_horas_inicio']){
+            //SOBREPOSICAO
+
+        }
+        else{
+            //BURACO
+        }
 
         $movimento['tempo_voo'] = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio'])/10)*60;
-
-        $movimento['preco_voo'] = ($movimento['tempo_voo']*60) * Aeronave::find($movimento['aeronave'])->preco_hora;
+        $movimento['preco_voo'] = ($movimento['tempo_voo']/60) * Aeronave::find($movimento['aeronave'])->preco_hora;
 
         if($movimento['natureza']=='I'){
             $instrutor=User::find($movimento['instrutor_id']);

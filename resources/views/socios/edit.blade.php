@@ -77,7 +77,7 @@
                                 </div>
                             </div>
 
-                            @can('piloto')
+                            @can('pilotoDirecao')
                                 <div class="form-group row">
                                     <label for="instrutor"
                                            class="col-md-4 col-form-label text-md-right">Instrutor</label>
@@ -209,7 +209,7 @@
 
                             <div class="form-group row mb-2">
                                 <div class="col-md-8 offset-md-4">
-                                    @can('piloto')
+                                    @can('pilotoDirecao')
                                         <a class="btn btn-link"
                                            href="{{ action('UserController@licenca', ['piloto' => $socio->id]) }}">Ver
                                             Licença</a>

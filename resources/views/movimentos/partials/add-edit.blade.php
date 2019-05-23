@@ -9,7 +9,12 @@
             ins.style.display='none';
         }
     }
+    function mostrarC(){
+        var ins=document.getElementsById('conflito');
+        ins.style.display=ins.style.display=='block'?'none':'block';
+    }
 </script>
+
 <div class="form-group row">
     <label for="data" class="col-md-4 col-form-label text-md-right">Data de voo</label>
 
@@ -173,7 +178,7 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="conta_horas_inicio" class="col-md-4 col-form-label text-md-right">Horas incio</label>
+    <label for="conta_horas_inicio" class="col-md-4 col-form-label text-md-right">Conta horas incio</label>
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('conta_horas_inicio') is-invalid @enderror" name="conta_horas_inicio" value="{{ old('conta_horas_inicio', strval($movimento->conta_horas_inicio)) }}">
@@ -186,7 +191,7 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="conta_horas_fim" class="col-md-4 col-form-label text-md-right">Horas de fim</label>
+    <label for="conta_horas_fim" class="col-md-4 col-form-label text-md-right">Conta horas de fim</label>
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('conta_horas_fim') is-invalid @enderror" name="conta_horas_fim" value="{{ old('conta_horas_fim', strval($movimento->conta_horas_fim)) }}">
@@ -272,5 +277,22 @@
                 </span>
             @enderror
         </div>
+    </div>
+</div>
+<div >
+    <label for="resolver" class="col-md-4 col-form-label text-md-right">Guardar com conflitos</label>
+    <input type="checkbox" class="form-control-input" name="resolver" value="yes" onchange="mostrarC">
+</div>
+<div class="form-group row" id="conflito" >
+    <label for="justificacao_conflito" class="col-md-4 col-form-label text-md-right"> Justificacao conflito</label>
+    <div class="col-md-6">
+    <textarea rows="3"  class="form-control @error('justificacao_conflito') is-invalid @enderror" name="justificacao_conflito">
+        {{ old('justificacao_conflito', strval($movimento->justificacao_conflito)) }}
+        @error('justificacao_conflito')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+        @enderror
+    </textarea>
     </div>
 </div>

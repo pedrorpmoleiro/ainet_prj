@@ -39,10 +39,12 @@ class StoreMovimento extends FormRequest
             'conta_horas_fim'=>'required',
             'modo_pagamento'=>'required',
             'num_recibo'=>'required',
-            'instrutor_id'=>'->nullable|numeric',
+            'instrutor_id'=>'nullable|numeric',
             'natureza'=>'required',
             'tipo_instrucao'=>'nullable',
-            'observacoes'=>'nullable'
+            'observacoes'=>'nullable',
+            'justificacao_conflito'=>'nullable'
+
         ];
     }
 
@@ -65,9 +67,7 @@ class StoreMovimento extends FormRequest
             'modo_pagamento.required'=>'O modo do pagamento é requerido',
             'num_recibo.required'=>'Número de recibo é requerido',
             'instrutor_id.numeric'=>'Numero instrutor errado',
-            'natureza.required'=>'Natureza é requereida',
-            'tipo_instrucao.nullable'=>'Tipo instrucao é não foi escolhido',
-            'observacoes.nullable'=>'Observacoes podem ser especificadas'
+            'natureza.required'=>'Natureza é requereida'
         ];
     }
 }
