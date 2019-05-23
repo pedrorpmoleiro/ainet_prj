@@ -50,10 +50,11 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::delete('/aeronaves/{aeronave}/pilotos/{piloto}', 'AeronaveController@removePiloto')->name('aeronaves.remove_piloto');
 
             Route::patch('/socios/{socio}/quota', 'UserController@setQuota')->name('socio.set_quota');
-            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socio.reset_quotas');
             Route::patch('/socios/{socio}/ativo', 'UserController@ativarSocio')->name('socio.set_ativo');
-            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
             Route::post('/socios/{socio}/send_reactivate_mail', 'UserController@sendReActivationEmail')->name('socio.resend_mail');
+
+            Route::patch('/socios/reset_quotas', 'UserController@resetQuotas')->name('socio.reset_quotas');
+            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
 
             Route::get('/pendentes', 'PendenteController@index')->name('pendente.index');
         });

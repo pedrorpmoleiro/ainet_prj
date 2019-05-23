@@ -1,5 +1,5 @@
 <div class="form-group row">
-    <label for="num_socio" class="col-md-4 col-form-label text-md-right">Númmero de sócio</label>
+    <label for="num_socio" class="col-md-4 col-form-label text-md-right">Número de sócio</label>
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_socio') is-invalid @enderror" name="num_socio"
@@ -18,7 +18,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-               value="{{ old('name', (string) $socio->name) }}" autofocus>
+               value="{{ old('name', (string) $socio->name) }}">
 
         @error('name')
         <span class="invalid-feedback" role="alert">
@@ -42,8 +42,6 @@
         @enderror
     </div>
 </div>
-
-<input type="hidden" name="num_socio" value="{{ $socio->num_socio }}">
 
 <div class="form-group row">
     <label for="nome_informal" class="col-md-4 col-form-label text-md-right">Nome Informal</label>

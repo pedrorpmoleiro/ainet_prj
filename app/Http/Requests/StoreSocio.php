@@ -26,7 +26,7 @@ class StoreSocio extends FormRequest
     {
         return [
             'name'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'num_socio'=>'required|numeric|min:0|unique:users,num_socio',
+            'num_socio'=>'required|numeric|min:1|unique:users,num_socio',
             'email'=>'required|email|unique:users,email',
             'nome_informal'=>'required|max:40',
             'sexo'=>['required', Rule::in(['M', 'F'])],
@@ -36,13 +36,13 @@ class StoreSocio extends FormRequest
             'endereco'=>'required',
             'tipo_socio'=>['required', Rule::in(['P', 'NP', 'A'])],
             'file_foto'=>'nullable|image',
-            'quota_paga'=>['required', Rule::in(['1', '0'])],
-            'ativo'=>['required', Rule::in(['1', '0'])],
-            'direcao'=>['required', Rule::in(['1', '0'])],
-            'instrutor'=>['required', Rule::in(['1', '0']),'different:aluno'],
-            'licenca_confirmada'=>['required', Rule::in(['1', '0'])],
-            'certificado_confirmado'=>['required', Rule::in(['1', '0'])],
-            'aluno'=>['required', Rule::in(['1', '0']), 'different:instrutor']
+            'quota_paga'=>['nullable', Rule::in(['1', '0'])],
+            'ativo'=>['nullable', Rule::in(['1', '0'])],
+            'direcao'=>['nullable', Rule::in(['1', '0'])],
+            'instrutor'=>['nullable', Rule::in(['1', '0']),'different:aluno'],
+            'licenca_confirmada'=>['nullable', Rule::in(['1', '0'])],
+            'certificado_confirmado'=>['nullable', Rule::in(['1', '0'])],
+            'aluno'=>['nullable', Rule::in(['1', '0']), 'different:instrutor']
         ];
     }
 

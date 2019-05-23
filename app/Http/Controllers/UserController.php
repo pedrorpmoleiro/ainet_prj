@@ -83,10 +83,6 @@ class UserController extends Controller
 
         $socio = $request->validated();
 
-        /*
-        $num_socio = User::max('num_socio');
-        $socio['num_socio'] = ++$num_socio;
-        */
         $socio['password'] = Hash::make($socio['data_nascimento']);
 
         $user = User::create($socio);
@@ -163,6 +159,8 @@ class UserController extends Controller
 
     public function destroy(User $socio)
     {
+        Storage::delete("public/fotos/$socio->foto_url");
+
         if (Movimento::where('piloto_id', $socio->id)->count() == 0 && Movimento::where('instrutor_id', $socio->id)->count() == 0) {
             $socio->forceDelete();
         } else {
@@ -172,26 +170,37 @@ class UserController extends Controller
         return redirect()->action('UserController@index');
     }
 
-    public function setQuota()
+    public function setQuota(Request $request, User $socio)
     {
+        $socio->quota_paga = (int) $request->input('quota_paga');
 
+        $socio->save();
+
+        return redirect()->action('UserController@index');
     }
 
     public function resetQuotas()
     {
-        User::update(['quota_paga'=>'0']);
+        // DB::table('users')->update(['quota_paga'=>'0']);
+        $users = User::all();
 
         return redirect()->action('UserController@index');
     }
 
     public function desativarSemQuotas()
     {
+        $users = User::where('quota_paga', 0)->get();
 
+        dd($users);
     }
 
-    public function ativarSocio(User $socio)
+    public function ativarSocio(Request $request, User $socio)
     {
+        $socio->ativo = (int) $request->input('ativo');
 
+        $socio->save();
+
+        return redirect()->action('UserController@index');
     }
 
     public function alterarPassword()
