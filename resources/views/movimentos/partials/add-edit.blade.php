@@ -285,19 +285,19 @@
 
     <div class="col-md-6">
         <select name="modo_pagamento" class="form-control">
-            <option value="N" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'N' ? 'checked' : '' }}>
+            <option value="N" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'N' ? 'selected': '' }}>
                 Numerário
             </option>
 
-            <option value="M" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'M' ? 'checked' : '' }}>
+            <option value="M" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'M' ? 'selected': '' }}>
                 Multibanco
             </option>
 
-            <option value="T" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'T' ? 'checked' : '' }}>
+            <option value="T" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'T' ? 'selected': '' }}>
                 Transferência
             </option>
 
-            <option value="P" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'P' ? 'checked' : '' }}>
+            <option value="P" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'P' ? 'selected': '' }}>
                 Pacote de horas
 
         </select>

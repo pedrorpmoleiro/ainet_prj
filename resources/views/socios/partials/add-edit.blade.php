@@ -130,11 +130,12 @@
             @endif
         @endcannot
         @can('direcao')
-            <input type="radio" name="sexo"
-                   value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'checked' : '' }}>Masculino<br>
+        <select class="form-control" name="sexo">
+        <option  value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
-            <input type="radio" name="sexo"
-                   value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'checked' : '' }}>Feminino
+        <option  value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino </option>
+        
+        </select>
         @endcan
     </div>
 </div>
@@ -145,15 +146,13 @@
 
     <div class="col-md-6">
         @if(Auth::user()->direcao)
-            <input type="radio" name="tipo_socio"
-                   value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'checked' : '' }}>Piloto<br>
+        <select name="tipo_socio"  class="form-control" id="">
+        <option  value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>Piloto</option>
 
-            <input type="radio" name="tipo_socio"
-                   value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'checked' : '' }}>Não Piloto
-            <br>
+        <option  value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não Piloto</option>
 
-            <input type="radio" name="tipo_socio"
-                   value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'checked' : '' }}>Aeromodelista
+        <option  value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'selected': '' }}>Aeromodelista</option>
+        </select>
         @else
             <input type="hidden" name="tipo_socio" value="{{ $socio->tipo_socio }}">
             @if ($socio->tipo_socio == 'P')
