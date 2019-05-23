@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -108,8 +109,10 @@ class UserController extends Controller
     public function edit(User $socio)
     {
         $title = "Editar Sócio";
+        $tipo_licenca = DB::table('tipos_licencas')->select(['code'])->get();
+        $classes_certificados = DB::table('classes_certificados')->select(['code'])->get();
 
-        return view('socios.edit', compact('title', 'socio'));
+        return view('socios.edit', compact('title', 'socio', 'tipo_licenca', 'classes_certificados'));
     }
 
     public function update(UpdateSocio $request, User $socio)
@@ -122,6 +125,7 @@ class UserController extends Controller
 
         $foto = null;
         if (isset($socioEdit['file_foto'])) {
+            Storage::delete("public/fotos/$socio->foto_url");
             $path = $socioEdit['file_foto']->storeAs('public/fotos', $socio->id.'_pic.jpg');
             $foto = basename($path);
         }

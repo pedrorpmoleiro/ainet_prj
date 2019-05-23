@@ -124,7 +124,7 @@
                                     <label class="col-md-4 col-form-label text-md-right">Tipo Licenca</label>
 
                                     <div class="col-md-6">
-                                        <p>{{ $socio->tipo_licenca }}</p>
+                                        <input type="text" name="tipo_licenca" class="form-control" readonly value="{{ $socio->tipo_licenca }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
