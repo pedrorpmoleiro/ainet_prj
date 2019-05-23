@@ -49,12 +49,12 @@ class UserController extends Controller
         }
         if(isset($quotas_pagas)) {
             $filters['quotas_pagas']=$quotas_pagas;
-            $socios=$socios->where('quota_paga',$quotas_pagas);
+            if($quotas_pagas    !='A')$socios=$socios->where('quota_paga',$quotas_pagas);
         }
         if (Auth::user()->direcao == 1) {
             if(isset($ativo)) {
                 $filters['ativo']=$ativo;
-                $socios=$socios->where('ativo',$ativo);
+                if($ativo!='A')$socios=$socios->where('ativo',$ativo);
             }
         } else {
             $socios = $socios->where('ativo', 1);

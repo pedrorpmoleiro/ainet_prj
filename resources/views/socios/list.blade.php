@@ -6,11 +6,12 @@
         <h2>{{ $title }}</h2>
     </div>
 
-    @if (count($socios))
-        @include('socios.partials.filtros')
-    @endif
+
 
     <div class="row justify-content-center">
+        @if (count($socios))
+            @include('socios.partials.filtros')
+        @endif
         <div class="col-md-auto">
             <div class="card">
                 <div class="card-body">
