@@ -8,6 +8,14 @@
         }
     }
 
+    window.onload = function() {
+        mostrar("{{ $movimento->natureza }}");
+        if("{{$movimento->justificacao_conflito}}"!=""){
+            check();
+            mostrarC();
+        }
+    };
+
     function mostrarC() {
         var checkBox = document.getElementById("resolve");
         var text = document.getElementById("conflito");
@@ -17,6 +25,12 @@
             text.style.display = "none";
         }
     }
+    function check(){
+        var checkBox = document.getElementById("resolve");
+        checkBox.checked=true;
+    }
+
+
 </script>
 
 <div class="form-group row">
