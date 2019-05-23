@@ -34,7 +34,7 @@
     <div class="col-md-6">
         <select class="form-control" name="aeronave">
             @foreach($aeronaves as $aeronave)
-                <option {{ old('aeronave', strval($movimento->aeronave)) == $aeronave->matricula ? 'selected' : '' }} value="{{ $aeronave->matricula}}"> {{$aeronave->matricula}}</option>
+                <option {{ old('aeronave', strval($movimento->aeronave)) == $aeronave->matricula ? 'selected' : '' }}> {{$aeronave->matricula}}</option>
             @endforeach
         </select>
     </div>

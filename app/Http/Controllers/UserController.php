@@ -83,8 +83,10 @@ class UserController extends Controller
 
         $socio = $request->validated();
 
+        /*
         $num_socio = User::max('num_socio');
         $socio['num_socio'] = ++$num_socio;
+        */
         $socio['password'] = Hash::make($socio['data_nascimento']);
 
         $user = User::create($socio);
@@ -109,10 +111,10 @@ class UserController extends Controller
     public function edit(User $socio)
     {
         $title = "Editar Sócio";
-        $tipo_licenca = DB::table('tipos_licencas')->select(['code'])->get();
+        $tipos_licenca = DB::table('tipos_licencas')->select(['code'])->get();
         $classes_certificados = DB::table('classes_certificados')->select(['code'])->get();
 
-        return view('socios.edit', compact('title', 'socio', 'tipo_licenca', 'classes_certificados'));
+        return view('socios.edit', compact('title', 'socio', 'tipos_licenca', 'classes_certificados'));
     }
 
     public function update(UpdateSocio $request, User $socio)
@@ -147,8 +149,8 @@ class UserController extends Controller
         $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
 
         if ($socio->tipo_socio == 'P') {
-            $socioEdit['validade_licenca'] = date('Y-m-d', strtotime($socioEdit['validade_licenca'])) ?? $socio->validade_licenca;
-            $socioEdit['validade_certificado'] = date('Y-m-d', strtotime($socioEdit['validade_certificado'])) ?? $socio->validade_certificado;
+            $socioEdit['validade_licenca'] = $socioEdit['validade_licenca'] ?? $socio->validade_licenca;
+            $socioEdit['validade_certificado'] = $socioEdit['validade_certificado'] ?? $socio->validade_certificado;
         }
 
         $socio->fill($socioEdit);
