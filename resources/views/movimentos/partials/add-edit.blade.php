@@ -2,7 +2,7 @@
     function mostrar(value)
     {
         var ins=document.getElementById('instrucao');
-        if(value==2){
+        if(value=='I'){
             ins.style.display='block';
         }
         else{
@@ -10,8 +10,13 @@
         }
     }
     function mostrarC(){
-        var ins=document.getElementsById('conflito');
-        ins.style.display=ins.style.display=='block'?'none':'block';
+        var checkBox = document.getElementById("resolve");
+        var text = document.getElementById("conflito");
+        if (checkBox.checked == true){
+            text.style.display = "block";
+        } else {
+            text.style.display = "none";
+        }
     }
 </script>
 
@@ -103,17 +108,44 @@
     <label for="natureza" class="col-md-4 col-form-label text-md-right" >Natureza </label>
 
     <div class="col-md-6">
-        <input type="radio" name="natureza" value="T" {{ old('natureza', strval($movimento->natureza)) == 'T' ? 'checked' : '' }} onclick="mostrar(1);">Treino<br>
-        
-        <input type="radio" name="natureza" value="I" {{ old('natureza', strval($movimento->natureza)) == 'I' ? 'checked' : '' }} onclick="mostrar(2);" >Instrução<br>
-        
-        <input type="radio" name="natureza" value="E" {{ old('natureza', strval($movimento->natureza)) == 'E' ? 'checked' : '' }} onclick="mostrar(3);">Especial
+        <select class="form-control" name="natureza" onchange="mostrar(value)">
+            <option value="T" {{ old('natureza', strval($movimento->natureza)) == 'T' ? 'selected' : '' }} onclick="mostrar(1);">Treino</option>
 
-        @error('natureza')
+            <option value="I" {{ old('natureza', strval($movimento->natureza)) == 'I' ? 'selected' : '' }} onclick="mostrar(2);" >Instrução</option>
+
+            <option value="E" {{ old('natureza', strval($movimento->natureza)) == 'E' ? 'selected' : '' }} onclick="mostrar(3);">Especial</option>
+
+        </select>
+
+    </div>
+</div>
+<div id="instrucao" style="display:none;">
+    <div class="form-group row">
+        <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
+
+        <div class="col-md-6">
+            <select class="form-control" name="instrutor_id">
+                @foreach($instrutores as $instrutor)
+                    <option {{ old('instrutor_id', strval($movimento->instrutor_id)) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
+
+        <div class="col-md-6">
+            <input type="radio" name="tipo_instrucao" value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo Comando <br>
+
+            <input type="radio" name="tipo_instrucao" value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}> Solo
+
+            @error('tipo_instrucao')
             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
     </div>
 </div>
 <div  class="form-group row">
@@ -201,25 +233,30 @@
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
+        <div class="flash-message">
+            @foreach (['danger', 'warning'] as $msg)
+                @if(Session::has('alert-' . $msg))
+                    <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
+                @endif
+            @endforeach
+        </div>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="modo_pagamento" class="col-md-4 col-form-label text-md-right">Modo Pagamento </label>
 
     <div class="col-md-6">
-        <input type="radio" name="modo_pagamento" value="N" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'N' ? 'checked' : '' }}>Numerário<br>
-        
-        <input type="radio" name="modo_pagamento" value="M" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'M' ? 'checked' : '' }}>Multibanco<br>
-        
-        <input type="radio" name="modo_pagamento" value="T" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'T' ? 'checked' : '' }}>Transferência <br>
+        <select name="modo_pagamento"  class="form-control">
+            <option   value="N" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'N' ? 'checked' : '' }}>Numerário</option>
 
-        <input type="radio" name="modo_pagamento" value="P" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'P' ? 'checked' : '' }}>Pacote de horas
+            <option   value="M" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'M' ? 'checked' : '' }}>Multibanco</option>
 
-        @error('modo_pagamento')
-            <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        @enderror
+            <option   value="T" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'T' ? 'checked' : '' }}>Transferência </option>
+
+            <option   value="P" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'P' ? 'checked' : '' }}>Pacote de horas
+
+        </select>
     </div>
 </div>
 <div class="form-group row">
@@ -250,40 +287,8 @@
     </div>
 </div>
 
-<div id="instrucao" style="display:none;">
-    <div class="form-group row">
-        <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
 
-        <div class="col-md-6">
-            <select class="form-control" name="instrutor_id">
-                @foreach($instrutores as $instrutor)
-                    <option {{ old('instrutor_id', strval($movimento->instrutor_id)) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
-
-        <div class="col-md-6">
-            <input type="radio" name="tipo_instrucao" value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo Comando <br>
-            
-            <input type="radio" name="tipo_instrucao" value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}> Solo
-
-            @error('tipo_instrucao')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-    </div>
-</div>
-<div >
-    <label for="resolver" class="col-md-4 col-form-label text-md-right">Guardar com conflitos</label>
-    <input type="checkbox" class="form-control-input" name="resolver" value="yes" onchange="mostrarC">
-</div>
-<div class="form-group row" id="conflito" >
+<div class="form-group row" id="conflito" style="display:none;" >
     <label for="justificacao_conflito" class="col-md-4 col-form-label text-md-right"> Justificacao conflito</label>
     <div class="col-md-6">
     <textarea rows="3"  class="form-control @error('justificacao_conflito') is-invalid @enderror" name="justificacao_conflito">
@@ -295,4 +300,9 @@
         @enderror
     </textarea>
     </div>
+</div>
+
+<div >
+    <label for="resolver" class="col-md-4 col-form-label text-md-right">Guardar com conflitos</label>
+    <input type="checkbox" id="resolve" class="form-control-input" name="resolver" onclick="mostrarC()">
 </div>

@@ -30,19 +30,20 @@ class UpdateMovimento extends FormRequest
             'aerodromo_chegada'=>'required',
             'hora_descolagem'=>'required',
             'hora_aterragem'=>'required',
-            'num_diario'=>'required',
-            'num_servico'=>'required',
-            'num_aterragens'=>'required',
-            'num_descolagens'=>'required',
-            'num_pessoas'=>'required',
-            'conta_horas_inicio'=>'required',
-            'conta_horas_fim'=>'required',
+            'num_diario'=>'required|numeric',
+            'num_servico'=>'required|numeric',
+            'num_aterragens'=>'required|numeric',
+            'num_descolagens'=>'required|numeric',
+            'num_pessoas'=>'required|numeric',
+            'conta_horas_inicio'=>'required|numeric',
+            'conta_horas_fim'=>'required|numeric|gt:conta_horas_inicio',
             'modo_pagamento'=>'required',
-            'num_recibo'=>'required',
+            'num_recibo'=>'required|numeric',
             'instrutor_id'=>'nullable|numeric',
             'natureza'=>'required',
             'tipo_instrucao'=>'nullable',
-            'observacoes'=>'nullable'
+            'observacoes'=>'nullable',
+            'justificacao_conflito'=>'nullable'
         ];
     }
 
@@ -66,8 +67,15 @@ class UpdateMovimento extends FormRequest
             'num_recibo.required'=>'Número de recibo é requerido',
             'instrutor_id.numeric'=>'Numero instrutor errado',
             'natureza.required'=>'Natureza é requereida',
-            'tipo_instrucao.nullable'=>'Tipo instrucao é não foi escolhido',
-            'observacoes.nullable'=>'Observacoes podem ser especificadas'
+            'conta_horas_fim.gt'=>'A conta hora fim deve ser maior do que Conta hora inicio',
+            'conta_horas_inicio.numeric'=>'A conta hora inicio dever ser um numero',
+            'conta_horas_fim.numeric'=>'A conta hora fim dever ser um numero',
+            'num_diario.numeric'=>'Número de diario deve ser un número',
+            'num_servico.numeric'=>'Número de servico deve ser un número',
+            'num_aterragens.numeric'=>'Número de aterragens deve ser un número',
+            'num_descolagens.numeric'=>'Número de descolagens deve ser un número',
+            'num_pessoas.numeric'=>'Número de pessoas deve ser un número',
+            'num_recibo.numeric'=>'Número de recibo deve ser un número'
         ];
     }
 }
