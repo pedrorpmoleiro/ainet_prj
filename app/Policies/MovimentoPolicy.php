@@ -20,7 +20,7 @@ class MovimentoPolicy
         //
     }
     public function update (User $user, Movimento $movimento) {
-        return ($user->direcao == 1 || $user->id == $movimento->piloto_id || $user->id==$movimento->instrutor_id) && $movimento->confirmado == 0;
+        return ($user->direcao || $user->id == $movimento->piloto_id || $user->id==$movimento->instrutor_id) && $movimento->confirmado == 0;
     }
 
 }

@@ -168,7 +168,9 @@ class UserController extends Controller
 
     public function resetQuotas()
     {
+        User::update(['quota_paga'=>'0']);
 
+        return redirect()->action('UserController@index');
     }
 
     public function desativarSemQuotas()
