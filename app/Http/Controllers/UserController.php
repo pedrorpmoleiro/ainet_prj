@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChangePassword;
 use App\Http\Requests\StoreSocio;
 use App\Http\Requests\UpdateSocio;
+use App\Movimento;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -156,7 +157,11 @@ class UserController extends Controller
 
     public function destroy(User $socio)
     {
-        $socio->delete();
+        if (Movimento::where('piloto_id', $socio->id)->count() == 0 && Movimento::where('instrutor_id', $socio->id)->count() == 0) {
+            $socio->forceDelete();
+        } else {
+            $socio->delete();
+        }
 
         return redirect()->action('UserController@index');
     }
