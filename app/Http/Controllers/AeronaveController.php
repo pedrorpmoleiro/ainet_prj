@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateAeronave;
 use App\Aeronave;
 use App\Movimento;
 use App\User;
+use Illuminate\Support\Facades\DB;
 
 class AeronaveController extends Controller
 {
@@ -97,11 +98,19 @@ class AeronaveController extends Controller
 
     public function addPiloto(Aeronave $aeronave, User $piloto)
     {
+        DB::table('aeronaves_pilotos')->insert([
+           'matricula'=>$aeronave->matricula,
+           'piloto_id'=>$piloto->id
+        ]);
 
+        return redirect()->back();
     }
 
     public function removePiloto(Aeronave $aeronave, User $piloto)
     {
+        DB::table('aeronaves_pilotos')->where('matricula', $aeronave->matricula)
+            ->where('piloto_id', $piloto->id)->delete();
 
+        return redirect()->back();
     }
 }
