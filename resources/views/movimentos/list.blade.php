@@ -14,7 +14,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                  @can('piloto')
+                  @can('pilotoDiracao')
                         <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar Movimento</a>
                     @endcan
                     @if (count($movimentos))
@@ -42,7 +42,7 @@
                                     <th>Nome do Instrutor</th>
                                     <th>Confirmado</th>
                                     <th>Observações</th>
-                                    @can('piloto')
+                                    @can('pilotoDiracao')
                                         <th>Ações</th>
                                     @endcan
                                 </tr>

@@ -38,10 +38,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function aeronaves(){
+
+    public function aeronaves()
+    {
         return $this->belongsToMany('App\Aeronave','aeronaves_pilotos','piloto_id','matricula');
     }
-    public function movimentos(){
+
+    public function movimentos()
+    {
         return $this->hasMany('App\Movimento');
     }
 }

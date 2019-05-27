@@ -23,15 +23,16 @@
                                           class="inline">
                                         @method('patch')
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-warning mb-4 mr-1">Reset de Quotas
+                                        <button type="submit" class="btn btn-sm btn-warning mb-4 mr-1">
+                                            Reset de Quotas
                                         </button>
                                     </form>
                                     <form action="{{ action('UserController@desativarSemQuotas') }}" method="POST"
                                           class="inline">
                                         @method('patch')
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-warning mb-4 mr-1">Desativar sócios
-                                            com quotas não pagas
+                                        <button type="submit" class="btn btn-sm btn-warning mb-4 mr-1">
+                                            Desativar sócios com quotas não pagas
                                         </button>
                                     </form>
                                 @endif

@@ -35,61 +35,46 @@
                                 <label for="quota_paga" class="col-md-4 col-form-label text-md-right">Quota Paga</label>
 
                                 <div class="col-md-6">
-                                    @if (Auth::user()->direcao)
-                                        <input type="radio" name="quota_paga"
-                                               value="1" {{ old('quota_paga', (string) $socio->quota_paga) == '1' ? 'checked' : '' }}>Sim<br>
+                                    <select class="form-control" name="quota_paga"
+                                            @cannot('direcao') disabled @endcannot >
+                                        <option value="1" {{ old('quota_paga', (string) $socio->quota_paga) == '1' ? 'selected': '' }}>
+                                            Sim
+                                        </option>
 
-                                        <input type="radio" name="quota_paga"
-                                               value="0" {{ old('quota_paga', (string) $socio->quota_paga) == '0' ? 'checked' : '' }}>Não
-                                    @else
-                                        <input type="hidden" name="quota_paga" value="{{ $socio->quota_paga }}">
-                                        @if ($socio->quota_paga)
-                                            <p>Sim</p>
-                                        @else
-                                            <p>Não</p>
-                                        @endif
-                                    @endif
-
+                                        <option value="0" {{ old('quota_paga', (string) $socio->quota_paga) == '0' ? 'selected': '' }}>
+                                            Não
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="direcao" class="col-md-4 col-form-label text-md-right">Direção</label>
 
                                 <div class="col-md-6">
-                                    @if (Auth::user()->direcao)
-                                        <input type="radio" name="direcao"
-                                               value="1" {{ old('direcao', (string) $socio->direcao) == '1' ? 'checked' : '' }}>Sim<br>
+                                    <select class="form-control" name="direcao" @cannot('direcao') disabled @endcannot >
+                                        <option value="1" {{ old('direcao', (string) $socio->direcao) == '1' ? 'selected': '' }}>
+                                            Sim
+                                        </option>
 
-                                        <input type="radio" name="direcao"
-                                               value="0" {{ old('direcao', (string) $socio->direcao) == '0' ? 'checked' : '' }}>Não
-                                    @else
-                                        <input type="hidden" name="direcao" value="{{ $socio->direcao }}">
-                                        @if ($socio->direcao)
-                                            <p>Sim</p>
-                                        @else
-                                            <p>Não</p>
-                                        @endif
-                                    @endif
+                                        <option value="0" {{ old('direcao', (string) $socio->direcao) == '0' ? 'selected': '' }}>
+                                            Não
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="ativo" class="col-md-4 col-form-label text-md-right">Ativo</label>
 
                                 <div class="col-md-6">
-                                    @if (Auth::user()->direcao)
-                                        <input type="radio" name="ativo"
-                                               value="1" {{ old('ativo', (string) $socio->ativo) == '1' ? 'checked' : '' }}>Sim<br>
+                                    <select class="form-control" name="ativo" @cannot('direcao') disabled @endcannot >
+                                        <option value="1" {{ old('ativo', (string) $socio->ativo) == '1' ? 'selected': '' }}>
+                                            Sim
+                                        </option>
 
-                                        <input type="radio" name="ativo"
-                                               value="0" {{ old('ativo', (string) $socio->ativo) == '0' ? 'checked' : '' }}>Não
-                                    @else
-                                        <input type="hidden" name="ativo" value="{{ $socio->ativo }}">
-                                        @if ($socio->ativo)
-                                            <p>Sim</p>
-                                        @else
-                                            <p>Não</p>
-                                        @endif
-                                    @endif
+                                        <option value="0" {{ old('ativo', (string) $socio->ativo) == '0' ? 'selected': '' }}>
+                                            Não
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -99,29 +84,26 @@
                                            class="col-md-4 col-form-label text-md-right">Instrutor</label>
 
                                     <div class="col-md-6">
-                                        @cannot('direcao')
-                                            <input type="hidden" name="instrutor" value="{{ $socio->instrutor }}">
-                                            @if ($socio->instrutor)
-                                                <p>Sim</p>
-                                            @else
-                                                <p>Não</p>
-                                            @endif
-                                        @endcannot
-                                        @can('direcao')
-                                            <input type="radio" name="instrutor"
-                                                   value="1" {{ old('instrutor', (string) $socio->instrutor) == '1' ? 'checked' : '' }}>
-                                            Sim<br>
-                                            <input type="radio" name="instrutor"
-                                                   value="0" {{ old('instrutor', (string) $socio->instrutor) == '0' ? 'checked' : '' }}>
-                                            Não
-                                        @endcan
+                                        <select class="form-control" name="instrutor"
+                                                @cannot('direcao') disabled @endcannot >
+                                            <option value="1" {{ old('instrutor', (string) $socio->instrutor) == '1' ? 'selected': '' }}>
+                                                Sim
+                                            </option>
+
+                                            <option value="0" {{ old('instrutor', (string) $socio->instrutor) == '0' ? 'selected': '' }}>
+                                                Não
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Numero de Licença</label>
 
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control @error('num_licenca') is-invalid @enderror" name="num_licenca" value="{{ old('num_licenca', (string) $socio->num_licenca) }}">
+                                        <input type="text"
+                                               class="form-control @error('num_licenca') is-invalid @enderror"
+                                               name="num_licenca"
+                                               value="{{ old('num_licenca', (string) $socio->num_licenca) }}">
                                     </div>
                                 </div>
 
@@ -140,41 +122,45 @@
                                     <label class="col-md-4 col-form-label text-md-right">Validadde da Licença</label>
 
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control @error('validade_licenca') is-invalid @enderror" name="validade_licenca" value="{{ old('validade_licenca', (string) $socio->validade_licenca) }}">
+                                        <input type="date"
+                                               class="form-control @error('validade_licenca') is-invalid @enderror"
+                                               name="validade_licenca"
+                                               value="{{ old('validade_licenca', (string) $socio->validade_licenca) }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Licenca Confirmada</label>
 
                                     <div class="col-md-6">
-                                        @if (Auth::user()->direcao)
-                                            <input type="radio" name="licenca_confirmada"
-                                                   value="1" {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '1' ? 'checked' : '' }}>Sim<br>
+                                        <select class="form-control" name="licenca_confirmada"
+                                                @cannot('direcao') disabled @endcannot >
+                                            <option value="1" {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '1' ? 'selected': '' }}>
+                                                Sim
+                                            </option>
 
-                                            <input type="radio" name="licenca_confirmada"
-                                                   value="0" {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '0' ? 'checked' : '' }}>Não
-                                        @else
-                                            <input type="hidden" name="licenca_confirmada" value="{{ $socio->licenca_confirmada }}">
-                                            @if ($socio->licenca_confirmada)
-                                                <p>Sim</p>
-                                            @else
-                                                <p>Não</p>
-                                            @endif
-                                        @endif
+                                            <option value="0" {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '0' ? 'selected': '' }}>
+                                                Não
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="file_licenca" class="col-md-4 col-form-label text-md-right">Alterar Licença</label>
+                                    <label for="file_licenca" class="col-md-4 col-form-label text-md-right">Alterar
+                                        Licença</label>
 
                                     <div class="col-md-6">
-                                        <input id="file_licenca" type="file" class="form-control-file" name="file_licenca" accept="application/pdf">
+                                        <input id="file_licenca" type="file" class="form-control-file"
+                                               name="file_licenca" accept="application/pdf">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Numero do Certificado</label>
 
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control @error('num_certificado') is-invalid @enderror" name="num_certificado" value="{{ old('num_certificado', (string) $socio->num_certificado) }}">
+                                        <input type="text"
+                                               class="form-control @error('num_certificado') is-invalid @enderror"
+                                               name="num_certificado"
+                                               value="{{ old('num_certificado', (string) $socio->num_certificado) }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -189,37 +175,39 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-md-4 col-form-label text-md-right">Validadde do Certificado</label>
+                                    <label class="col-md-4 col-form-label text-md-right">Validadde do
+                                        Certificado</label>
 
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control @error('validade_certificado') is-invalid @enderror" name="validade_certificado" value="{{ old('validade_certificado', (string) $socio->validade_certificado) }}">
+                                        <input type="date"
+                                               class="form-control @error('validade_certificado') is-invalid @enderror"
+                                               name="validade_certificado"
+                                               value="{{ old('validade_certificado', (string) $socio->validade_certificado) }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Certificado Confirmado</label>
 
                                     <div class="col-md-6">
-                                        @if (Auth::user()->direcao)
-                                            <input type="radio" name="certificado_confirmado"
-                                                   value="1" {{ old('certificado_confirmado', (string) $socio->certificado_confirmado) == '1' ? 'checked' : '' }}>Sim<br>
+                                        <select class="form-control" name="certificado_confirmado"
+                                                @cannot('direcao') disabled @endcannot >
+                                            <option value="1" {{ old('certificado_confirmado', (string) $socio->certificado_confirmado) == '1' ? 'selected': '' }}>
+                                                Sim
+                                            </option>
 
-                                            <input type="radio" name="certificado_confirmado"
-                                                   value="0" {{ old('certificado_confirmado', (string) $socio->certificado_confirmado) == '0' ? 'checked' : '' }}>Não
-                                        @else
-                                            <input type="hidden" name="certificado_confirmado" value="{{ $socio->certificado_confirmado }}">
-                                            @if ($socio->certificado_confirmado)
-                                                <p>Sim</p>
-                                            @else
-                                                <p>Não</p>
-                                            @endif
-                                        @endif
+                                            <option value="0" {{ old('certificado_confirmado', (string) $socio->certificado_confirmado) == '0' ? 'selected': '' }}>
+                                                Não
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="file_certificado" class="col-md-4 col-form-label text-md-right">Alterar Certificado</label>
+                                    <label for="file_certificado" class="col-md-4 col-form-label text-md-right">Alterar
+                                        Certificado</label>
 
                                     <div class="col-md-6">
-                                        <input id="file_certificado" type="file" class="form-control-file" name="file_certificado" accept="application/pdf">
+                                        <input id="file_certificado" type="file" class="form-control-file"
+                                               name="file_certificado" accept="application/pdf">
                                     </div>
                                 </div>
                             @endcan
@@ -229,11 +217,16 @@
                                     <label for="aluno" class="col-md-4 col-form-label text-md-right">Aluno</label>
 
                                     <div class="col-md-6">
-                                        <input type="radio" name="aluno"
-                                               value="1" {{ old('aluno', (string) $socio->aluno) == '1' ? 'checked' : '' }}>Sim<br>
+                                        <select class="form-control" name="aluno"
+                                                @cannot('direcao') disabled @endcannot >
+                                            <option value="1" {{ old('aluno', (string) $socio->aluno) == '1' ? 'selected': '' }}>
+                                                Sim
+                                            </option>
 
-                                        <input type="radio" name="aluno"
-                                               value="0" {{ old('aluno', (string) $socio->aluno) == '0' ? 'checked' : '' }}>Não
+                                            <option value="0" {{ old('aluno', (string) $socio->aluno) == '0' ? 'selected': '' }}>
+                                                Não
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                             @endcan

@@ -35,14 +35,7 @@ class StoreSocio extends FormRequest
             'telefone'=>'required|regex:/^\+?\d{3}(?: ?\d+)*$/|max:20',
             'endereco'=>'required',
             'tipo_socio'=>['required', Rule::in(['P', 'NP', 'A'])],
-            'file_foto'=>'nullable|image',
-            'quota_paga'=>['nullable', Rule::in(['1', '0'])],
-            'ativo'=>['nullable', Rule::in(['1', '0'])],
-            'direcao'=>['nullable', Rule::in(['1', '0'])],
-            'instrutor'=>['nullable', Rule::in(['1', '0']),'different:aluno'],
-            'licenca_confirmada'=>['nullable', Rule::in(['1', '0'])],
-            'certificado_confirmado'=>['nullable', Rule::in(['1', '0'])],
-            'aluno'=>['nullable', Rule::in(['1', '0']), 'different:instrutor']
+            'file_foto'=>'nullable|image'
         ];
     }
 
@@ -74,22 +67,6 @@ class StoreSocio extends FormRequest
             'tipo_socio.required'=>'O tipo de sócio tem que ser preenchido',
             'tipo_socio.in'=>'O tipo de sócio é inválido',
             'file_foto.image'=>'O ficheiro não é uma imagem ou é de um formato não suportado',
-            'quota_paga.required'=>'O valor tem de ser preenchido',
-            'quota_paga.in'=>'O valor é inválido',
-            'ativo.required'=>'O valor tem de ser preenchido',
-            'ativo.in'=>'O valor é inválido',
-            'direcao.required'=>'O valor tem de ser preenchido',
-            'direcao.in'=>'O valor é inválido',
-            'instrutor.required'=>'O valor tem de ser preenchido',
-            'instrutor.in'=>'O valor é inválido',
-            'licenca_confirmada.required'=>'O valor tem de ser preenchido',
-            'licenca_confirmada.in'=>'O valor é inválido',
-            'certificado_confirmado.required'=>'O valor tem de ser preenchido',
-            'certificado_confirmado.in'=>'O valor é inválido',
-            'aluno.required'=>'O valor tem de ser preenchido',
-            'aluno.in'=>'O valor é inválido',
-            'aluno.different'=>'Não é possível ser instrutor e aluno ao mesmo tempo',
-            'instrutor.different'=>'Não é possível ser instrutor e aluno ao mesmo tempo'
         ];
     }
 }

@@ -122,21 +122,11 @@
     <label for="sexo" class="col-md-4 col-form-label text-md-right">Género</label>
 
     <div class="col-md-6">
-        @cannot('direcao')
-            @if ($socio->sexo == 'M')
-                <p>Masculino</p>
-            @else
-                <p>Feminino</p>
-            @endif
-        @endcannot
-        @can('direcao')
-        <select class="form-control" name="sexo">
-        <option  value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
+        <select class="form-control" name="sexo" @cannot('direcao') disabled @endcannot >
+            <option value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
-        <option  value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino </option>
-        
+            <option value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino</option>
         </select>
-        @endcan
     </div>
 </div>
 
@@ -145,25 +135,18 @@
     <label for="tipo_socio" class="col-md-4 col-form-label text-md-right">Tipo de Sócio</label>
 
     <div class="col-md-6">
-        @if(Auth::user()->direcao)
-        <select name="tipo_socio"  class="form-control" id="">
-        <option  value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>Piloto</option>
+        <select name="tipo_socio" class="form-control" @cannot('direcao') disabled @endcannot>
+            <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>Piloto
+            </option>
 
-        <option  value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não Piloto</option>
+            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não
+                Piloto
+            </option>
 
-        <option  value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'selected': '' }}>Aeromodelista</option>
+            <option value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'selected': '' }}>
+                Aeromodelista
+            </option>
         </select>
-        @else
-            <input type="hidden" name="tipo_socio" value="{{ $socio->tipo_socio }}">
-            @if ($socio->tipo_socio == 'P')
-                <p>Piloto</p>
-            @elseif ($socio->tipo_socio == 'NP')
-                <p>Não Piloto</p>
-            @else
-                <p>Aeromodelista</p>
-            @endif
-        @endif
-
     </div>
 </div>
 

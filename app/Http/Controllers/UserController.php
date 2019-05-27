@@ -130,10 +130,12 @@ class UserController extends Controller
 
         if (isset($socioEdit['file_licenca'])) {
             $socioEdit['file_licenca']->storeAs('docs_piloto', "licenca_$socio->id.pdf");
+            $socioEdit['licenca_confirmada'] = 0;
         }
 
         if (isset($socioEdit['file_certificado'])) {
             $socioEdit['file_certificado']->storeAs('docs_piloto', "certificado_$socio->id.pdf");
+            $socioEdit['certificado_confirmado'] = 0;
         }
 
         $keys = array_keys($socioEdit, null, true);
@@ -147,6 +149,19 @@ class UserController extends Controller
         if ($socio->tipo_socio == 'P') {
             $socioEdit['validade_licenca'] = $socioEdit['validade_licenca'] ?? $socio->validade_licenca;
             $socioEdit['validade_certificado'] = $socioEdit['validade_certificado'] ?? $socio->validade_certificado;
+        }
+
+        if (!Auth::user()->direcao) {
+            if (isset($socioEdit['num_socio'])) unset($socioEdit['num_socio']);
+            if (isset($socioEdit['ativo'])) unset($socioEdit['ativo']);
+            if (isset($socioEdit['quota_paga'])) unset($socioEdit['quota_paga']);
+            if (isset($socioEdit['sexo'])) unset($socioEdit['sexo']);
+            if (isset($socioEdit['tipo_socio'])) unset($socioEdit['tipo_socio']);
+            if (isset($socioEdit['direcao'])) unset($socioEdit['direcao']);
+            if (isset($socioEdit['instrutor'])) unset($socioEdit['instrutor']);
+            if (isset($socioEdit['aluno'])) unset($socioEdit['aluno']);
+            if (isset($socioEdit['certificado_confirmado'])) unset($socioEdit['certificado_confirmado']);
+            if (isset($socioEdit['licenca_confirmada'])) unset($socioEdit['licenca_confirmada']);
         }
 
         $socio->fill($socioEdit);
@@ -181,17 +196,21 @@ class UserController extends Controller
 
     public function resetQuotas()
     {
-        // DB::table('users')->update(['quota_paga'=>'0']);
-        $users = User::all();
+        DB::table('users')->update(['quota_paga'=>'0']);
 
         return redirect()->action('UserController@index');
     }
 
     public function desativarSemQuotas()
     {
-        $users = User::where('quota_paga', 0)->get();
+        $users = User::where('quota_paga', '0')->get();
 
-        dd($users);
+        foreach ($users as $user) {
+            $user->quota_paga = 0;
+            $user->save();
+        }
+
+        return redirect()->action('UserController@index');
     }
 
     public function ativarSocio(Request $request, User $socio)

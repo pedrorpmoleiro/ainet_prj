@@ -8,9 +8,9 @@
         }
     }
 
-    window.onload = function() {
+    window.onload = function () {
         mostrar("{{ $movimento->natureza }}");
-        if("{{$movimento->justificacao_conflito}}"!=""){
+        if ("{{$movimento->justificacao_conflito}}" != "") {
             check();
             mostrarC();
         }
@@ -25,12 +25,11 @@
             text.style.display = "none";
         }
     }
-    function check(){
+
+    function check() {
         var checkBox = document.getElementById("resolve");
-        checkBox.checked=true;
+        checkBox.checked = true;
     }
-
-
 </script>
 
 <div class="form-group row">
@@ -38,7 +37,7 @@
 
     <div class="col-md-6">
         <input type="date" class="form-control @error('data') is-invalid @enderror" name="data"
-               value="{{ old('data', strval($movimento->data)) }}">
+               value="{{ old('data', (string) $movimento->data) }}">
 
         @error('data')
         <span class="invalid-feedback" role="alert">
@@ -53,7 +52,7 @@
     <div class="col-md-6">
         <select class="form-control" name="aeronave">
             @foreach($aeronaves as $aeronave)
-                <option {{ old('aeronave', strval($movimento->aeronave)) == $aeronave->matricula ? 'selected' : '' }}> {{$aeronave->matricula}}</option>
+                <option {{ old('aeronave', (string) $movimento->aeronave) == $aeronave->matricula ? 'selected' : '' }}> {{$aeronave->matricula}}</option>
             @endforeach
         </select>
     </div>
@@ -91,7 +90,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_diario') is-invalid @enderror" name="num_diario"
-               value="{{ old('num_diario', strval($movimento->num_diario)) }}">
+               value="{{ old('num_diario', (string) $movimento->num_diario) }}">
 
         @error('num_diario')
         <span class="invalid-feedback" role="alert">
@@ -105,7 +104,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_servico') is-invalid @enderror" name="num_servico"
-               value="{{ old('num_servico', strval($movimento->num_servico)) }}">
+               value="{{ old('num_servico', (string) $movimento->num_servico) }}">
 
         @error('num_servico')
         <span class="invalid-feedback" role="alert">
@@ -128,22 +127,20 @@
     <div class="col-md-6">
         <select class="form-control" name="natureza" onchange="mostrar(value)">
             <option value="T"
-                    {{ old('natureza', strval($movimento->natureza)) == 'T' ? 'selected' : '' }} onclick="mostrar(1);">
+                    {{ old('natureza', (string) $movimento->natureza) == 'T' ? 'selected' : '' }} onclick="mostrar(1);">
                 Treino
             </option>
 
             <option value="I"
-                    {{ old('natureza', strval($movimento->natureza)) == 'I' ? 'selected' : '' }} onclick="mostrar(2);">
+                    {{ old('natureza', (string) $movimento->natureza) == 'I' ? 'selected' : '' }} onclick="mostrar(2);">
                 Instrução
             </option>
 
             <option value="E"
-                    {{ old('natureza', strval($movimento->natureza)) == 'E' ? 'selected' : '' }} onclick="mostrar(3);">
+                    {{ old('natureza', (string) $movimento->natureza) == 'E' ? 'selected' : '' }} onclick="mostrar(3);">
                 Especial
             </option>
-
         </select>
-
     </div>
 </div>
 <div id="instrucao" style="display:none;">
@@ -153,7 +150,7 @@
         <div class="col-md-6">
             <select class="form-control" name="instrutor_id">
                 @foreach($instrutores as $instrutor)
-                    <option {{ old('instrutor_id', strval($movimento->instrutor_id)) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
+                    <option {{ old('instrutor_id', (string) $movimento->instrutor_id) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
                 @endforeach
             </select>
         </div>

@@ -50,10 +50,10 @@ class UpdateSocio extends FormRequest
             'quota_paga'=>['required', Rule::in(['1', '0'])],
             'ativo'=>['required', Rule::in(['1', '0'])],
             'direcao'=>['required', Rule::in(['1', '0'])],
-            'instrutor'=>['nullable', Rule::in(['1', '0']),'different:aluno'],
+            'instrutor'=>['nullable', Rule::in(['1', '0'])],
             'licenca_confirmada'=>['nullable', Rule::in(['1', '0'])],
             'certificado_confirmado'=>['nullable', Rule::in(['1', '0'])],
-            'aluno'=>['nullable', Rule::in(['1', '0']), 'different:instrutor']
+            'aluno'=>['required', Rule::in(['1', '0'])]
         ];
     }
 

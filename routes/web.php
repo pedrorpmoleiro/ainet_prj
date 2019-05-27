@@ -38,8 +38,10 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::resource('movimentos', 'MovimentoController')->only(['edit','update']);
         });
 
+        Route::resource('movimentos', 'MovimentoController')->only(['create'])->middleware(['can:create,App\Movimento']);
+
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
-        Route::resource('movimentos', 'MovimentoController')->except(['show', 'edit', 'update']);
+        Route::resource('movimentos', 'MovimentoController')->except(['show', 'edit', 'update', 'create']);
 
         Route::middleware(['isDirecao'])->group(function () {
             Route::patch('/socios/reset_quotas','UserController@resetQuotas')->name('socio.reset_quotas');
