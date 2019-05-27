@@ -22,7 +22,7 @@ class MovimentoPolicy
 
     public function update (User $user, Movimento $movimento)
     {
-        return (($user->direcao || $user->tipo_socio == 'P') && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)) && $movimento->confirmado == 0;
+        return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
     }
 
     public function create (User $user)
