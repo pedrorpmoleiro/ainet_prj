@@ -24,10 +24,10 @@ class StoreMovimento extends FormRequest
     public function rules()
     {
         return [
-            'data'=>'required',
+            'data'=>'required|date_format:Y-m-d',
             'aeronave'=>'required',
-            'aerodromo_partida'=>'required',
-            'aerodromo_chegada'=>'required',
+            'aerodromo_partida'=>'required|exists:aerodromos,code',
+            'aerodromo_chegada'=>'required|exists:aerodromos,code',
             'hora_descolagem'=>'required',
             'hora_aterragem'=>'required',
             'num_diario'=>'required|numeric',
@@ -40,8 +40,8 @@ class StoreMovimento extends FormRequest
             'modo_pagamento'=>'required',
             'num_recibo'=>'required|numeric',
             'instrutor_id'=>'nullable|numeric',
-            'natureza'=>'required',
-            'tipo_instrucao'=>'nullable',
+            'natureza'=>['required', Rule::in(['T', 'I', 'E'])],
+            'tipo_instrucao'=>['nullable', Rule::in(['D', 'S'])],
             'observacoes'=>'nullable',
             'justificacao_conflito'=>'nullable'
 

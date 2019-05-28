@@ -66,6 +66,7 @@ class US16_PermissoesTest extends USTestBase
         $requestData = array_merge($this->movToSave, ["num_recibo" => "3123232"]);
         $response = $this->makeRequest($requestData, $this->normalUser);
         $response->assertUnauthorized('POST', "/movimentos", 'Sócio normal (não piloto) está autorizado a criar ou alterar movimentos (não devia ter acesso a essa funcionalidade)');
+        //dump($response->getStatusCode());
     }
 
     public function testProtegeCriarOuAlterarMovimentoComoPilotoDesativado()

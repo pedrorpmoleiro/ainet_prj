@@ -14,7 +14,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="form-group">
-                    <form role="form" method="get" action="{{ action('MovimentoController@index') }}">
+                    <form role="form" method="GET" action="{{ action('MovimentoController@index') }}">
                         <div class="row ml-2">
                             <div class="form-group mr-2">
                                 <input type="text" class="form-control" placeholder="Id Movimento" name="id"

@@ -19,7 +19,7 @@
                                 <a class="btn btn-sm btn-primary mb-4 mr-1"
                                    href="{{ action('UserController@create') }}">Adicionar Sócio</a>
                                 @if (count($socios))
-                                    <form action="{{ action('UserController@resetQuotas') }}" method="POST"
+                                    <form method="POST" action="{{ action('UserController@resetQuotas') }}"
                                           class="inline">
                                         @method('patch')
                                         @csrf
@@ -27,7 +27,7 @@
                                             Reset de Quotas
                                         </button>
                                     </form>
-                                    <form action="{{ action('UserController@desativarSemQuotas') }}" method="POST"
+                                    <form method="POST" action="{{ action('UserController@desativarSemQuotas') }}"
                                           class="inline">
                                         @method('patch')
                                         @csrf
@@ -88,7 +88,7 @@
                                             <td>
                                                 <div class="row justify-content-center">
                                                     <a class="btn btn-sm btn-primary mr-1"
-                                                       href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
+                                                           href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
                                                     <form action="{{ action('UserController@setQuota', ['socio' => $socio->id]) }}"
                                                           method="POST" class="inline">
                                                         @method('patch')

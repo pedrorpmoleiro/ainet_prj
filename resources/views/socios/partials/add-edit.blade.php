@@ -139,8 +139,7 @@
             <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>Piloto
             </option>
 
-            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não
-                Piloto
+            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não Piloto
             </option>
 
             <option value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'selected': '' }}>

@@ -57,6 +57,19 @@
         </select>
     </div>
 </div>
+
+<div class="form-group row">
+    <label for="piloto_id" class="col-md-4 col-form-label text-md-right">Piloto</label>
+
+    <div class="col-md-6">
+        <select class="form-control" name="piloto_id" @cannot('direcao') disabled @endcannot>
+            @foreach($pilotos as $piloto)
+                <option {{ old('piloto_id', (string) $movimento->piloto_id) == $piloto->id ? 'selected' : '' }}> {{ __("$piloto->num_socio - $piloto->nome_informal") }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
 <div class="form-group row">
     <label for="hora_descolagem" class="col-md-4 col-form-label text-md-right">Hora Descolagem</label>
 
@@ -113,14 +126,6 @@
         @enderror
     </div>
 </div>
-<!--div class="form-group row">
-    <label for="piloto_id" class="col-md-4 col-form-label text-md-right">Número de Piloto</label>
-
-    <div class="col-md-6">
-        <input type="text" class="form-control @error('piloto_id') is-invalid @enderror" name="piloto_id" value="{{ old('piloto_id', strval($movimento->piloto_id)) }}">
-
-    </div>
-</div-->
 <div class="form-group row">
     <label for="natureza" class="col-md-4 col-form-label text-md-right">Natureza </label>
 
@@ -161,11 +166,11 @@
 
         <div class="col-md-6">
             <input type="radio" name="tipo_instrucao"
-                   value="D" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'D' ? 'checked' : '' }}>Duplo
+                   value="D" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'D' ? 'checked' : '' }}>Duplo
             Comando <br>
 
             <input type="radio" name="tipo_instrucao"
-                   value="S" {{ old('tipo_instrucao', strval($movimento->tipo_instrucao)) == 'S' ? 'checked' : '' }}>
+                   value="S" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'S' ? 'checked' : '' }}>
             Solo
 
             @error('tipo_instrucao')
@@ -181,7 +186,7 @@
     <div class="col-md-6">
         <select class="form-control" name="aerodromo_partida">
             @foreach($aerodromos as $aerodromo)
-                <option {{ old('aerodromo_partida', strval($movimento->aerodromo_partida)) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
+                <option {{ old('aerodromo_partida', (string) $movimento->aerodromo_partida) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
             @endforeach
         </select>
     </div>
@@ -193,7 +198,7 @@
     <div class="col-md-6">
         <select class="form-control" name="aerodromo_chegada">
             @foreach($aerodromos as $aerodromo)
-                <option {{ old('aerodromo_chegada', strval($movimento->aerodromo_chegada)) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
+                <option {{ old('aerodromo_chegada', (string) $movimento->aerodromo_chegada) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
             @endforeach
         </select>
     </div>
@@ -203,7 +208,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_aterragens') is-invalid @enderror" name="num_aterragens"
-               value="{{ old('num_aterragens', strval($movimento->num_aterragens)) }}">
+               value="{{ old('num_aterragens', (string) $movimento->num_aterragens) }}">
 
         @error('num_aterragens')
         <span class="invalid-feedback" role="alert">
@@ -217,7 +222,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_descolagens') is-invalid @enderror" name="num_descolagens"
-               value="{{ old('num_descolagens', strval($movimento->num_descolagens)) }}">
+               value="{{ old('num_descolagens', (string) $movimento->num_descolagens) }}">
 
         @error('num_descolagens')
         <span class="invalid-feedback" role="alert">
@@ -231,7 +236,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_pessoas') is-invalid @enderror" name="num_pessoas"
-               value="{{ old('num_pessoas', strval($movimento->num_pessoas)) }}">
+               value="{{ old('num_pessoas', (string) $movimento->num_pessoas) }}">
 
         @error('num_pessoas')
         <span class="invalid-feedback" role="alert">
@@ -246,7 +251,7 @@
     <div class="col-md-6">
         <input type="text" class="form-control @error('conta_horas_inicio') is-invalid @enderror"
                name="conta_horas_inicio"
-               value="{{ old('conta_horas_inicio', strval($movimento->conta_horas_inicio)) }}">
+               value="{{ old('conta_horas_inicio', (string) $movimento->conta_horas_inicio) }}">
 
         @error('conta_horas_inicio')
         <span class="invalid-feedback" role="alert">
@@ -260,7 +265,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('conta_horas_fim') is-invalid @enderror" name="conta_horas_fim"
-               value="{{ old('conta_horas_fim', strval($movimento->conta_horas_fim)) }}">
+               value="{{ old('conta_horas_fim', (string) $movimento->conta_horas_fim) }}">
 
         @error('conta_horas_fim')
         <span class="invalid-feedback" role="alert">
@@ -276,27 +281,26 @@
         </div>
     </div>
 </div>
-
 <div class="form-group row">
     <label for="modo_pagamento" class="col-md-4 col-form-label text-md-right">Modo Pagamento </label>
 
     <div class="col-md-6">
         <select name="modo_pagamento" class="form-control">
-            <option value="N" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'N' ? 'selected': '' }}>
+            <option value="N" {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == 'N' ? 'selected': '' }}>
                 Numerário
             </option>
 
-            <option value="M" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'M' ? 'selected': '' }}>
+            <option value="M" {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == 'M' ? 'selected': '' }}>
                 Multibanco
             </option>
 
-            <option value="T" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'T' ? 'selected': '' }}>
+            <option value="T" {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == 'T' ? 'selected': '' }}>
                 Transferência
             </option>
 
-            <option value="P" {{ old('modo_pagamento', strval($movimento->modo_pagamento)) == 'P' ? 'selected': '' }}>
+            <option value="P" {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == 'P' ? 'selected': '' }}>
                 Pacote de horas
-
+            </option>
         </select>
     </div>
 </div>
@@ -335,7 +339,7 @@
 </div>
 <div id="conflito" style="display:none;">
     <div class="form-group row">
-        <label for="justificacao_conflito" class="col-md-4 col-form-label text-md-right"> Justificacao conflito</label>
+        <label for="justificacao_conflito" class="col-md-4 col-form-label text-md-right">Justificacao conflito</label>
         <div class="col-md-6">
         <textarea rows="3" class="form-control @error('justificacao_conflito') is-invalid @enderror"
                   name="justificacao_conflito">
@@ -348,5 +352,4 @@
             @enderror
         </div>
     </div>
-
 </div>

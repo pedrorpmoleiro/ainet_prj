@@ -25,6 +25,11 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
     Route::middleware(['isAtivo'])->group(function () {
         Route::resource('socios', 'UserController')->only(['index']);
 
+        Route::middleware(['isDirecao'])->group(function () {
+            Route::patch('/socios/reset_quotas','UserController@resetQuotas')->name('socio.reset_quotas');
+            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
+        });
+
         Route::middleware(['can:update,socio'])->group(function () {
             Route::resource('socios', 'UserController')->only(['edit', 'update']);
         });
@@ -34,17 +39,14 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::get('/pilotos/{piloto}/licenca','UserController@licenca')->name('piloto.licenca');
         });
 
-        Route::resource('movimentos', 'MovimentoController')->only(['create'])->middleware(['can:create,App\Movimento']);
+        Route::resource('movimentos', 'MovimentoController')->only(['create', 'store'])->middleware(['can:create,App\Movimento']);
         Route::resource('movimentos', 'MovimentoController')->only(['edit','update'])->middleware(['can:update,movimento']);
 
-        Route::resource('movimentos', 'MovimentoController')->except(['show', 'edit', 'update', 'create']);
+        Route::resource('movimentos', 'MovimentoController')->only(['index', 'destroy']);
 
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
 
         Route::middleware(['isDirecao'])->group(function () {
-            Route::patch('/socios/reset_quotas','UserController@resetQuotas')->name('socio.reset_quotas');
-            Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
-
             Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->except(['show', 'index']);
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update', 'index']);
 
