@@ -21,6 +21,11 @@ class MovimentoController extends Controller
         $movimentos=Movimento::orderBy('id');
         $query=$request->query();
         // $filters=$query;
+        $keys = array_keys($query, null, true);
+
+        foreach ($keys as $key) {
+            unset($query[$key]);
+        }
         $filters=[
             'id'=>'','piloto'=>'','aeronave'=>'','instrutor'=>'','natureza'=>'','confirmado'=>'',
             'data_inf'=>'','data_sup'=>'','filter_day'=>'','meus_movimentos'=>''

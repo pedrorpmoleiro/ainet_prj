@@ -22,7 +22,7 @@
                             </div>
                             <div class="form-group mr-2">
                                 <input type="text" class="form-control" placeholder="Matricula Aeronave" name="aeronave"
-                                       value="{{old('aeronave',strval($filters['aeronave']))}}">
+                                       value="{{old('aeronave',strval($filters['aeronave'])??'')}}">
                             </div>
                             <div class="form-group mr-2">
                                 <input type="text" class="form-control" placeholder="Piloto" name="piloto"
