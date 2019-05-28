@@ -305,7 +305,7 @@
 
     <div class="col-md-6">
         <input type="text" class="form-control @error('num_recibo') is-invalid @enderror" name="num_recibo"
-               value="{{ old('num_recibo', strval($movimento->num_recibo)) }}">
+               value="{{ old('num_recibo', (string) $movimento->num_recibo) }}">
 
         @error('num_recibo')
         <span class="invalid-feedback" role="alert">
@@ -319,7 +319,7 @@
     <label for="observacoes" class="col-md-4 col-form-label text-md-right"> Observacoes</label>
     <div class="col-md-6">
     <textarea rows="3" class="form-control @error('observacoes') is-invalid @enderror" name="observacoes">
-{{ old('observacoes', strval($movimento->observacoes)) }}
+{{ old('observacoes', (string) $movimento->observacoes) }}
         @error('observacoes')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -339,7 +339,7 @@
         <div class="col-md-6">
         <textarea rows="3" class="form-control @error('justificacao_conflito') is-invalid @enderror"
                   name="justificacao_conflito">
-            {{ old('justificacao_conflito', strval($movimento->justificacao_conflito)) }}
+            {{ old('justificacao_conflito', (string) $movimento->justificacao_conflito) }}
         </textarea>
             @error('justificacao_conflito')
             <span class="invalid-feedback" role="alert">

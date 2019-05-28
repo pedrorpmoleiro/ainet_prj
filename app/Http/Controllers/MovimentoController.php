@@ -11,7 +11,6 @@ use App\Aeronave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class MovimentoController extends Controller
 {
