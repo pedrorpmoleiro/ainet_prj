@@ -54,20 +54,23 @@ class MovimentoController extends Controller
             $filters['confirmado'] = $confirmado;
             if ($confirmado != 'A') $movimentos = $movimentos->where('confirmado', $confirmado);
         }
-        if (isset($data_inf)) {
-            if (!isset($filter_day)) {
-                $filter_day = 'anterior';
-            }
+        if (isset($filter_day)) {
             $filters['filter_day'] = $filter_day;
-
-            $filters['data_inf'] = $data_inf;
-            if ($filter_day == 'posterior') {
-                $movimentos = $movimentos->where('data', '>=', $data_inf);
+        } else {
+            if (isset($data_inf)) {
+                $filters['filter_day'] = 'posterior';
+            }elseif (isset($data_sup)){
+                $filters['filter_day'] = 'anterior';
+            }
+        }//VIENE DEL URL DIRECTO
+        if (isset($data_inf)) {
+            if ($filters['filter_day']== 'anterior') {
+                $movimentos = $movimentos->where('data', '<=', $data_inf);
             } else {
-                if ($filter_day == 'anterior') {
-                    $movimentos = $movimentos->where('data', '<=', $data_inf);
+                if ($filters['filter_day']== 'posterior') {
+                    $movimentos = $movimentos->where('data', '>=', $data_inf);
                 } else {
-                    if ($filter_day == 'data') {
+                    if ($filters['filter_day'] == 'data') {
                         $movimentos = $movimentos->where('data', $data_inf);
                     } else {
                         if (isset($data_sup)) {
