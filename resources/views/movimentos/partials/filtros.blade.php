@@ -90,8 +90,7 @@
                                                 @endif value="N">Todos
                                         </option>
                                         <option @if($filters['meus_movimentos'] == "S" || $filters['meus_movimentos'] == "Meus Movimentos" )selected
-                                                @endif value="S">Meus Movimentos
-                                        </option>
+                                                @endif value="S">Meus Movimentos</option>
                                     </select>
                                 </div>
                             @endcan

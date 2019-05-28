@@ -63,9 +63,8 @@ class MovimentoController extends Controller
                 $filters['filter_day'] = 'anterior';
             }
         }//VIENE DEL URL DIRECTO
-        if (isset($data_inf)) {
             if ($filters['filter_day']== 'anterior') {
-                $movimentos = $movimentos->where('data', '<=', $data_inf);
+                $movimentos = $movimentos->where('data', '<=', $data_sup);
             } else {
                 if ($filters['filter_day']== 'posterior') {
                     $movimentos = $movimentos->where('data', '>=', $data_inf);
@@ -80,12 +79,9 @@ class MovimentoController extends Controller
                     }
                 }
             }
-        }
         if (isset($meus_movimentos)) {
             $filters['meus_movimentos'] = $meus_movimentos;
-            if ($meus_movimentos == 'S') {
-                $movimentos = $movimentos->where('piloto_id', Auth::user()->id);
-            }
+            if ($meus_movimentos != 'N') $movimentos = $movimentos->where('piloto_id', Auth::user()->id);
         }
 
         $movimentos = $movimentos->paginate(24);
