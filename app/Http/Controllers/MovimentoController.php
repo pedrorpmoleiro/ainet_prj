@@ -57,28 +57,28 @@ class MovimentoController extends Controller
         if (isset($filter_day)) {
             $filters['filter_day'] = $filter_day;
         } else {
+            //VIENE DEL URL DIRECTO
             if (isset($data_inf)) {
                 $filters['filter_day'] = 'posterior';
-            }elseif (isset($data_sup)){
+            } elseif (isset($data_sup)) {
                 $filters['filter_day'] = 'anterior';
             }
-        }//VIENE DEL URL DIRECTO
-            if ($filters['filter_day']== 'anterior') {
+        }
+        if (isset($data_sup)) {
+            if ($filters['filter_day'] == 'anterior') {
                 $movimentos = $movimentos->where('data', '<=', $data_sup);
-            } else {
-                if ($filters['filter_day']== 'posterior') {
-                    $movimentos = $movimentos->where('data', '>=', $data_inf);
-                } else {
-                    if ($filters['filter_day'] == 'data') {
-                        $movimentos = $movimentos->where('data', $data_inf);
-                    } else {
-                        if (isset($data_sup)) {
-                            $filters['data_sup'] = $data_sup;
-                            $movimentos = $movimentos->where('data', '>=', $data_inf)->where('data', '<=', $data_sup);
-                        }
-                    }
-                }
             }
+        }
+        if (isset($data_inf)) {
+            if ($filters['filter_day'] == 'posterior') {
+                $movimentos = $movimentos->where('data', '>=', $data_inf);
+            }
+        }
+        if (isset($data_inf) && isset($data_sup)) {
+            $filters['filter_day'] = 'duas_datas';
+            $movimentos = $movimentos->where('data', '>=', $data_inf)->where('data', '<=', $data_sup);
+
+        }
         if (isset($meus_movimentos)) {
             $filters['meus_movimentos'] = $meus_movimentos;
             if ($meus_movimentos != 'N') $movimentos = $movimentos->where('piloto_id', Auth::user()->id);
