@@ -11,7 +11,7 @@ use App\Aeronave;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
 class MovimentoController extends Controller
 {
 
@@ -177,11 +177,28 @@ class MovimentoController extends Controller
                 $movimento['tipo_conflito'] = 'S';
             }
         }
+        $movimento['confirmado'] = 0;
         //US18
-        $movimento['tempo_voo'] = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']) / 10) * 60;
+        /*$movimento['tempo_voo'] = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']) / 10) * 60;
         $movimento['preco_voo'] = ($movimento['tempo_voo'] / 60) * Aeronave::find($movimento['aeronave'])->preco_hora;
         $movimento['confirmado'] = 0;
-        // dd($movimento);
+        */
+        $aeronave_valores=DB::table('aeronaves_valores')->where('matricula',$movimento['aeronave'])->get();
+        $conta_horas_resta=(($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
+        if($conta_horas_resta<=10){
+                $aeronave_valores=$aeronave_valores->where('unidade_conta_horas',$conta_horas_resta);
+                $movimento['tempo_voo']=$aeronave_valores->minutos;
+                $movimento['preco_voo']=$aeronave_valores->preco;
+        }else{
+            $multiplo=(int)$conta_horas_resta/10;
+            $resto=$conta_horas_resta%10;
+            $tempo=$aeronave_valores->where('unidade_conta_horas',10)->minutos*$multiplo;
+            $preco=$aeronave_valores->where('unidade_conta_horas',10)->preco*$multiplo;
+            $tempo+=$aeronave_valores->where('unidade_conta_horas',$resto)->minutos;
+            $preco+=$aeronave_valores->where('unidade_conta_horas',$resto)->preco;
+            $movimento['tempo_voo']=$tempo;
+            $movimento['preco_voo']=$preco;
+        }
         Movimento::create($movimento);
         return redirect()->action('MovimentoController@index');
     }
@@ -205,6 +222,7 @@ class MovimentoController extends Controller
         }
 
         $instrutores = User::where('instrutor', 1)->get();
+
 
         return view('movimentos.edit', compact('title', 'movimento', 'aeronaves', 'pilotos', 'aerodromos', 'instrutores'));
     }
@@ -244,18 +262,30 @@ class MovimentoController extends Controller
                 Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
                 $title = 'Inserir novo movimento';
                 $aerodromos = Aerodromo::all();
-                $aeronaves = Auth::user()->aeronaves;
+                if (Auth::user()->direcao) {
+                    $aeronaves = Aeronave::all();
+                    $pilotos = User::where('tipo_socio', 'P')->get();
+                } else {
+                    $aeronaves = Auth::user()->aeronaves;
+                    $pilotos = [Auth::user()];
+                }
                 $instrutores = User::where('instrutor', 1)->get();
                 //   dd($movimento);
-                return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'aeronaves', 'instrutores'));
+                return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'pilotos', 'aeronaves', 'instrutores'));
             } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
                 Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
                 $title = 'Inserir novo movimento';
                 $aerodromos = Aerodromo::all();
-                $aeronaves = Auth::user()->aeronaves;
+                if (Auth::user()->direcao) {
+                    $aeronaves = Aeronave::all();
+                    $pilotos = User::where('tipo_socio', 'P')->get();
+                } else {
+                    $aeronaves = Auth::user()->aeronaves;
+                    $pilotos = [Auth::user()];
+                }
                 $instrutores = User::where('instrutor', 1)->get();
                 //   dd($movimento);
-                return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'aeronaves', 'instrutores'));
+                return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'pilotos', 'aeronaves', 'instrutores'));
             }
         } else {
             if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
@@ -264,8 +294,24 @@ class MovimentoController extends Controller
                 $movimento['tipo_conflito'] = 'S';
             }
         }
-        $movimento['tempo_voo'] = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']) / 10) * 60;
-        $movimento['preco_voo'] = ($movimento['tempo_voo'] / 60) * Aeronave::find($movimento['aeronave'])->preco_hora;
+        $aeronave_valores=DB::table('aeronaves_valores')->where('matricula',$movimento['aeronave'])->get();
+        $conta_horas_resta=(($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
+        if($conta_horas_resta<=10){
+            $aeronave_valores=$aeronave_valores->where('unidade_conta_horas',$conta_horas_resta);
+            $movimento['tempo_voo']=$aeronave_valores->minutos;
+            $movimento['preco_voo']=$aeronave_valores->preco;
+        }else{
+            $multiplo=(int)$conta_horas_resta/10;
+            $resto=$conta_horas_resta%10;
+            $tempo=$aeronave_valores->where('unidade_conta_horas',10)->minutos*$multiplo;
+            $preco=$aeronave_valores->where('unidade_conta_horas',10)->preco*$multiplo;
+            $tempo+=$aeronave_valores->where('unidade_conta_horas',$resto)->minutos;
+            $preco+=$aeronave_valores->where('unidade_conta_horas',$resto)->preco;
+            $movimento['tempo_voo']=$tempo;
+            $movimento['preco_voo']=$preco;
+        }
+        dd($movimento);
+        Movimento::create($movimento);
         $movimento['confirmado'] = 0;
         $movimento->save();
         return redirect()->action('MovimentoController@index');
