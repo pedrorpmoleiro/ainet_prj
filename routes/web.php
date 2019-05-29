@@ -38,9 +38,10 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
         });
 
         Route::resource('movimentos', 'MovimentoController')->only(['create', 'store'])->middleware(['can:create,App\Movimento']);
-        Route::resource('movimentos', 'MovimentoController')->only(['edit','update'])->middleware(['can:update,movimento']);
 
         Route::resource('movimentos', 'MovimentoController')->only(['index', 'destroy']);
+
+        Route::resource('movimentos', 'MovimentoController')->only(['edit','update'])->middleware(['can:update,movimento']);
 
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
 

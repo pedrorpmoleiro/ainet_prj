@@ -16,9 +16,9 @@
                             @include('movimentos.partials.add-edit')
 
                             <input type="hidden" name="tempo_voo"
-                                   value="{{ old('tempo_voo', (string) $movimento->tempo_voo) }}">
+                                   value="124">
                             <input type="hidden" name="preco_voo"
-                                   value="{{ old('preco_voo', (string) $movimento->preco_voo) }}">
+                                   value="123">
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">

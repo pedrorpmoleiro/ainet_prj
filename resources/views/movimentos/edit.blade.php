@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form action="{{ action('MovimentoController@update', ['movimento'=>$movimento->id]) }}"
-                              method="post">
+                              method="POST">
                             @method('PUT')
                             @csrf
 

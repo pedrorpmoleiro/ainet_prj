@@ -64,7 +64,7 @@
     <div class="col-md-6">
         <select class="form-control" name="piloto_id" @cannot('direcao') disabled @endcannot>
             @foreach($pilotos as $piloto)
-                <option {{ old('piloto_id', (string) $movimento->piloto_id) == $piloto->id ? 'selected' : '' }}> {{ __("$piloto->num_socio - $piloto->nome_informal") }}</option>
+                <option {{ old('piloto_id', (string) $movimento->piloto_id) == $piloto->id ? 'selected' : '' }} value="{{$piloto->id}}"> {{ __("$piloto->num_socio - $piloto->nome_informal") }}</option>
             @endforeach
         </select>
     </div>
@@ -74,7 +74,7 @@
     <label for="hora_descolagem" class="col-md-4 col-form-label text-md-right">Hora Descolagem</label>
 
     <div class="col-md-6">
-        <input type="time" class="form-control @error('hora_descolagem') is-invalid @enderror" name="hora_descolagem"
+        <input type="text" class="form-control @error('hora_descolagem') is-invalid @enderror" name="hora_descolagem"
                value="{{ old('hora_descolagem', date('H:j:s',strtotime($movimento->hora_descolagem))) }}">
 
         @error('hora_descolagem')
@@ -88,7 +88,7 @@
     <label for="hora_aterragem" class="col-md-4 col-form-label text-md-right">Hora Aterragem</label>
 
     <div class="col-md-6">
-        <input type="time" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem"
+        <input type="text" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem"
                value="{{ old('hora_aterragem', date('H:j:s',strtotime($movimento->hora_aterragem))) }}">
         @error('hora_aterragem')
         <span class="invalid-feedback" role="alert">
@@ -332,11 +332,14 @@
     </textarea>
     </div>
 </div>
-
-<div>
-    <label for="resolver" class="col-md-4 col-form-label text-md-right">Guardar com conflitos</label>
-    <input type="checkbox" id="resolve" class="form-control-input" name="resolver" onclick="mostrarC()">
-</div>
+@foreach (['danger', 'warning'] as $msg)
+    @if(Session::has('alert-' . $msg))
+        <div>
+            <label for="resolver" class="col-md-4 col-form-label text-md-right">Guardar com conflitos</label>
+            <input type="checkbox" id="resolve" class="form-control-input" name="resolver" onclick="mostrarC()">
+        </div>
+    @endif
+@endforeach
 <div id="conflito" style="display:none;">
     <div class="form-group row">
         <label for="justificacao_conflito" class="col-md-4 col-form-label text-md-right">Justificacao conflito</label>
