@@ -46,8 +46,7 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
 
         Route::middleware(['isDirecao'])->group(function () {
-            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->except(['show', 'index', 'destroy']);
-            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->only(['destroy'])->middleware(['can:destroy,aeronave']);
+            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->except(['show', 'index']);
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update', 'index']);
 
             Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotos')->name('aeronaves.pilotos');

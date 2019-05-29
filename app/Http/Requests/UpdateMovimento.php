@@ -26,7 +26,7 @@ class UpdateMovimento extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'data'=>['required', 'date_format:Y-m-d'],
             'aeronave'=>['required', 'exists:aeronaves,matricula'],
             'aerodromo_partida'=>['required', 'exists:aerodromos,code'],
@@ -41,16 +41,21 @@ class UpdateMovimento extends FormRequest
             'conta_horas_inicio'=>['required', 'integer', 'min:1'],
             'conta_horas_fim'=>['required', 'integer', 'gt:conta_horas_inicio', 'min:1'],
             'modo_pagamento'=>['required', Rule::in(['N', 'M', 'T', 'P'])],
-            'num_recibo'=>['required', 'integer'],
+            'num_recibo'=>['required', 'max:20'],
             'natureza'=>['required', Rule::in(['T', 'I', 'E'])],
-            'tipo_instrucao'=>['nullable', Rule::in(['D', 'S'])],
             'observacoes'=>['nullable'],
             'justificacao_conflito'=>['nullable'],
-            'instrutor_id'=>['nullable', 'exists:users,id', new Instrutor],
             'piloto_id'=>['required', 'exists:users,id', new Piloto],
             'tempo_voo'=>['required', 'integer', 'min:1'],
             'preco_voo'=>['required', 'numeric', 'min:1']
         ];
+
+        if ($this->attributes->get('natureza') == 'I') {
+            $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
+            $rules['instrutor_id'] = ['required', 'exists:users,id', new Instrutor];
+        }
+
+        return $rules;
     }
 
     public function messages()

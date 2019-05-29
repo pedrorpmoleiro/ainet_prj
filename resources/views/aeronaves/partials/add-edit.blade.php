@@ -98,7 +98,7 @@
                 @for ($i = 0; $i < 10; $i++)
                    <tr>
                        <td>{{ $i + 1 }}</td>
-                       <td><input type="text" class="form-control" name="minutos[]" value="{{ old('minutos.'.$i, $minutos[$i]) }}"></td>
+                       <td><input type="text" class="form-control" name="tempos[]" value="{{ old('minutos.'.$i, $minutos[$i]) }}"></td>
                        <td><input type="text" class="form-control" name="precos[]" value="{{ old('precos.'.$i, $precos[$i]) }}"></td>
                    </tr>
                 @endfor

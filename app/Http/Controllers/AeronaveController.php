@@ -39,6 +39,16 @@ class AeronaveController extends Controller
         $aeronave = $request->validated();
 
         Aeronave::create($aeronave);
+
+        $insert = [];
+        $precos = $aeronave['precos'];
+        $tempos = $aeronave['tempos'];
+
+        for ($i = 0; $i < 10; $i++) {
+            $insert[] = ['matricula'=>$aeronave['matricula'], 'unidade_conta_horas'=>($i + 1), 'minutos'=>$tempos[$i], 'preco'=>$precos[$i]];
+        }
+
+        DB::table('aeronaves_valores')->insert($insert);
         
         return redirect()->action('AeronaveController@index');
     }
@@ -52,8 +62,8 @@ class AeronaveController extends Controller
     {
         $title = "Editar Aeronave";
 
-        $minutos = [5, 10, 20, 25, 30, 35, 40, 50, 55, 60];
-        $precos = ['', '', '', '', '', '', '', '', '', ''];
+        $minutos = DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)->select(['minutos'])->get();
+        $precos = DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)->select(['preco'])->get();
 
         return view('aeronaves.edit', compact('title', 'aeronave', 'minutos', 'precos'));
     }

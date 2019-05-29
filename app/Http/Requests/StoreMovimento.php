@@ -26,7 +26,7 @@ class StoreMovimento extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'data'=>['required', 'date_format:Y-m-d'],
             'aeronave'=>['required', 'exists:aeronaves,matricula'],
             'aerodromo_partida'=>['required', 'exists:aerodromos,code'],
@@ -45,12 +45,17 @@ class StoreMovimento extends FormRequest
             'natureza'=>['required', Rule::in(['T', 'I', 'E'])],
             'observacoes'=>['nullable'],
             'justificacao_conflito'=>['nullable'],
-            'tipo_instrucao'=>['nullable', Rule::in(['D', 'S'])],
-            'instrutor_id'=>['nullable', 'exists:users,id', new Instrutor],
             'piloto_id'=>['required', 'exists:users,id', new Piloto],
             'tempo_voo'=>['required', 'integer', 'min:1'],
             'preco_voo'=>['required', 'numeric', 'min:1']
         ];
+
+        if ($this->attributes->get('natureza') == 'I') {
+            $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
+            $rules['instrutor_id'] = ['required', 'exists:users,id', new Instrutor];
+        }
+
+        return $rules;
     }
 
     public function messages()
