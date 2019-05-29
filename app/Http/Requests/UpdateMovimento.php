@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Instrutor;
+use App\Rules\Piloto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -25,26 +27,29 @@ class UpdateMovimento extends FormRequest
     public function rules()
     {
         return [
-            'data'=>'required',
-            'aeronave'=>'required',
-            'aerodromo_partida'=>'required',
-            'aerodromo_chegada'=>'required',
-            'hora_descolagem'=>'required',
-            'hora_aterragem'=>'required',
-            'num_diario'=>'required|numeric',
-            'num_servico'=>'required|numeric',
-            'num_aterragens'=>'required|numeric',
-            'num_descolagens'=>'required|numeric',
-            'num_pessoas'=>'required|numeric',
-            'conta_horas_inicio'=>'required|numeric',
-            'conta_horas_fim'=>'required|numeric|gt:conta_horas_inicio',
-            'modo_pagamento'=>'required',
-            'num_recibo'=>'required|numeric',
-            'instrutor_id'=>'nullable|numeric',
-            'natureza'=>'required',
-            'tipo_instrucao'=>'nullable',
-            'observacoes'=>'nullable',
-            'justificacao_conflito'=>'nullable'
+            'data'=>['required', 'date_format:Y-m-d'],
+            'aeronave'=>['required', 'exists:aeronaves,matricula'],
+            'aerodromo_partida'=>['required', 'exists:aerodromos,code'],
+            'aerodromo_chegada'=>['required', 'exists:aerodromos,code'],
+            'hora_descolagem'=>['required', 'date_format:H:i'],
+            'hora_aterragem'=>['required', 'date_format:H:i'],
+            'num_diario'=>['required', 'integer', 'min:1'],
+            'num_servico'=>['required', 'integer', 'min:1'],
+            'num_aterragens'=>['required', 'integer', 'min:1'],
+            'num_descolagens'=>['required', 'integer', 'min:1'],
+            'num_pessoas'=>['required', 'integer', 'min:1'],
+            'conta_horas_inicio'=>['required', 'integer', 'min:1'],
+            'conta_horas_fim'=>['required', 'integer', 'gt:conta_horas_inicio', 'min:1'],
+            'modo_pagamento'=>['required', Rule::in(['N', 'M', 'T', 'P'])],
+            'num_recibo'=>['required', 'integer'],
+            'natureza'=>['required', Rule::in(['T', 'I', 'E'])],
+            'tipo_instrucao'=>['nullable', Rule::in(['D', 'S'])],
+            'observacoes'=>['nullable'],
+            'justificacao_conflito'=>['nullable'],
+            'instrutor_id'=>['nullable', 'exists:users,id', new Instrutor],
+            'piloto_id'=>['required', 'exists:users,id', new Piloto],
+            'tempo_voo'=>['required', 'integer', 'min:1'],
+            'preco_voo'=>['required', 'numeric', 'min:1']
         ];
     }
 

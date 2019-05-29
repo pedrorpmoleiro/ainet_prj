@@ -26,12 +26,12 @@ class StoreSocio extends FormRequest
     {
         return [
             'name'=>'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'num_socio'=>'required|numeric|min:1|unique:users,num_socio',
+            'num_socio'=>'required|integer|min:1|unique:users,num_socio',
             'email'=>'required|email|unique:users,email',
             'nome_informal'=>'required|max:40',
             'sexo'=>['required', Rule::in(['M', 'F'])],
             'data_nascimento'=>'required|date_format:Y-m-d|before:today',
-            'nif'=>'required|numeric|max:999999999',
+            'nif'=>'required|integer|max:999999999',
             'telefone'=>'required|regex:/^\+?\d{3}(?: ?\d+)*$/|max:20',
             'endereco'=>'required',
             'tipo_socio'=>['required', Rule::in(['P', 'NP', 'A'])],

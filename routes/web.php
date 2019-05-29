@@ -30,9 +30,7 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
         });
 
-        Route::middleware(['can:update,socio'])->group(function () {
-            Route::resource('socios', 'UserController')->only(['edit', 'update']);
-        });
+        Route::resource('socios', 'UserController')->only(['edit', 'update'])->middleware(['can:update,socio']);
 
         Route::middleware(['can:licenca,piloto'])->group(function () {
             Route::get('/pilotos/{piloto}/certificado','UserController@certificado')->name('piloto.certificado');
@@ -47,7 +45,8 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
 
         Route::middleware(['isDirecao'])->group(function () {
-            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->except(['show', 'index']);
+            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->except(['show', 'index', 'destroy']);
+            Route::resource('aeronaves', 'AeronaveController')->parameters(['aeronaves'=>'aeronave'])->only(['destroy'])->middleware(['can:destroy,aeronave']);
             Route::resource('socios', 'UserController')->except(['show', 'edit', 'update', 'index']);
 
             Route::get('/aeronaves/{aeronave}/pilotos', 'AeronaveController@pilotos')->name('aeronaves.pilotos');

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class UserController extends Controller
 {
@@ -86,7 +87,7 @@ class UserController extends Controller
         $socio['password'] = Hash::make($socio['data_nascimento']);
 
         $user = User::create($socio);
-        
+
         if (isset($socio['file_foto'])) {
             $path = $socio['file_foto']->storeAs('public/fotos', $user->id.'_pic.jpg');
             $foto = basename($path);
@@ -187,7 +188,13 @@ class UserController extends Controller
 
     public function setQuota(Request $request, User $socio)
     {
-        $socio->quota_paga = (int) $request->input('quota_paga');
+        $quota_paga = (int) $request->input('quota_paga');
+
+        if ($quota_paga != 0 && $quota_paga != 1) {
+            throw new AccessDeniedHttpException('Unauthorized.');
+        }
+
+        $socio->quota_paga = $quota_paga;
 
         $socio->save();
 
@@ -203,19 +210,20 @@ class UserController extends Controller
 
     public function desativarSemQuotas()
     {
-        $users = User::where('quota_paga', '0')->get();
-
-        foreach ($users as $user) {
-            $user->quota_paga = 0;
-            $user->save();
-        }
+        User::where('quota_paga', '0')->update(['ativo'=>'0']);
 
         return redirect()->action('UserController@index');
     }
 
     public function ativarSocio(Request $request, User $socio)
     {
-        $socio->ativo = (int) $request->input('ativo');
+        $ativo = (int) $request->input('ativo');
+
+        if ($ativo != 0 && $ativo != 1) {
+            throw new AccessDeniedHttpException('Unauthorized.');
+        }
+
+        $socio->ativo = $ativo;
 
         $socio->save();
 

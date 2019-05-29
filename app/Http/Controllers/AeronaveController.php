@@ -24,7 +24,10 @@ class AeronaveController extends Controller
         $title = 'Inserir nova aeronave';
         $aeronave = new Aeronave();
 
-        return view('aeronaves.add', compact('title', 'aeronave'));
+        $minutos = [5, 10, 20, 25, 30, 35, 40, 50, 55, 60];
+        $precos = ['', '', '', '', '', '', '', '', '', ''];
+
+        return view('aeronaves.add', compact('title', 'aeronave', 'minutos', 'precos'));
     }
 
     public function store(StoreAeronave $request)
@@ -49,7 +52,10 @@ class AeronaveController extends Controller
     {
         $title = "Editar Aeronave";
 
-        return view('aeronaves.edit', compact('title', 'aeronave'));
+        $minutos = [5, 10, 20, 25, 30, 35, 40, 50, 55, 60];
+        $precos = ['', '', '', '', '', '', '', '', '', ''];
+
+        return view('aeronaves.edit', compact('title', 'aeronave', 'minutos', 'precos'));
     }
 
     public function update(UpdateAeronave $request, Aeronave $aeronave)

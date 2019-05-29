@@ -81,3 +81,28 @@
         @enderror
     </div>
 </div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right">Valores</label>
+
+    <div class="col-md-6">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Conta Horas</th>
+                    <th>Minutos</th>
+                    <th>Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for ($i = 0; $i < 10; $i++)
+                   <tr>
+                       <td>{{ $i + 1 }}</td>
+                       <td><input type="text" class="form-control" name="minutos[]" value="{{ old('minutos.'.$i, $minutos[$i]) }}"></td>
+                       <td><input type="text" class="form-control" name="precos[]" value="{{ old('precos.'.$i, $precos[$i]) }}"></td>
+                   </tr>
+                @endfor
+            </tbody>
+        </table>
+    </div>
+</div>

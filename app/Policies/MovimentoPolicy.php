@@ -29,4 +29,8 @@ class MovimentoPolicy
     {
         return $user->direcao || $user->tipo_socio == 'P';
     }
+
+    public function destroy (User $user, Movimento $movimento) {
+        return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
+    }
 }

@@ -234,9 +234,11 @@ class MovimentoController extends Controller
         }
 
         $movimentoE = $request->validated();
+
         $movimento->fill($movimentoE);
         $movimento['hora_descolagem'] = $movimento['data'] . ' ' . $movimento['hora_descolagem'];
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
+
         if ($movimento['natureza'] == 'I') {
             $instrutor = User::find($movimento['instrutor_id']);
             $movimento['num_licenca_instrutor'] = $instrutor['num_licenca'];
@@ -254,14 +256,18 @@ class MovimentoController extends Controller
             $movimento['validade_certificado_instrutor'] = null;
             $movimento['classe_certificado_instrutor'] = null;
         }
+
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
+
         if (is_null($resolver)) {
             if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
                 //SOBREPOSICAO
                 Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
                 $title = 'Inserir novo movimento';
                 $aerodromos = Aerodromo::all();
+                $instrutores = User::where('instrutor', 1)->get();
+
                 if (Auth::user()->direcao) {
                     $aeronaves = Aeronave::all();
                     $pilotos = User::where('tipo_socio', 'P')->get();
@@ -269,13 +275,14 @@ class MovimentoController extends Controller
                     $aeronaves = Auth::user()->aeronaves;
                     $pilotos = [Auth::user()];
                 }
-                $instrutores = User::where('instrutor', 1)->get();
-                //   dd($movimento);
+
                 return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'pilotos', 'aeronaves', 'instrutores'));
             } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
                 Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
                 $title = 'Inserir novo movimento';
                 $aerodromos = Aerodromo::all();
+                $instrutores = User::where('instrutor', 1)->get();
+
                 if (Auth::user()->direcao) {
                     $aeronaves = Aeronave::all();
                     $pilotos = User::where('tipo_socio', 'P')->get();
@@ -283,8 +290,7 @@ class MovimentoController extends Controller
                     $aeronaves = Auth::user()->aeronaves;
                     $pilotos = [Auth::user()];
                 }
-                $instrutores = User::where('instrutor', 1)->get();
-                //   dd($movimento);
+
                 return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'pilotos', 'aeronaves', 'instrutores'));
             }
         } else {
