@@ -44,7 +44,7 @@
                                             <td>{{ $movimento->hora_descolagem }}</td>
                                             <td>{{ $movimento->hora_aterragem }}</td>
                                             <td>{{ $movimento->tempo_voo }}</td>
-                                            <td>{{ $movimento->natureza }}</td>
+                                            <td>{{ $movimento::toString($movimento->natureza) }}</td>
                                             <td>{{ $movimento->piloto->nome_informal }}</td>
                                             <td>{{ $movimento->aerodromo_partida }}</td>
                                             <td>{{ $movimento->aerodromo_chegada }}</td>
@@ -68,15 +68,6 @@
                                                                     </button>
                                                                 </form>
                                                             @endcan
-                                                            <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}"
-                                                                  method="POST" role="form" class="inline">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button type="submit"
-                                                                        class="btn btn-sm btn-danger  mr-1">
-                                                                    Eliminar
-                                                                </button>
-                                                            </form>
                                                         @endif
                                                     </div>
                                                 </td>
@@ -109,6 +100,7 @@
                                     <th>Email</th>
                                     <th>Nº de telefone</th>
                                     <th>Nº de Licença</th>
+                                    <th>Nº de Certificado</th>
                                     <th>Direção</th>
                                     @can('direcao')
                                         <th>Ações</th>
@@ -139,6 +131,14 @@
                                             @else
                                                 N/A
                                             @endif
+                                        </td>
+                                        <td>
+                                            @if ($socio->num_certificado)
+                                                {{ $socio->num_certificado }}
+                                            @else
+                                                N/A
+                                            @endif
+
                                         </td>
                                         <td>
                                             @if ($socio->direcao == 1)
@@ -189,15 +189,6 @@
                                                                 Ativar
                                                             </button>
                                                         @endif
-                                                    </form>
-                                                    <form action="{{ action('UserController@destroy', ['socio' => $socio->id]) }}"
-                                                          method="POST" role="form" class="inline">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button type="submit"
-                                                                class="btn btn-sm btn-danger  mr-1">
-                                                            Eliminar
-                                                        </button>
                                                     </form>
                                                 </div>
                                             </td>

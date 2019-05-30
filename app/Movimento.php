@@ -24,4 +24,17 @@ class Movimento extends Model
     {
         return $this->belongsTo('App\User');
     }
+    public static function toString($natureza){
+        switch ($natureza){
+            case "T":
+                return "Treino";
+                break;
+            case "I":
+                return "Instrucao";
+                break;
+            case "E":
+                return "Especial";
+                break;
+        }
+    }
 }

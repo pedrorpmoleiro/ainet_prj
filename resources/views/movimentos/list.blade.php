@@ -57,7 +57,7 @@
                                         <td>{{ $movimento->hora_descolagem }}</td>
                                         <td>{{ $movimento->hora_aterragem }}</td>
                                         <td>{{ $movimento->tempo_voo }}</td>
-                                        <td>{{ $movimento->natureza }}</td>
+                                        <td>{{ $movimento::toString($movimento->natureza) }}</td>
                                         <td>{{ $movimento->piloto->nome_informal }}</td>
                                         <td>{{ $movimento->aerodromo_partida }}</td>
                                         <td>{{ $movimento->aerodromo_chegada }}</td>
