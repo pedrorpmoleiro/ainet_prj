@@ -98,7 +98,7 @@
                                                         <a class="btn btn-xs btn-primary mr-1"
                                                            href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
                                                         @can('direcao')
-                                                            <form action="{{ action('MovimentoController@update', ['movimento' => $movimento->id]) }}">
+                                                            <form action="{{ action('MovimentoController@update', ['movimento'=>$movimento->id]) }}"method="POST">
                                                                 @method('PUT')
                                                                 @csrf
                                                                 <button type="submit" class="btn btn-xs btn-warning  mr-1" name="confirmar">
