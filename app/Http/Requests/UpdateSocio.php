@@ -26,34 +26,39 @@ class UpdateSocio extends FormRequest
     {
         $id = (int)$this->route()->parameters()['socio']->id;
 
-        return [
-            'name' => 'required|regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/',
-            'num_socio' => "required|numeric|min:1|unique:users,num_socio,$id",
+        $rules = [
+            'name' => ['required', 'regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/'],
+            'num_socio' => ['required', 'numeric', 'min:1', "unique:users,num_socio,$id"],
             'sexo' => ['required', Rule::in(['M', 'F'])],
-            'email' => "required|email|unique:users,email,$id",
-            'nome_informal' => 'required|max:40',
-            'data_nascimento' => 'required|date_format:Y-m-d|before:today',
-            'nif' => 'nullable|numeric|max:999999999',
+            'email' => ['required', 'email', "unique:users,email,$id"],
+            'nome_informal' => ['required', 'max:40'],
+            'data_nascimento' => ['required', 'date_format:Y-m-d', 'before:today'],
+            'nif' => ['nullable', 'numeric', 'max:999999999'],
             'telefone' => ['nullable', 'max:20'],
             'endereco' => ['nullable'],
             'tipo_socio' => ['required', Rule::in(['P', 'NP', 'A'])],
             'file_foto' => ['nullable', 'image'],
-            'num_licenca' => ['nullable', 'max:30'],
-            'tipo_licenca' => ['nullable', 'exists:tipos_licencas,code'],
-            'validade_licenca' => ['nullable', 'date_format:Y-m-d'],
-            'num_certificado' => ['nullable', 'max:30'],
-            'classe_certificado' => ['nullable', 'exists:classes_certificados,code'],
-            'validade_certificado' => ['nullable', 'date_format:Y-m-d'],
-            'file_licenca' => ['nullable', 'file', 'mimes:pdf'],
-            'file_certificado' => ['nullable', 'file', 'mimes:pdf'],
             'quota_paga' => ['required', Rule::in(['1', '0'])],
             'ativo' => ['required', Rule::in(['1', '0'])],
             'direcao' => ['required', Rule::in(['1', '0'])],
-            'instrutor' => ['nullable', Rule::in(['1', '0'])],
-            'licenca_confirmada' => ['nullable', Rule::in(['1', '0'])],
-            'certificado_confirmado' => ['nullable', Rule::in(['1', '0'])],
-            'aluno' => ['required', Rule::in(['1', '0'])]
         ];
+
+        if ($this->request->get('tipo_socio') == 'P') {
+            $rules['instrutor'] = ['nullable', Rule::in(['1', '0'])];
+            $rules['licenca_confirmada'] = ['nullable', Rule::in(['1', '0'])];
+            $rules['certificado_confirmado'] = ['nullable', Rule::in(['1', '0'])];
+            $rules['aluno'] = ['required', Rule::in(['1', '0'])];
+            $rules['num_licenca'] = ['nullable', 'max:30'];
+            $rules['tipo_licenca'] = ['nullable', 'exists:tipos_licencas,code'];
+            $rules['validade_licenca'] = ['nullable', 'date_format:Y-m-d'];
+            $rules['num_certificado'] = ['nullable', 'max:30'];
+            $rules['classe_certificado'] = ['nullable', 'exists:classes_certificados,code'];
+            $rules['validade_certificado'] = ['nullable', 'date_format:Y-m-d'];
+            $rules['file_licenca'] = ['nullable', 'file', 'mimes:pdf'];
+            $rules['file_certificado'] = ['nullable', 'file', 'mimes:pdf'];
+        }
+
+        return $rules;
     }
 
     public function messages()
