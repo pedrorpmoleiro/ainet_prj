@@ -45,6 +45,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ action('MovimentoController@index') }}">Movimentos</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ action('PendenteController@index') }}">Pendentes</a>
+                            </li>
                         @endif
                     </ul>
                     <!-- Right Side Of Navbar -->

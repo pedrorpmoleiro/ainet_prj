@@ -31,7 +31,7 @@
                                           class="inline">
                                         @method('patch')
                                         @csrf
-                                        <button type="submit" class="btn btn-sm btn-warning mb-4 mr-1">
+                                        <button type="submit" class="btn btn-sm btn-dark mb-4 mr-1">
                                             Desativar sócios com quotas não pagas
                                         </button>
                                     </form>
@@ -111,12 +111,12 @@
                                                         @csrf
                                                         @if ($socio->ativo)
                                                             <input type="hidden" name="ativo" value="0">
-                                                            <button type="submit" class="btn btn-sm btn-warning mr-1">
+                                                            <button type="submit" class="btn btn-sm btn-secondary mr-1">
                                                                 Desativar
                                                             </button>
                                                         @else
                                                             <input type="hidden" name="ativo" value="1">
-                                                            <button type="submit" class="btn btn-sm btn-warning mr-1">
+                                                            <button type="submit" class="btn btn-sm btn-success mr-1">
                                                                 Ativar
                                                             </button>
                                                         @endif
