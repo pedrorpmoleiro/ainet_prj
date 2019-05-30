@@ -132,12 +132,12 @@ class MovimentoController extends Controller
 
         if ($movimento['natureza'] == 'I') {
             $instrutor = User::find($movimento['instrutor_id']);
-            $movimento['num_licenca_instrutor'] = $instrutor['num_licenca'];
-            $movimento['validade_licenca_instrutor'] = $instrutor['validade_licenca'];
-            $movimento['tipo_licenca_instrutor'] = $instrutor['tipo_licenca'];
-            $movimento['num_certificado_instrutor'] = $instrutor['num_certificado'];
-            $movimento['validade_certificado_instrutor'] = $instrutor['validade_certificado'];
-            $movimento['classe_certificado_instrutor'] = $instrutor['classe_certificado'];
+            $movimento['num_licenca_instrutor'] = $instrutor->num_licenca;
+            $movimento['validade_licenca_instrutor'] = $instrutor->validade_licenca;
+            $movimento['tipo_licenca_instrutor'] = $instrutor->tipo_licenca;
+            $movimento['num_certificado_instrutor'] = $instrutor->num_certificado;
+            $movimento['validade_certificado_instrutor'] = $instrutor->validade_certificado;
+            $movimento['classe_certificado_instrutor'] = $instrutor->classe_certificado;
         } else {
             $movimento['instrutor_id'] = null;
             $movimento['tipo_instrucao']=null;
@@ -229,12 +229,12 @@ class MovimentoController extends Controller
 
         if ($movimento['natureza'] == 'I') {
             $instrutor = User::find($movimento['instrutor_id']);
-            $movimento['num_licenca_instrutor'] = $instrutor['num_licenca'];
-            $movimento['validade_licenca_instrutor'] = $instrutor['validade_licenca'];
-            $movimento['tipo_licenca_instrutor'] = $instrutor['tipo_licenca'];
-            $movimento['num_certificado_instrutor'] = $instrutor['num_certificado'];
-            $movimento['validade_certificado_instrutor'] = $instrutor['validade_certificado'];
-            $movimento['classe_certificado_instrutor'] = $instrutor['classe_certificado'];
+            $movimento['num_licenca_instrutor'] = $instrutor->num_licenca;
+            $movimento['validade_licenca_instrutor'] = $instrutor->validade_licenca;
+            $movimento['tipo_licenca_instrutor'] = $instrutor->tipo_licenca;
+            $movimento['num_certificado_instrutor'] = $instrutor->num_certificado;
+            $movimento['validade_certificado_instrutor'] = $instrutor->validade_certificado;
+            $movimento['classe_certificado_instrutor'] = $instrutor->classe_certificado;
         } else {
             $movimento['instrutor_id'] = null;
             $movimento['num_licenca_instrutor'] = null;
