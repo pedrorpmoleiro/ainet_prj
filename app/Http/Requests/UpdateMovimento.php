@@ -50,7 +50,7 @@ class UpdateMovimento extends FormRequest
             'preco_voo'=>['required', 'numeric', 'min:1']
         ];
 
-        if ($this->attributes->get('natureza') == 'I') {
+        if ($this->request->get('natureza') == 'I') {
             $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
             $rules['instrutor_id'] = ['required', 'exists:users,id', new Instrutor];
         }

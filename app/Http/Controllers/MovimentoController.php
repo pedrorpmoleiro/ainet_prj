@@ -131,7 +131,7 @@ class MovimentoController extends Controller
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
 
         if ($movimento['natureza'] == 'I') {
-            $instrutor = User::find($movimento['instrutor_id']);
+            $instrutor = User::findOrFail($movimento['instrutor_id']);
             $movimento['num_licenca_instrutor'] = $instrutor->num_licenca;
             $movimento['validade_licenca_instrutor'] = $instrutor->validade_licenca;
             $movimento['tipo_licenca_instrutor'] = $instrutor->tipo_licenca;
@@ -228,7 +228,7 @@ class MovimentoController extends Controller
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
 
         if ($movimento['natureza'] == 'I') {
-            $instrutor = User::find($movimento['instrutor_id']);
+            $instrutor = User::findOrFail($movimento['instrutor_id']);
             $movimento['num_licenca_instrutor'] = $instrutor->num_licenca;
             $movimento['validade_licenca_instrutor'] = $instrutor->validade_licenca;
             $movimento['tipo_licenca_instrutor'] = $instrutor->tipo_licenca;
