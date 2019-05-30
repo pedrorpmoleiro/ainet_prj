@@ -91,6 +91,7 @@ class MovimentoController extends Controller
 
     }
 
+
     public function create()
     {
         $title = 'Inserir novo movimento';
@@ -120,35 +121,18 @@ class MovimentoController extends Controller
             return redirect()->action('MovimentoController@index');
         }
         $movimento = $request->validated();
-        $user = User::findOrFail($movimento['piloto_id']);
-
-        $movimento['piloto_id'] = $user->id;
-        $movimento['num_licenca_piloto'] = $user->num_licenca;
-        $movimento['validade_licenca_piloto'] = $user->validade_licenca;
-        $movimento['tipo_licenca_piloto'] = $user->tipo_licenca;
-        $movimento['num_certificado_piloto'] = $user->num_certificado;
-        $movimento['validade_certificado_piloto'] = $user->validade_certificado;
-        $movimento['classe_certificado_piloto'] = $user->classe_certificado;
+        //TODO LO QUE TIENE QUE VER COM EL PILOTO
+        $movimento = $this->preencherDadosPiloto($movimento);
+        //TODO PREENCHER HORA DESCOLAGEM
         $movimento['hora_descolagem'] = $movimento['data'] . ' ' . $movimento['hora_descolagem'];
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
-
-        if ($movimento['natureza'] == 'I') {
-            $instrutor = User::findOrFail($movimento['instrutor_id']);
-            $movimento['num_licenca_instrutor'] = $instrutor->num_licenca;
-            $movimento['validade_licenca_instrutor'] = $instrutor->validade_licenca;
-            $movimento['tipo_licenca_instrutor'] = $instrutor->tipo_licenca;
-            $movimento['num_certificado_instrutor'] = $instrutor->num_certificado;
-            $movimento['validade_certificado_instrutor'] = $instrutor->validade_certificado;
-            $movimento['classe_certificado_instrutor'] = $instrutor->classe_certificado;
-        } else {
-            $movimento['instrutor_id'] = null;
-            $movimento['tipo_instrucao'] = null;
-        }
+        //TODO INSTRUCAO
+        $movimento = $this->preencherDadosInstrucao($movimento);
+        dd($movimento);
         //CONTA HORAS US19
-        //CONTA HORAS US19
+        //TODO CONFLITOS
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
-
         if (isset($ultMovimento)) {
             if (is_null($resolver)) {
                 if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
@@ -167,12 +151,72 @@ class MovimentoController extends Controller
                 }
             }
         }
+        //TODO PRECO E TEMPO
+        $movimento = $this->preencherPrecoTempo($movimento);
+        //NAO CONFIRMAR
         $movimento['confirmado'] = 0;
-        //US18
-        /*$movimento['tempo_voo'] = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']) / 10) * 60;
-        $movimento['preco_voo'] = ($movimento['tempo_voo'] / 60) * Aeronave::find($movimento['aeronave'])->preco_hora;
-        $movimento['confirmado'] = 0;
-        */
+        dd($movimento);
+        Movimento::create($movimento);
+
+        return redirect()->action('MovimentoController@index');
+    }
+
+    public function preencherDadosPiloto($movimento)
+    {
+        $user = User::findOrFail($movimento['piloto_id']);
+        $movimento['piloto_id'] = $user->id;
+        $movimento['num_licenca_piloto'] = $user->num_licenca;
+        $movimento['validade_licenca_piloto'] = $user->validade_licenca;
+        $movimento['tipo_licenca_piloto'] = $user->tipo_licenca;
+        $movimento['num_certificado_piloto'] = $user->num_certificado;
+        $movimento['validade_certificado_piloto'] = $user->validade_certificado;
+        $movimento['classe_certificado_piloto'] = $user->classe_certificado;
+        return $movimento;
+    }
+
+    public function preencherDadosInstrucao($movimento)
+    {
+        if ($movimento['natureza'] == 'I') {
+            $instrutor = User::findOrFail($movimento['instrutor_id']);
+            $movimento['num_licenca_instrutor'] = $instrutor->num_licenca;
+            $movimento['validade_licenca_instrutor'] = $instrutor->validade_licenca;
+            $movimento['tipo_licenca_instrutor'] = $instrutor->tipo_licenca;
+            $movimento['num_certificado_instrutor'] = $instrutor->num_certificado;
+            $movimento['validade_certificado_instrutor'] = $instrutor->validade_certificado;
+            $movimento['classe_certificado_instrutor'] = $instrutor->classe_certificado;
+        } else {
+            $movimento['instrutor_id'] = null;
+            $movimento['tipo_instrucao'] = null;
+        }
+        return $movimento;
+    }
+
+    public function preencherConflitos($movimento, $request)
+    {
+        $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
+        $resolver = $request->input('resolver');
+        if (isset($ultMovimento)) {
+            if (is_null($resolver)) {
+                if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
+                    //SOBREPOSICAO
+                    Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
+                    return redirect()->action('MovimentoController@create')->withInput();
+                } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+                    Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
+                    return redirect()->action('MovimentoController@create')->withInput();
+                }
+            } else {
+                if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
+                    $movimento['tipo_conflito'] = 'B';
+                } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+                    $movimento['tipo_conflito'] = 'S';
+                }
+            }
+        }
+    }
+
+    public function preencherPrecoTempo($movimento)
+    {
         $aeronave_valores = DB::table('aeronaves_valores')->where('matricula', $movimento['aeronave'])->get();
         $conta_horas_resta = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
 
@@ -191,10 +235,6 @@ class MovimentoController extends Controller
             $movimento['tempo_voo'] = $tempo;
             $movimento['preco_voo'] = $preco;
         }
-
-        Movimento::create($movimento);
-
-        return redirect()->action('MovimentoController@index');
     }
 
     public function show($id)
@@ -222,9 +262,9 @@ class MovimentoController extends Controller
 
     public function update(UpdateMovimento $request, Movimento $movimento)
     {
-        $confirmar=$request->input('confirmar');
-        if(isset($confirmar)){
-            $movimento->confirmado=1;
+        $confirmar = $request->input('confirmar');
+        if (isset($confirmar)) {
+            $movimento->confirmado = 1;
             $movimento->save();
             return redirect()->action('MovimentoController@index');
         }
