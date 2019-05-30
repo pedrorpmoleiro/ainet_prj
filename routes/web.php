@@ -37,11 +37,10 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::get('/pilotos/{piloto}/licenca','UserController@licenca')->name('piloto.licenca');
         });
 
+        Route::resource('movimentos', 'MovimentoController')->only(['index']);
         Route::resource('movimentos', 'MovimentoController')->only(['create', 'store'])->middleware(['can:create,App\Movimento']);
-
-        Route::resource('movimentos', 'MovimentoController')->only(['index', 'destroy']);
-
         Route::resource('movimentos', 'MovimentoController')->only(['edit','update'])->middleware(['can:update,movimento']);
+        Route::resource('movimentos', 'MovimentoController')->only(['destroy'])->middleware(['can:destroy,movimento']);
 
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
 
