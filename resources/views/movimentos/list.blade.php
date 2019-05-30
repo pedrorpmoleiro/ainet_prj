@@ -98,7 +98,13 @@
                                                         <a class="btn btn-xs btn-primary mr-1"
                                                            href="{{ action('MovimentoController@edit', ['movimento' => $movimento->id]) }}">Editar</a>
                                                         @can('direcao')
-                                                            <p class="btn btn-xs btn-warning mr-1">Validar</p>
+                                                            <form action="{{ action('MovimentoController@update', ['movimento' => $movimento->id]) }}">
+                                                                @method('PUT')
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-xs btn-warning  mr-1" name="confirmar">
+                                                                    Confirmar
+                                                                </button>
+                                                            </form>
                                                         @endcan
                                                         <form action="{{ action('MovimentoController@destroy', ['movimento' => $movimento->id]) }}"
                                                               method="POST" role="form" class="inline">

@@ -215,6 +215,11 @@ class MovimentoController extends Controller
 
     public function update(UpdateMovimento $request, Movimento $movimento)
     {
+        if($request->has('confirmar')){
+            $movimento->confirmado=1;
+            $movimento->save();
+            return redirect()->action('MovimentoController@index');
+        }
         Session::forget('alert-warning');
         Session::forget('alert-danger');
         if ($request->has('cancel')) {
