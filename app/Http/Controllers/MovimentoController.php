@@ -230,8 +230,10 @@ class MovimentoController extends Controller
             $resto = $conta_horas_resta % 10;
             $tempo = $aeronave_valores->where('unidade_conta_horas', 10)->first()->minutos * $multiplo;
             $preco = $aeronave_valores->where('unidade_conta_horas', 10)->first()->preco * $multiplo;
-            $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
-            $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
+            if($resto!=0){
+                $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
+                $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
+            }
             $movimento['tempo_voo'] = $tempo;
             $movimento['preco_voo'] = $preco;
         }
@@ -342,8 +344,10 @@ class MovimentoController extends Controller
             $resto = $conta_horas_resta % 10;
             $tempo = $aeronave_valores->where('unidade_conta_horas', 10)->first()->minutos * $multiplo;
             $preco = $aeronave_valores->where('unidade_conta_horas', 10)->first()->preco * $multiplo;
-            $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
-            $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
+            if($resto!=0){
+                $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
+                $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
+            }
             $movimento['tempo_voo'] = $tempo;
             $movimento['preco_voo'] = $preco;
         }
