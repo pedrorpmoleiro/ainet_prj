@@ -62,8 +62,16 @@ class AeronaveController extends Controller
     {
         $title = "Editar Aeronave";
 
-        $minutos = DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)->select(['minutos'])->get();
-        $precos = DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)->select(['preco'])->get();
+        $minutosCol = DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)->select(['minutos'])->get();
+        $precosCol = DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)->select(['preco'])->get();
+
+        $minutos = [];
+        $precos = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            $minutos[] = $minutosCol->get($i)->minutos;
+            $precos[] = $precosCol->get($i)->preco;
+        }
 
         return view('aeronaves.edit', compact('title', 'aeronave', 'minutos', 'precos'));
     }
@@ -79,8 +87,15 @@ class AeronaveController extends Controller
         $aeronaveEdit['matricula'] = $aeronave->matricula;
 
         $aeronave->fill($aeronaveEdit);
-
         $aeronave->save();
+
+        $precos = $aeronaveEdit['precos'];
+        $tempos = $aeronaveEdit['tempos'];
+
+        for ($i = 0; $i < 10; $i++) {
+            DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)
+                ->where('unidade_conta_horas', ($i + 1))->update(['minutos'=>$tempos[$i], 'preco'=>$precos[$i]]);
+        }
 
         return redirect()->action('AeronaveController@index');
     }
