@@ -40,7 +40,7 @@ class UpdateSocio extends FormRequest
             'file_foto' => ['nullable', 'image'],
             'quota_paga' => ['required', Rule::in(['1', '0'])],
             'ativo' => ['required', Rule::in(['1', '0'])],
-            'direcao' => ['required', Rule::in(['1', '0'])],
+            'direcao' => ['required', Rule::in(['1', '0'])]
         ];
 
         if ($this->request->get('tipo_socio') == 'P') {
