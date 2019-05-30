@@ -19,11 +19,11 @@ class UserPolicy
         //
     }
 
-    public function update (User $user, User $socio) {
-        return ($user->direcao == 1) || $user->id == $socio->id;
+    public function canUpdate (User $userLogado, User $socio) {
+        return $userLogado->direcao || $userLogado->id == $socio->id;
     }
 
-    public  function licenca (User $user, User $piloto) {
-        return ($user->direcao == 1) || $user->id == $piloto->id;
+    public  function verLicenca (User $userLogado, User $user) {
+        return $user->tipo_socio == 'P' && ($userLogado->direcao || $userLogado->id == $user->id);
     }
 }

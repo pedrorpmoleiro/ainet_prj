@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 class MovimentoController extends Controller
 {
 
@@ -114,19 +115,20 @@ class MovimentoController extends Controller
     {
         Session::forget('alert-warning');
         Session::forget('alert-danger');
+
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
         $movimento = $request->validated();
-        $user = Auth::user();
+        $user = User::findOrFail($movimento['piloto_id']);
 
-        $movimento['piloto_id'] = Auth::user()->id;
-        $movimento['num_licenca_piloto'] = $user['num_licenca'];
-        $movimento['validade_licenca_piloto'] = $user['validade_licenca'];
-        $movimento['tipo_licenca_piloto'] = $user['tipo_licenca'];
-        $movimento['num_certificado_piloto'] = $user['num_certificado'];
-        $movimento['validade_certificado_piloto'] = $user['validade_certificado'];
-        $movimento['classe_certificado_piloto'] = $user['classe_certificado'];
+        $movimento['piloto_id'] = $user->id;
+        $movimento['num_licenca_piloto'] = $user->num_licenca;
+        $movimento['validade_licenca_piloto'] = $user->validade_licenca;
+        $movimento['tipo_licenca_piloto'] = $user->tipo_licenca;
+        $movimento['num_certificado_piloto'] = $user->num_certificado;
+        $movimento['validade_certificado_piloto'] = $user->validade_certificado;
+        $movimento['classe_certificado_piloto'] = $user->classe_certificado;
         $movimento['hora_descolagem'] = $movimento['data'] . ' ' . $movimento['hora_descolagem'];
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
 
@@ -140,26 +142,29 @@ class MovimentoController extends Controller
             $movimento['classe_certificado_instrutor'] = $instrutor->classe_certificado;
         } else {
             $movimento['instrutor_id'] = null;
-            $movimento['tipo_instrucao']=null;
+            $movimento['tipo_instrucao'] = null;
         }
         //CONTA HORAS US19
         //CONTA HORAS US19
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
-        if (is_null($resolver)) {
-            if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
-                //SOBREPOSICAO
-                Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
-                return redirect()->action('MovimentoController@create')->withInput();
-            } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
-                Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
-                return redirect()->action('MovimentoController@create')->withInput();
-            }
-        } else {
-            if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
-                $movimento['tipo_conflito'] = 'B';
-            } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
-                $movimento['tipo_conflito'] = 'S';
+
+        if (isset($ultMovimento)) {
+            if (is_null($resolver)) {
+                if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
+                    //SOBREPOSICAO
+                    Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
+                    return redirect()->action('MovimentoController@create')->withInput();
+                } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+                    Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
+                    return redirect()->action('MovimentoController@create')->withInput();
+                }
+            } else {
+                if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
+                    $movimento['tipo_conflito'] = 'B';
+                } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+                    $movimento['tipo_conflito'] = 'S';
+                }
             }
         }
         $movimento['confirmado'] = 0;
@@ -168,24 +173,27 @@ class MovimentoController extends Controller
         $movimento['preco_voo'] = ($movimento['tempo_voo'] / 60) * Aeronave::find($movimento['aeronave'])->preco_hora;
         $movimento['confirmado'] = 0;
         */
-        $aeronave_valores=DB::table('aeronaves_valores')->where('matricula',$movimento['aeronave'])->get();
-        $conta_horas_resta=(($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
-        if($conta_horas_resta<=10){
-            $aeronave_valores=$aeronave_valores->where('unidade_conta_horas',$conta_horas_resta);
-            $movimento['tempo_voo']=$aeronave_valores->first()->minutos;
-            $movimento['preco_voo']=$aeronave_valores->first()->preco;
-        }else{
-            $multiplo= (int) $conta_horas_resta/10;
-            $multiplo=round($multiplo,0,PHP_ROUND_HALF_DOWN);
-            $resto=$conta_horas_resta%10;
-            $tempo=$aeronave_valores->where('unidade_conta_horas',10)->first()->minutos*$multiplo;
-            $preco=$aeronave_valores->where('unidade_conta_horas',10)->first()->preco*$multiplo;
-            $tempo+=$aeronave_valores->where('unidade_conta_horas',$resto)->first()->minutos;
-            $preco+=$aeronave_valores->where('unidade_conta_horas',$resto)->first()->preco;
-            $movimento['tempo_voo']=$tempo;
-            $movimento['preco_voo']=$preco;
+        $aeronave_valores = DB::table('aeronaves_valores')->where('matricula', $movimento['aeronave'])->get();
+        $conta_horas_resta = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
+
+        if ($conta_horas_resta <= 10) {
+            $aeronave_valores = $aeronave_valores->where('unidade_conta_horas', $conta_horas_resta);
+            $movimento['tempo_voo'] = $aeronave_valores->first()->minutos;
+            $movimento['preco_voo'] = $aeronave_valores->first()->preco;
+        } else {
+            $multiplo = (int)$conta_horas_resta / 10;
+            $multiplo = round($multiplo, 0, PHP_ROUND_HALF_DOWN);
+            $resto = $conta_horas_resta % 10;
+            $tempo = $aeronave_valores->where('unidade_conta_horas', 10)->first()->minutos * $multiplo;
+            $preco = $aeronave_valores->where('unidade_conta_horas', 10)->first()->preco * $multiplo;
+            $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
+            $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
+            $movimento['tempo_voo'] = $tempo;
+            $movimento['preco_voo'] = $preco;
         }
+
         Movimento::create($movimento);
+
         return redirect()->action('MovimentoController@index');
     }
 
@@ -208,7 +216,6 @@ class MovimentoController extends Controller
         }
 
         $instrutores = User::where('instrutor', 1)->get();
-
 
         return view('movimentos.edit', compact('title', 'movimento', 'aeronaves', 'pilotos', 'aerodromos', 'instrutores'));
     }
@@ -249,56 +256,61 @@ class MovimentoController extends Controller
             $movimento['num_certificado_instrutor'] = null;
             $movimento['validade_certificado_instrutor'] = null;
             $movimento['classe_certificado_instrutor'] = null;
-            $movimento['tipo_instrucao']=null;
+            $movimento['tipo_instrucao'] = null;
         }
 
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
 
-        if (is_null($resolver)) {
-            if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
-                //SOBREPOSICAO
-                Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
-                return redirect()->action('MovimentoController@edit', ['movimento'=>$movimento->id])->withInput();
-                /*$movimentoAux=new Movimento();
-                $movimentoAux->fill($movimento);
-                return $this->edit($movimentoAux);
-                */
-            } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
-                Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
-                return redirect()->action('MovimentoController@edit', ['movimento'=>$movimento->id])->withInput();
-               /* $movimentoAux=new Movimento();
-                $movimentoAux->fill($movimento);
-                return $this->edit($movimentoAux);
-               */
+        if (isset($ultMovimento)) {
+            if (is_null($resolver)) {
+                if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
+                    //SOBREPOSICAO
+                    Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
+                    return redirect()->action('MovimentoController@edit', ['movimento' => $movimento->id])->withInput();
+                    /*$movimentoAux=new Movimento();
+                    $movimentoAux->fill($movimento);
+                    return $this->edit($movimentoAux);
+                    */
+                } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+                    Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
+                    return redirect()->action('MovimentoController@edit', ['movimento' => $movimento->id])->withInput();
+                    /* $movimentoAux=new Movimento();
+                     $movimentoAux->fill($movimento);
+                     return $this->edit($movimentoAux);
+                    */
+                }
+            } else {
+                if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
+                    $movimento['tipo_conflito'] = 'B';
+                } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+                    $movimento['tipo_conflito'] = 'S';
+                }
             }
+        }
+
+        $aeronave_valores = DB::table('aeronaves_valores')->where('matricula', $movimento['aeronave'])->get();
+        $conta_horas_resta = (($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
+
+        if ($conta_horas_resta <= 10) {
+            $aeronave_valores = $aeronave_valores->where('unidade_conta_horas', $conta_horas_resta);
+            $movimento['tempo_voo'] = $aeronave_valores->first()->minutos;
+            $movimento['preco_voo'] = $aeronave_valores->first()->preco;
         } else {
-            if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
-                $movimento['tipo_conflito'] = 'B';
-            } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
-                $movimento['tipo_conflito'] = 'S';
-            }
+            $multiplo = (int)$conta_horas_resta / 10;
+            $multiplo = round($multiplo, 0, PHP_ROUND_HALF_DOWN);
+            $resto = $conta_horas_resta % 10;
+            $tempo = $aeronave_valores->where('unidade_conta_horas', 10)->first()->minutos * $multiplo;
+            $preco = $aeronave_valores->where('unidade_conta_horas', 10)->first()->preco * $multiplo;
+            $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
+            $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
+            $movimento['tempo_voo'] = $tempo;
+            $movimento['preco_voo'] = $preco;
         }
-        $aeronave_valores=DB::table('aeronaves_valores')->where('matricula',$movimento['aeronave'])->get();
-        $conta_horas_resta=(($movimento['conta_horas_fim'] - $movimento['conta_horas_inicio']));
-        if($conta_horas_resta<=10){
-            $aeronave_valores=$aeronave_valores->where('unidade_conta_horas',$conta_horas_resta);
-            $movimento['tempo_voo']=$aeronave_valores->first()->minutos;
-            $movimento['preco_voo']=$aeronave_valores->first()->preco;
-        }else{
-            $multiplo= (int) $conta_horas_resta/10;
-            $multiplo=round($multiplo,0,PHP_ROUND_HALF_DOWN);
-            $resto=$conta_horas_resta%10;
-            $tempo=$aeronave_valores->where('unidade_conta_horas',10)->first()->minutos*$multiplo;
-            $preco=$aeronave_valores->where('unidade_conta_horas',10)->first()->preco*$multiplo;
-            $tempo+=$aeronave_valores->where('unidade_conta_horas',$resto)->first()->minutos;
-            $preco+=$aeronave_valores->where('unidade_conta_horas',$resto)->first()->preco;
-            $movimento['tempo_voo']=$tempo;
-            $movimento['preco_voo']=$preco;
-        }
-       //dd($movimento);
+
         $movimento['confirmado'] = 0;
         $movimento->save();
+
         return redirect()->action('MovimentoController@index');
     }
 

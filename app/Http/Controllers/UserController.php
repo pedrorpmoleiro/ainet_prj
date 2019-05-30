@@ -18,54 +18,54 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $socios=User::orderBy('id');
-        $query=$request->query();
+        $socios = User::orderBy('id');
+        $query = $request->query();
         $title = 'Sócios';
-        $filters=[
-            'num_socio'=>'','nome_informal'=>'','email'=>'','tipo'=>'',
-            'direcao'=>'','quotas_pagas'=>'','ativo'=>''
+        $filters = [
+            'num_socio' => '', 'nome_informal' => '', 'email' => '', 'tipo' => '',
+            'direcao' => '', 'quotas_pagas' => '', 'ativo' => ''
         ];
 
         foreach ($query as $name => $value) {
             $$name = $value;
         }
 
-        if(isset($num_socio)) {
-            $filters['num_socio']=$num_socio;
-            $socios=$socios->where('num_socio',$num_socio);
+        if (isset($num_socio)) {
+            $filters['num_socio'] = $num_socio;
+            $socios = $socios->where('num_socio', $num_socio);
         }
-        if(isset($nome_informal)) {
-            $filters['nome_informal']=$nome_informal;
-            $socios=$socios->where('nome_informal', 'like', '%'.$nome_informal.'%');
+        if (isset($nome_informal)) {
+            $filters['nome_informal'] = $nome_informal;
+            $socios = $socios->where('nome_informal', 'like', '%' . $nome_informal . '%');
         }
-        if(isset($email)) {
-            $filters['email']=$email;
-            $socios=$socios->where('email', 'like', '%'.$email.'%');
+        if (isset($email)) {
+            $filters['email'] = $email;
+            $socios = $socios->where('email', 'like', '%' . $email . '%');
         }
-        if(isset($tipo)) {
-            $filters['tipo']=$tipo;
-           if($tipo!="Todos") $socios=$socios->where('tipo_socio',$tipo);
+        if (isset($tipo)) {
+            $filters['tipo'] = $tipo;
+            if ($tipo != "Todos") $socios = $socios->where('tipo_socio', $tipo);
         }
-        if(isset($direcao)) {
-            $filters['direcao']=$direcao;
-            if($direcao!='A')$socios=$socios->where('direcao',$direcao);
+        if (isset($direcao)) {
+            $filters['direcao'] = $direcao;
+            if ($direcao != 'A') $socios = $socios->where('direcao', $direcao);
         }
-        if(isset($quotas_pagas)) {
-            $filters['quotas_pagas']=$quotas_pagas;
-            if($quotas_pagas    !='A')$socios=$socios->where('quota_paga',$quotas_pagas);
+        if (isset($quotas_pagas)) {
+            $filters['quotas_pagas'] = $quotas_pagas;
+            if ($quotas_pagas != 'A') $socios = $socios->where('quota_paga', $quotas_pagas);
         }
         if (Auth::user()->direcao == 1) {
-            if(isset($ativo)) {
-                $filters['ativo']=$ativo;
-                if($ativo!='A')$socios=$socios->where('ativo',$ativo);
+            if (isset($ativo)) {
+                $filters['ativo'] = $ativo;
+                if ($ativo != 'A') $socios = $socios->where('ativo', $ativo);
             }
         } else {
             $socios = $socios->where('ativo', 1);
         }
 
-        $socios=$socios->paginate(24);
+        $socios = $socios->paginate(24);
 
-        return view('socios.list', compact('title', 'socios','filters'));
+        return view('socios.list', compact('title', 'socios', 'filters'));
     }
 
     public function create()
@@ -89,7 +89,7 @@ class UserController extends Controller
         $user = User::create($socio);
 
         if (isset($socio['file_foto'])) {
-            $path = $socio['file_foto']->storeAs('public/fotos', $user->id.'_pic.jpg');
+            $path = $socio['file_foto']->storeAs('public/fotos', $user->id . '_pic.jpg');
             $foto = basename($path);
             $user->foto_url = $foto;
             $user->save();
@@ -116,16 +116,12 @@ class UserController extends Controller
 
     public function update(UpdateSocio $request, User $socio)
     {
-        if ($request->has('cancel')) {
-            return redirect()->action('UserController@index');
-        }
-
         $socioEdit = $request->validated();
 
         $foto = null;
         if (isset($socioEdit['file_foto'])) {
             Storage::delete("public/fotos/$socio->foto_url");
-            $path = $socioEdit['file_foto']->storeAs('public/fotos', $socio->id.'_pic.jpg');
+            $path = $socioEdit['file_foto']->storeAs('public/fotos', $socio->id . '_pic.jpg');
             $foto = basename($path);
         }
 
@@ -148,11 +144,20 @@ class UserController extends Controller
         $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
 
         if ($socio->tipo_socio == 'P') {
+            if ($socioEdit['num_licenca'] != (string) $socio->num_licenca || $socioEdit['tipo_licenca'] != (string) $socio->tipo_licenca
+                || $socioEdit['validade_licenca'] != (string) $socio->validade_licenca) {
+                $socioEdit['licenca_confirmada'] = '0';
+            }
+
+            if ($socioEdit['num_certificado'] != (string) $socio->num_certificado || $socioEdit['classe_certificado'] != (string) $socio->classe_certificado
+                || $socioEdit['validade_certificado'] != (string) $socio->validade_certificado) {
+                $socioEdit['certificado_confirmado'] = '0';
+            }
+
             $socioEdit['validade_licenca'] = $socioEdit['validade_licenca'] ?? $socio->validade_licenca;
             $socioEdit['validade_certificado'] = $socioEdit['validade_certificado'] ?? $socio->validade_certificado;
-        }
 
-        if (!Auth::user()->direcao) {
+        } else if (!Auth::user()->direcao) {
             if (isset($socioEdit['num_socio'])) unset($socioEdit['num_socio']);
             if (isset($socioEdit['ativo'])) unset($socioEdit['ativo']);
             if (isset($socioEdit['quota_paga'])) unset($socioEdit['quota_paga']);
@@ -188,7 +193,7 @@ class UserController extends Controller
 
     public function setQuota(Request $request, User $socio)
     {
-        $quota_paga = (int) $request->input('quota_paga');
+        $quota_paga = (int)$request->input('quota_paga');
 
         if ($quota_paga != 0 && $quota_paga != 1) {
             throw new AccessDeniedHttpException('Unauthorized.');
@@ -203,21 +208,21 @@ class UserController extends Controller
 
     public function resetQuotas()
     {
-        DB::table('users')->update(['quota_paga'=>'0']);
+        DB::table('users')->update(['quota_paga' => '0']);
 
         return redirect()->action('UserController@index');
     }
 
     public function desativarSemQuotas()
     {
-        User::where('quota_paga', '0')->update(['ativo'=>'0']);
+        User::where('quota_paga', '0')->update(['ativo' => '0']);
 
         return redirect()->action('UserController@index');
     }
 
     public function ativarSocio(Request $request, User $socio)
     {
-        $ativo = (int) $request->input('ativo');
+        $ativo = (int)$request->input('ativo');
 
         if ($ativo != 0 && $ativo != 1) {
             throw new AccessDeniedHttpException('Unauthorized.');

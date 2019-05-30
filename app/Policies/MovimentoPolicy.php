@@ -20,17 +20,17 @@ class MovimentoPolicy
         //
     }
 
-    public function update (User $user, Movimento $movimento)
+    public function canUpdate (User $user, Movimento $movimento)
     {
         return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
     }
 
-    public function create (User $user)
+    public function canCreate (User $user)
     {
         return $user->direcao || $user->tipo_socio == 'P';
     }
 
-    public function destroy (User $user, Movimento $movimento) {
+    public function canDestroy (User $user, Movimento $movimento) {
         return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
     }
 }

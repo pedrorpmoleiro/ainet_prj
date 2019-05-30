@@ -30,17 +30,17 @@ Route::middleware(['auth', 'verified', 'isNotDeleted'])->group(function () {
             Route::patch('/socios/desativar_sem_quotas', 'UserController@desativarSemQuotas')->name('socio.desativar_sem_quotas');
         });
 
-        Route::resource('socios', 'UserController')->only(['edit', 'update'])->middleware(['can:update,socio']);
+        Route::resource('socios', 'UserController')->only(['edit', 'update'])->middleware(['can:canUpdate,socio']);
 
-        Route::middleware(['can:licenca,piloto'])->group(function () {
+        Route::middleware(['can:verLicenca,piloto'])->group(function () {
             Route::get('/pilotos/{piloto}/certificado','UserController@certificado')->name('piloto.certificado');
             Route::get('/pilotos/{piloto}/licenca','UserController@licenca')->name('piloto.licenca');
         });
 
         Route::resource('movimentos', 'MovimentoController')->only(['index']);
-        Route::resource('movimentos', 'MovimentoController')->only(['create', 'store'])->middleware(['can:create,App\Movimento']);
-        Route::resource('movimentos', 'MovimentoController')->only(['edit','update'])->middleware(['can:update,movimento']);
-        Route::resource('movimentos', 'MovimentoController')->only(['destroy'])->middleware(['can:destroy,movimento']);
+        Route::resource('movimentos', 'MovimentoController')->only(['create', 'store'])->middleware(['can:canCreate,App\Movimento']);
+        Route::resource('movimentos', 'MovimentoController')->only(['edit','update'])->middleware(['can:canUpdate,movimento']);
+        Route::resource('movimentos', 'MovimentoController')->only(['destroy'])->middleware(['can:canDestroy,movimento']);
 
         Route::resource('aeronaves', 'AeronaveController')->only(['index']);
 

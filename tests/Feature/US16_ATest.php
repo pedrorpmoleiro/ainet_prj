@@ -45,7 +45,7 @@ class US16_ATest extends USTestBase
     {
         if ($this->insertMov) {
             $response->assertSeeInOrder_2(['<input', 'name="' .$fieldName. '"', '>'], 'Campo ['.$fieldName.'] não incluido ou inválido');
-        } else {            
+        } else {
             $response->assertSeeInOrder_2(['<input', 'name="' .$fieldName. '"', 'value="'. $this->movToSave[$fieldName] .'"', '>'],'Campo ['.$fieldName.'] não incluido ou inválido');
         }
     }
