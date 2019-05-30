@@ -53,12 +53,28 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                                     <a type="submit" href="{{action('MovimentoController@index')}}"
-                                       class="btn btn-default">Cancel</a>
+                                       class="btn btn-sm btn-default">Cancel</a>
                                 </div>
                             </div>
                         </form>
+                        @can('direcao')
+                            <div class="form-group row mt-2">
+                                <div class="col-md-8 offset-md-4">
+                                    <form action="{{ action('MovimentoController@update', ['movimento'=>$movimento->id]) }}"
+                                          method="POST">
+                                        @method('PUT')
+                                        @csrf
+                                        <button type="submit"
+                                                class="btn btn-sm btn-warning  mr-1"
+                                                name="confirmar">
+                                            Confirmar
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>
