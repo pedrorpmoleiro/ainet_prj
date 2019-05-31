@@ -21,7 +21,7 @@ class MovimentoController extends Controller
         $title = "Movimentos";
         $movimentos = Movimento::orderBy('id');
         $query = $request->query();
-        // $filters=$query;
+
         $filters = [
             'id' => '', 'piloto' => '', 'aeronave' => '', 'instrutor' => '', 'natureza' => '', 'confirmado' => '',
             'data_inf' => '', 'data_sup' => '', 'filter_day' => '', 'meus_movimentos' => ''
@@ -163,6 +163,7 @@ class MovimentoController extends Controller
     public function preencherDadosPiloto($movimento)
     {
         $user = User::findOrFail($movimento['piloto_id']);
+
         $movimento['piloto_id'] = $user->id;
         $movimento['num_licenca_piloto'] = $user->num_licenca;
         $movimento['validade_licenca_piloto'] = $user->validade_licenca;
@@ -170,6 +171,7 @@ class MovimentoController extends Controller
         $movimento['num_certificado_piloto'] = $user->num_certificado;
         $movimento['validade_certificado_piloto'] = $user->validade_certificado;
         $movimento['classe_certificado_piloto'] = $user->classe_certificado;
+
         return $movimento;
     }
 

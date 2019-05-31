@@ -111,7 +111,7 @@
                             </div>
 
 
-                            @if ((Auth::user()->direcao || Auth::user()->tipo_socio == 'P') && $socio->tipo_socio == 'P')
+                            @if ($socio->tipo_socio == 'P')
                                 <div class="form-group row">
                                     <label for="instrutor"
                                            class="col-md-4 col-form-label text-md-right">Instrutor</label>
@@ -287,14 +287,12 @@
                                                name="file_certificado" accept="application/pdf">
                                     </div>
                                 </div>
-                            @endif
 
-                            @if (Auth::user()->direcao && $socio->tipo_socio == 'P')
                                 <div class="form-group row">
                                     <label for="aluno" class="col-md-4 col-form-label text-md-right">Aluno</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control @error('aluno') is-invalid @enderror" name="aluno">
+                                        <select class="form-control @error('aluno') is-invalid @enderror" name="aluno" @cannot('direcao') disabled @endcannot>
                                             <option value="1" {{ old('aluno', (string) $socio->aluno) == '1' ? 'selected': '' }}>
                                                 Sim
                                             </option>
@@ -303,6 +301,10 @@
                                                 Não
                                             </option>
                                         </select>
+                                        @cannot('direcao')
+                                            <input type="hidden" name="aluno"
+                                                   value="{{ old('aluno', (string) $socio->aluno) }}">
+                                        @endcannot
 
                                         @error('aluno')
                                         <span class="invalid-feedback" role="alert">
@@ -313,7 +315,7 @@
                                 </div>
                             @endif
 
-                            @if ((Auth::user()->direcao || Auth::user()->tipo_socio == 'P') && $socio->tipo_socio == 'P')
+                            @if ($socio->tipo_socio == 'P')
                                 <div class="form-group row mb-2">
                                     <div class="col-md-8 offset-md-4">
                                         @if (Storage::disk('local')->exists("docs_piloto/certificado_$socio->id.pdf"))

@@ -26,37 +26,35 @@ class UpdateMovimento extends FormRequest
      */
     public function rules()
     {
-        if ($this->request->has('confirmar')) {
-            return ['confirmar'=>'nullable'];
-        }
-
         $rules = [
-            'data'=>['required', 'date_format:Y-m-d'],
-            'aeronave'=>['required', 'exists:aeronaves,matricula'],
-            'aerodromo_partida'=>['required', 'exists:aerodromos,code'],
-            'aerodromo_chegada'=>['required', 'exists:aerodromos,code'],
-            'hora_descolagem'=>['required', 'date_format:H:i'],
-            'hora_aterragem'=>['required', 'date_format:H:i'],
-            'num_diario'=>['required', 'integer', 'min:1'],
-            'num_servico'=>['required', 'integer', 'min:1'],
-            'num_aterragens'=>['required', 'integer', 'min:1'],
-            'num_descolagens'=>['required', 'integer', 'min:1'],
-            'num_pessoas'=>['required', 'integer', 'min:1'],
-            'conta_horas_inicio'=>['required', 'integer', 'min:1'],
-            'conta_horas_fim'=>['required', 'integer', 'gt:conta_horas_inicio', 'min:1'],
-            'modo_pagamento'=>['required', Rule::in(['N', 'M', 'T', 'P'])],
-            'num_recibo'=>['required', 'max:20'],
-            'natureza'=>['required', Rule::in(['T', 'I', 'E'])],
-            'observacoes'=>['nullable'],
-            'justificacao_conflito'=>['nullable'],
-            'piloto_id'=>['required', 'exists:users,id', new Piloto],
-            'tempo_voo'=>['required', 'integer', 'min:1'],
-            'preco_voo'=>['required', 'numeric', 'min:1']
+            'data' => ['required', 'date_format:Y-m-d'],
+            'aeronave' => ['required', 'exists:aeronaves,matricula'],
+            'aerodromo_partida' => ['required', 'exists:aerodromos,code'],
+            'aerodromo_chegada' => ['required', 'exists:aerodromos,code'],
+            'hora_descolagem' => ['required', 'date_format:H:i'],
+            'hora_aterragem' => ['required', 'date_format:H:i'],
+            'num_diario' => ['required', 'integer', 'min:1'],
+            'num_servico' => ['required', 'integer', 'min:1'],
+            'num_aterragens' => ['required', 'integer', 'min:1'],
+            'num_descolagens' => ['required', 'integer', 'min:1'],
+            'num_pessoas' => ['required', 'integer', 'min:1'],
+            'conta_horas_inicio' => ['required', 'integer', 'min:1'],
+            'conta_horas_fim' => ['required', 'integer', 'gt:conta_horas_inicio', 'min:1'],
+            'modo_pagamento' => ['required', Rule::in(['N', 'M', 'T', 'P'])],
+            'num_recibo' => ['required', 'max:20'],
+            'natureza' => ['required', Rule::in(['T', 'I', 'E'])],
+            'observacoes' => ['nullable'],
+            'justificacao_conflito' => ['nullable'],
+            'piloto_id' => ['required', new Piloto],
+            'tempo_voo' => ['required', 'integer', 'min:1'],
+            'preco_voo' => ['required', 'numeric', 'min:1'],
+            'instrutor_id' => ['nullable'],
+            'tipo_instrucao' => ['nullable', Rule::in(['D', 'S'])]
         ];
 
         if ($this->request->get('natureza') == 'I') {
+            $rules['instrutor_id'] = ['required', new Instrutor];
             $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
-            $rules['instrutor_id'] = ['required', 'exists:users,id', new Instrutor];
         }
 
         return $rules;
