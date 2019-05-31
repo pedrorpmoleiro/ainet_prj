@@ -175,13 +175,10 @@
         <label for="tipo_instrucao" class="col-md-4 col-form-label text-md-right"> Tipo Instrucao </label>
 
         <div class="col-md-6">
-            <input type="radio" name="tipo_instrucao"
-                   value="D" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'D' ? 'checked' : '' }}>Duplo
-            Comando <br>
-
-            <input type="radio" name="tipo_instrucao"
-                   value="S" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'S' ? 'checked' : '' }}>
-            Solo
+            <select name="tipo_instrucao" class="form-control @error('tipo_instrucao') is-invalid @enderror">
+                <option value="D" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'D' ? 'selected' : '' }}>Duplo Comando </option>
+                <option value="S" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'S' ? 'selected' : '' }}>Solo</option>
+            </select>
 
             @error('tipo_instrucao')
             <span class="invalid-feedback" role="alert">
