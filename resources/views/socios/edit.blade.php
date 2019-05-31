@@ -348,9 +348,9 @@
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a type="submit" href="{{action('UserController@index')}}"
-                                       class="btn">Cancel</a>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submeter</button>
+                                    <a role="button" href="{{action('UserController@index')}}"
+                                       class="btn btn-sm btn-secondary">Cancelar</a>
                                 </div>
                             </div>
 

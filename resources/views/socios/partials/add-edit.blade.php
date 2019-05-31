@@ -122,7 +122,8 @@
     <label for="sexo" class="col-md-4 col-form-label text-md-right">Género</label>
 
     <div class="col-md-6">
-        <select class="form-control @error('sexo') is-invalid @enderror" name="sexo" @cannot('direcao') disabled @endcannot>
+        <select class="form-control @error('sexo') is-invalid @enderror" name="sexo"
+                @cannot('direcao') disabled @endcannot>
             <option value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
             <option value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino</option>
@@ -144,7 +145,8 @@
     <label for="tipo_socio" class="col-md-4 col-form-label text-md-right">Tipo de Sócio</label>
 
     <div class="col-md-6">
-        <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror" @cannot('direcao') disabled @endcannot>
+        <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror"
+                @cannot('direcao') disabled @endcannot>
             <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>
                 Piloto
             </option>

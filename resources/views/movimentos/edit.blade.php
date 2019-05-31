@@ -45,17 +45,17 @@
 
                                     @error('preco_voo')
                                     <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
-                                    <a type="submit" href="{{action('MovimentoController@index')}}"
-                                       class="btn btn-sm btn-default">Cancel</a>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submeter</button>
+                                    <a role="button" href="{{action('MovimentoController@index')}}"
+                                       class="btn btn-sm btn-secondary">Cancelar</a>
                                 </div>
                             </div>
                         </form>
@@ -66,9 +66,7 @@
                                           method="POST">
                                         @method('PUT')
                                         @csrf
-                                        <button type="submit"
-                                                class="btn btn-sm btn-warning  mr-1"
-                                                name="confirmar">
+                                        <button type="submit" class="btn btn-sm btn-warning  mr-1" name="confirmar">
                                             Confirmar
                                         </button>
                                     </form>

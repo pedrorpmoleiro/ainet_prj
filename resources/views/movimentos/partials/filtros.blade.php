@@ -10,7 +10,7 @@
 </script>
 
 <div class="row justify-content-center">
-    <div class="col-md-12">
+    <div class="col-md-auto">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="form-group">
@@ -90,13 +90,14 @@
                                                 @endif value="N">Todos
                                         </option>
                                         <option @if($filters['meus_movimentos'] == "S" || $filters['meus_movimentos'] == "Meus Movimentos" )selected
-                                                @endif value="S">Meus Movimentos</option>
+                                                @endif value="S">Meus Movimentos
+                                        </option>
                                     </select>
                                 </div>
                             @endcan
                         </div>
                         <div class="form-group row ml-2">
-                            <button type="submit" class="btn btn-primary">Filtrar</button>
+                            <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
                         </div>
                     </form>
                 </div>

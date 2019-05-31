@@ -8,20 +8,21 @@
 
         <script type="text/javascript">
             @if (count($pilotos))
-                function changeActionAdd() {
-                    var e = document.getElementById('pilotosNotAuthorized');
-                    var nAut = e.options[e.selectedIndex].value;
+            function changeActionAdd() {
+                var e = document.getElementById('pilotosNotAuthorized');
+                var nAut = e.options[e.selectedIndex].value;
 
-                    document.getElementById('add_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(nAut);
-                }
+                document.getElementById('add_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(nAut);
+            }
+
             @endif
             @if (count($pilotosAeronave))
-                function changeActionRemove() {
-                    var e = document.getElementById('pilotosAuthorized');
-                    var aut = e.options[e.selectedIndex].value;
+            function changeActionRemove() {
+                var e = document.getElementById('pilotosAuthorized');
+                var aut = e.options[e.selectedIndex].value;
 
-                    document.getElementById('remove_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(aut);
-                }
+                document.getElementById('remove_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(aut);
+            }
             @endif
         </script>
 

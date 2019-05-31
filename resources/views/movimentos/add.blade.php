@@ -15,16 +15,14 @@
 
                             @include('movimentos.partials.add-edit')
 
-                            <input type="hidden" name="tempo_voo"
-                                   value="124">
-                            <input type="hidden" name="preco_voo"
-                                   value="123">
+                            <input type="hidden" name="tempo_voo" value="124">
+                            <input type="hidden" name="preco_voo" value="123">
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <a type="submit" href="{{action('MovimentoController@index')}}"
-                                       class="btn">Cancel</a>
+                                    <button type="submit" class="btn btn-primary">Submeter</button>
+                                    <a role="button" href="{{action('MovimentoController@index')}}"
+                                       class="btn btn-sm btn-secondary">Cancelar</a>
                                 </div>
                             </div>
                         </form>

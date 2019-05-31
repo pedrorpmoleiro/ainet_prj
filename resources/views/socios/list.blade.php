@@ -88,7 +88,7 @@
                                             <td>
                                                 <div class="row justify-content-center">
                                                     <a class="btn btn-sm btn-primary mr-1"
-                                                           href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
+                                                       href="{{ action('UserController@edit', ['socio' => $socio->id]) }}">Editar</a>
                                                     <form action="{{ action('UserController@setQuota', ['socio' => $socio->id]) }}"
                                                           method="POST" class="inline">
                                                         @method('patch')
