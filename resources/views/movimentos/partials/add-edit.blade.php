@@ -74,8 +74,8 @@
     <label for="hora_descolagem" class="col-md-4 col-form-label text-md-right">Hora Descolagem</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('hora_descolagem') is-invalid @enderror" name="hora_descolagem"
-               value="{{ old('hora_descolagem', date('H:j:s',strtotime($movimento->hora_descolagem))) }}">
+        <input type="time" class="form-control @error('hora_descolagem') is-invalid @enderror" name="hora_descolagem"
+               value="{{ old('hora_descolagem', date('H:i',strtotime($movimento->hora_descolagem))) }}">
 
         @error('hora_descolagem')
         <span class="invalid-feedback" role="alert">
@@ -88,8 +88,8 @@
     <label for="hora_aterragem" class="col-md-4 col-form-label text-md-right">Hora Aterragem</label>
 
     <div class="col-md-6">
-        <input type="text" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem"
-               value="{{ old('hora_aterragem', date('H:j:s',strtotime($movimento->hora_aterragem))) }}">
+        <input type="time" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem"
+               value="{{ old('hora_aterragem', date('H:i',strtotime($movimento->hora_aterragem))) }}">
         @error('hora_aterragem')
         <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

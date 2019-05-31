@@ -27,7 +27,7 @@ class UpdateSocio extends FormRequest
         $id = (int)$this->route()->parameters()['socio']->id;
 
         $rules = [
-            'name' => ['required', 'regex:/^([a-zA-Z]+\s)*[a-zA-Z]+$/'],
+            'name' => ['required'],
             'num_socio' => ['required', 'numeric', 'min:1', "unique:users,num_socio,$id"],
             'sexo' => ['required', Rule::in(['M', 'F'])],
             'email' => ['required', 'email', "unique:users,email,$id"],
