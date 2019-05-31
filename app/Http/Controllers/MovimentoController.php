@@ -128,7 +128,6 @@ class MovimentoController extends Controller
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
         //TODO INSTRUCAO
         $movimento = $this->preencherDadosInstrucao($movimento);
-        dd($movimento);
         //CONTA HORAS US19
         //TODO CONFLITOS
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
@@ -155,7 +154,6 @@ class MovimentoController extends Controller
         $movimento = $this->preencherPrecoTempo($movimento);
         //NAO CONFIRMAR
         $movimento['confirmado'] = 0;
-        dd($movimento);
         Movimento::create($movimento);
 
         return redirect()->action('MovimentoController@index');
@@ -243,6 +241,7 @@ class MovimentoController extends Controller
             $movimento['tempo_voo'] = $tempo;
             $movimento['preco_voo'] = $preco;
         }
+        return $movimento;
     }
 
     public function show($id)

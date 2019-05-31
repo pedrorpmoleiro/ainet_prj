@@ -62,11 +62,20 @@
     <label for="piloto_id" class="col-md-4 col-form-label text-md-right">Piloto</label>
 
     <div class="col-md-6">
-        <select class="form-control" name="piloto_id" @cannot('direcao') disabled @endcannot>
+        <select class="form-control @error('piloto_id') is-invalid @enderror" name="piloto_id" @cannot('direcao') disabled @endcannot>
             @foreach($pilotos as $piloto)
                 <option {{ old('piloto_id', (string) $movimento->piloto_id) == $piloto->id ? 'selected' : '' }} value="{{$piloto->id}}"> {{ __("$piloto->num_socio - $piloto->nome_informal") }}</option>
             @endforeach
         </select>
+        @cannot('direcao')
+            <input type="hidden" name="piloto_id" value="{{ old('piloto_id', (string) $piloto->id) }}">
+        @endcannot
+
+        @error('piloto_id')
+        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+        @enderror
     </div>
 </div>
 
