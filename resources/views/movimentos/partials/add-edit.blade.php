@@ -186,7 +186,7 @@
     <div class="col-md-6">
         <select class="form-control" name="aerodromo_partida">
             @foreach($aerodromos as $aerodromo)
-                <option {{ old('aerodromo_partida', (string) $movimento->aerodromo_partida) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
+                <option {{ old('aerodromo_partida', (string) $movimento->aerodromo_partida) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}">{{ __("$aerodromo->code - $aerodromo->nome") }}</option>
             @endforeach
         </select>
     </div>
@@ -198,7 +198,7 @@
     <div class="col-md-6">
         <select class="form-control" name="aerodromo_chegada">
             @foreach($aerodromos as $aerodromo)
-                <option {{ old('aerodromo_chegada', (string) $movimento->aerodromo_chegada) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}"> {{$aerodromo->nome}}</option>
+                <option {{ old('aerodromo_chegada', (string) $movimento->aerodromo_chegada) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}">{{ __("$aerodromo->code - $aerodromo->nome") }}</option>
             @endforeach
         </select>
     </div>
