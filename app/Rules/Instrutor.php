@@ -14,9 +14,13 @@ class Instrutor implements Rule
 
     public function passes($attribute, $value)
     {
-        $socio = User::findOrFail($value);
+        $socio = User::find($value);
 
-        return $socio->instrutor;
+        if (isset($socio)) {
+            return $socio->instrutor == 1;
+        }
+
+        return false;
     }
 
     public function message()

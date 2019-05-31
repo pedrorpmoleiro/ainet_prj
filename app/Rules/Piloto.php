@@ -14,9 +14,13 @@ class Piloto implements Rule
 
     public function passes($attribute, $value)
     {
-        $socio = User::findOrFail($value);
+        $socio = User::find($value);
 
-        return $socio->tipo_socio == 'P';
+        if (isset($socio)) {
+            return $socio->tipo_socio == 'P';
+        }
+
+        return false;
     }
 
     public function message()

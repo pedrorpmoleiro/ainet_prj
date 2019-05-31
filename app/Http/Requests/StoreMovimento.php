@@ -45,14 +45,16 @@ class StoreMovimento extends FormRequest
             'natureza' => ['required', Rule::in(['T', 'I', 'E'])],
             'observacoes' => ['nullable'],
             'justificacao_conflito' => ['nullable'],
-            'piloto_id' => ['required', 'integer','exists:users,id', new Piloto],
+            'piloto_id' => ['required', new Piloto],
             'tempo_voo' => ['required', 'integer', 'min:1'],
-            'preco_voo' => ['required', 'numeric', 'min:1']
+            'preco_voo' => ['required', 'numeric', 'min:1'],
+            'instrutor_id' => ['nullable'],
+            'tipo_instrucao' => ['nullable']
         ];
 
         if ($this->request->get('natureza') == 'I') {
             $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
-            $rules['instrutor_id'] = ['required', 'integer', 'exists:users,id', new Instrutor];
+            $rules['instrutor_id'] = ['required', new Instrutor];
         }
 
         return $rules;

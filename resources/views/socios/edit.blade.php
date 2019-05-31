@@ -111,7 +111,7 @@
                             </div>
 
 
-                            @can('pilotoDirecao')
+                            @if ((Auth::user()->direcao || Auth::user()->tipo_socio == 'P') && $socio->tipo_socio == 'P')
                                 <div class="form-group row">
                                     <label for="instrutor"
                                            class="col-md-4 col-form-label text-md-right">Instrutor</label>
@@ -287,15 +287,14 @@
                                                name="file_certificado" accept="application/pdf">
                                     </div>
                                 </div>
-                            @endcan
+                            @endif
 
-                            @can ('direcao')
+                            @if (Auth::user()->direcao && $socio->tipo_socio == 'P')
                                 <div class="form-group row">
                                     <label for="aluno" class="col-md-4 col-form-label text-md-right">Aluno</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control @error('aluno') is-invalid @enderror" name="aluno"
-                                                @cannot('direcao') disabled @endcannot >
+                                        <select class="form-control @error('aluno') is-invalid @enderror" name="aluno">
                                             <option value="1" {{ old('aluno', (string) $socio->aluno) == '1' ? 'selected': '' }}>
                                                 Sim
                                             </option>
@@ -304,10 +303,6 @@
                                                 Não
                                             </option>
                                         </select>
-                                        @cannot('direcao')
-                                            <input type="hidden" name="aluno"
-                                                   value="{{ old('aluno', (string) $socio->aluno) }}">
-                                        @endcannot
 
                                         @error('aluno')
                                         <span class="invalid-feedback" role="alert">
@@ -316,22 +311,26 @@
                                         @enderror
                                     </div>
                                 </div>
-                            @endcan
+                            @endif
 
-                            <div class="form-group row mb-2">
-                                <div class="col-md-8 offset-md-4">
-                                    @can('pilotoDirecao')
-                                        <a class="btn btn-link"
-                                           href="{{ action('UserController@licenca', ['piloto' => $socio->id]) }}">
-                                            Ver Licença
-                                        </a>
-                                        <a class="btn btn-link"
-                                           href="{{ action('UserController@certificado', ['piloto' => $socio->id]) }}">
-                                            Ver Certificado
-                                        </a>
-                                    @endcan
+                            @if ((Auth::user()->direcao || Auth::user()->tipo_socio == 'P') && $socio->tipo_socio == 'P')
+                                <div class="form-group row mb-2">
+                                    <div class="col-md-8 offset-md-4">
+                                        @if (Storage::disk('local')->exists("docs_piloto/certificado_$socio->id.pdf"))
+                                            <a class="btn btn-link"
+                                               href="{{ action('UserController@certificado', ['piloto' => $socio->id]) }}">
+                                                Ver Certificado
+                                            </a>
+                                        @endif
+                                        @if (Storage::disk('local')->exists("docs_piloto/licenca_$socio->id.pdf"))
+                                            <a class="btn btn-link"
+                                               href="{{ action('UserController@licenca', ['piloto' => $socio->id]) }}">
+                                                Ver Licença
+                                            </a>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
 
                             <div class="form-group row mb-2">
                                 <div class="col-md-8 offset-md-4">

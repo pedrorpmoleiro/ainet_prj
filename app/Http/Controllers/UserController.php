@@ -123,6 +123,7 @@ class UserController extends Controller
             Storage::delete("public/fotos/$socio->foto_url");
             $path = $socioEdit['file_foto']->storeAs('public/fotos', $socio->id . '_pic.jpg');
             $foto = basename($path);
+            unset($socioEdit['file_foto']);
         }
 
         if (isset($socioEdit['file_licenca'])) {
@@ -267,11 +268,19 @@ class UserController extends Controller
 
     public function licenca(User $piloto)
     {
-        return response()->file(storage_path("app/docs_piloto/licenca_$piloto->id.pdf", "licenca.pdf", [], null));
+        if (Storage::disk('local')->exists("docs_piloto/licenca_$piloto->id.pdf")) {
+            return response()->file(storage_path("app/docs_piloto/licenca_$piloto->id.pdf", "licenca.pdf", [], null));
+        } else {
+            return redirect()->action('UserController@edit', ['socio' => $piloto->id]);
+        }
     }
 
     public function certificado(User $piloto)
     {
-        return response()->file(storage_path("app/docs_piloto/certificado_$piloto->id.pdf", "certificado.pdf", [], null));
+        if (Storage::disk('local')->exists("docs_piloto/certificado_$piloto->id.pdf")) {
+            return response()->file(storage_path("app/docs_piloto/certificado_$piloto->id.pdf", "certificado.pdf", [], null));
+        } else {
+            return redirect()->action('UserController@edit', ['socio' => $piloto->id]);
+        }
     }
 }
