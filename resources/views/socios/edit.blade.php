@@ -322,11 +322,13 @@
                                 <div class="col-md-8 offset-md-4">
                                     @can('pilotoDirecao')
                                         <a class="btn btn-link"
-                                           href="{{ action('UserController@licenca', ['piloto' => $socio->id]) }}">Ver
-                                            Licença</a>
+                                           href="{{ action('UserController@licenca', ['piloto' => $socio->id]) }}">
+                                            Ver Licença
+                                        </a>
                                         <a class="btn btn-link"
-                                           href="{{ action('UserController@certificado', ['piloto' => $socio->id]) }}">Ver
-                                            Certificado</a>
+                                           href="{{ action('UserController@certificado', ['piloto' => $socio->id]) }}">
+                                            Ver Certificado
+                                        </a>
                                     @endcan
                                 </div>
                             </div>
@@ -335,13 +337,15 @@
                                 <div class="col-md-8 offset-md-4">
                                     @if ($socio->ativo == 0)
                                         <a class="btn btn-link"
-                                           href="{{ action('UserController@sendReActivationEmail', ['socio'=>$socio->id]) }}">Reenviar
-                                            email de validação</a>
+                                           href="{{ action('UserController@sendReActivationEmail', ['socio'=>$socio->id]) }}">
+                                            Reenviar email de validação
+                                        </a>
                                     @endif
 
                                     @if ($socio->id == Auth::user()->id)
-                                        <a class="btn btn-link" href="{{ action('UserController@alterarPassword') }}">Alterar
-                                            Senha</a>
+                                        <a class="btn btn-link" href="{{ action('UserController@alterarPassword') }}">
+                                            Alterar Senha
+                                        </a>
                                     @endif
                                 </div>
                             </div>

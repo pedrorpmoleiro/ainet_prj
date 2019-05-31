@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateSocio extends FormRequest
@@ -43,11 +44,10 @@ class UpdateSocio extends FormRequest
             'direcao' => ['required', Rule::in(['1', '0'])]
         ];
 
-        if ($this->request->get('tipo_socio') == 'P') {
+        if ($this->request->get('tipo_socio') == 'P' || Auth::user()->direcao) {
             $rules['instrutor'] = ['nullable', Rule::in(['1', '0'])];
             $rules['licenca_confirmada'] = ['nullable', Rule::in(['1', '0'])];
             $rules['certificado_confirmado'] = ['nullable', Rule::in(['1', '0'])];
-            $rules['aluno'] = ['required', Rule::in(['1', '0'])];
             $rules['num_licenca'] = ['nullable', 'max:30'];
             $rules['tipo_licenca'] = ['nullable', 'exists:tipos_licencas,code'];
             $rules['validade_licenca'] = ['nullable', 'date_format:Y-m-d'];
@@ -56,6 +56,10 @@ class UpdateSocio extends FormRequest
             $rules['validade_certificado'] = ['nullable', 'date_format:Y-m-d'];
             $rules['file_licenca'] = ['nullable', 'file', 'mimes:pdf'];
             $rules['file_certificado'] = ['nullable', 'file', 'mimes:pdf'];
+        }
+
+        if (Auth::user()->direcao) {
+            $rules['aluno'] = ['required', Rule::in(['1', '0'])];
         }
 
         return $rules;
