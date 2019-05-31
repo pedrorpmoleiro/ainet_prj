@@ -35,8 +35,7 @@
                                 <label for="quota_paga" class="col-md-4 col-form-label text-md-right">Quota Paga</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="quota_paga"
-                                            @cannot('direcao') disabled @endcannot >
+                                    <select class="form-control" name="quota_paga">
                                         <option value="1" {{ old('quota_paga', (string) $socio->quota_paga) == '1' ? 'selected': '' }}>
                                             Sim
                                         </option>
@@ -51,7 +50,7 @@
                                 <label for="direcao" class="col-md-4 col-form-label text-md-right">Direção</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="direcao" @cannot('direcao') disabled @endcannot >
+                                    <select class="form-control" name="direcao">
                                         <option value="1" {{ old('direcao', (string) $socio->direcao) == '1' ? 'selected': '' }}>
                                             Sim
                                         </option>
@@ -66,7 +65,7 @@
                                 <label for="ativo" class="col-md-4 col-form-label text-md-right">Ativo</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="ativo" @cannot('direcao') disabled @endcannot >
+                                    <select class="form-control" name="ativo"  >
                                         <option value="1" {{ old('ativo', (string) $socio->ativo) == '1' ? 'selected': '' }}>
                                             Sim
                                         </option>
@@ -86,7 +85,7 @@
 
                                     <div class="col-md-6">
                                         <select class="form-control" name="instrutor"
-                                                @cannot('direcao') disabled @endcannot >
+                                                 >
                                             <option value="1" {{ old('instrutor', (string) $socio->instrutor) == '1' ? 'selected': '' }}>
                                                 Sim
                                             </option>
