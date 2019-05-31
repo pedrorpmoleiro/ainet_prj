@@ -116,13 +116,7 @@ class AeronaveController extends Controller
         $title = "Pilotos Autorizados a voar a aeronave $aeronave->matricula";
         $pilotosAeronave = $aeronave->pilotos;
         $pilotosAeronaveIds = $aeronave->pilotos->pluck('id');
-        $pilotos = User::where('tipo_socio', 'P');
-
-        foreach ($pilotosAeronaveIds as $id) {
-            $pilotos = $pilotos->where('id', '<>', $id);
-        }
-
-        $pilotos = $pilotos->get();
+        $pilotos = User::where('tipo_socio', 'P')->whereNotIn('id', $pilotosAeronaveIds)->get();
 
         return view('aeronaves.pilotos', compact('title', 'pilotosAeronave', 'pilotos', 'aeronave'));
     }

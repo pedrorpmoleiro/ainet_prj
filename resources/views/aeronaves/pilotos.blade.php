@@ -7,27 +7,22 @@
         </div>
 
         <script type="text/javascript">
-            function changeActionAdd() {
-                var e = document.getElementById('pilotosNotAuthorized');
-                var nAut = e.options[e.selectedIndex].value;
+            @if (count($pilotos))
+                function changeActionAdd() {
+                    var e = document.getElementById('pilotosNotAuthorized');
+                    var nAut = e.options[e.selectedIndex].value;
 
-                if (nAut == -1) {
-                    location.reload();
+                    document.getElementById('add_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(nAut);
                 }
+            @endif
+            @if (count($pilotosAeronave))
+                function changeActionRemove() {
+                    var e = document.getElementById('pilotosAuthorized');
+                    var aut = e.options[e.selectedIndex].value;
 
-                document.getElementById('add_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(nAut);
-            }
-
-            function changeActionRemove() {
-                var e = document.getElementById('pilotosAuthorized');
-                var aut = e.options[e.selectedIndex].value;
-
-                if (aut == -1) {
-                    location.reload();
+                    document.getElementById('remove_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(aut);
                 }
-
-                document.getElementById('remove_piloto_form').action = "{{ action('AeronaveController@pilotos', ['aeronave' => $aeronave->matricula]) }}".concat("/").concat(aut);
-            }
+            @endif
         </script>
 
         <div class="row justify-content-center">
