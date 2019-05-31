@@ -141,7 +141,8 @@ class MovimentoController extends Controller
                 } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
                     Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
 
-                }return redirect()->action('MovimentoController@create')->withInput();
+                }
+                return redirect()->action('MovimentoController@create')->withInput();
             } else {
                 if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
                     $movimento['tipo_conflito'] = 'B';
@@ -234,7 +235,7 @@ class MovimentoController extends Controller
             $resto = $conta_horas_resta % 10;
             $tempo = $aeronave_valores->where('unidade_conta_horas', 10)->first()->minutos * $multiplo;
             $preco = $aeronave_valores->where('unidade_conta_horas', 10)->first()->preco * $multiplo;
-            if($resto!=0){
+            if ($resto != 0) {
                 $tempo += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->minutos;
                 $preco += $aeronave_valores->where('unidade_conta_horas', $resto)->first()->preco;
             }
@@ -288,7 +289,7 @@ class MovimentoController extends Controller
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
 
         //TODO PREENCHER INSTRUCAO
-        $movimento=$this->preencherDadosInstrucao($movimento);
+        $movimento = $this->preencherDadosInstrucao($movimento);
         //TODO PREENCHER CONFLITO
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
@@ -311,7 +312,7 @@ class MovimentoController extends Controller
             }
         }
         //TODO PREENCHER TEMPO E PRECO
-        $movimento=$this->preencherPrecoTempo($movimento);
+        $movimento = $this->preencherPrecoTempo($movimento);
         $movimento['confirmado'] = 0;
         $movimento->save();
 

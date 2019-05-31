@@ -45,11 +45,11 @@ class AeronaveController extends Controller
         $tempos = $aeronave['tempos'];
 
         for ($i = 0; $i < 10; $i++) {
-            $insert[] = ['matricula'=>$aeronave['matricula'], 'unidade_conta_horas'=>($i + 1), 'minutos'=>$tempos[$i], 'preco'=>$precos[$i]];
+            $insert[] = ['matricula' => $aeronave['matricula'], 'unidade_conta_horas' => ($i + 1), 'minutos' => $tempos[$i], 'preco' => $precos[$i]];
         }
 
         DB::table('aeronaves_valores')->insert($insert);
-        
+
         return redirect()->action('AeronaveController@index');
     }
 
@@ -94,7 +94,7 @@ class AeronaveController extends Controller
 
         for ($i = 0; $i < 10; $i++) {
             DB::table('aeronaves_valores')->where('matricula', $aeronave->matricula)
-                ->where('unidade_conta_horas', ($i + 1))->update(['minutos'=>$tempos[$i], 'preco'=>$precos[$i]]);
+                ->where('unidade_conta_horas', ($i + 1))->update(['minutos' => $tempos[$i], 'preco' => $precos[$i]]);
         }
 
         return redirect()->action('AeronaveController@index');
@@ -124,8 +124,8 @@ class AeronaveController extends Controller
     public function addPiloto(Aeronave $aeronave, User $piloto)
     {
         DB::table('aeronaves_pilotos')->insert([
-           'matricula'=>$aeronave->matricula,
-           'piloto_id'=>$piloto->id
+            'matricula' => $aeronave->matricula,
+            'piloto_id' => $piloto->id
         ]);
 
         return redirect()->back();

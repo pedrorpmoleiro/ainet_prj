@@ -144,13 +144,13 @@ class UserController extends Controller
         $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
 
         if ($socio->tipo_socio == 'P') {
-            if ($socioEdit['num_licenca'] != (string) $socio->num_licenca || $socioEdit['tipo_licenca'] != (string) $socio->tipo_licenca
-                || $socioEdit['validade_licenca'] != (string) $socio->validade_licenca) {
+            if ($socioEdit['num_licenca'] != (string)$socio->num_licenca || $socioEdit['tipo_licenca'] != (string)$socio->tipo_licenca
+                || $socioEdit['validade_licenca'] != (string)$socio->validade_licenca) {
                 $socioEdit['licenca_confirmada'] = '0';
             }
 
-            if ($socioEdit['num_certificado'] != (string) $socio->num_certificado || $socioEdit['classe_certificado'] != (string) $socio->classe_certificado
-                || $socioEdit['validade_certificado'] != (string) $socio->validade_certificado) {
+            if ($socioEdit['num_certificado'] != (string)$socio->num_certificado || $socioEdit['classe_certificado'] != (string)$socio->classe_certificado
+                || $socioEdit['validade_certificado'] != (string)$socio->validade_certificado) {
                 $socioEdit['certificado_confirmado'] = '0';
             }
 
