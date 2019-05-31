@@ -127,11 +127,13 @@ class UserController extends Controller
 
         if (isset($socioEdit['file_licenca'])) {
             $socioEdit['file_licenca']->storeAs('docs_piloto', "licenca_$socio->id.pdf");
+            unset($socioEdit['file_licenca']);
             $socioEdit['licenca_confirmada'] = 0;
         }
 
         if (isset($socioEdit['file_certificado'])) {
             $socioEdit['file_certificado']->storeAs('docs_piloto', "certificado_$socio->id.pdf");
+            unset($socioEdit['file_certificado']);
             $socioEdit['certificado_confirmado'] = 0;
         }
 
