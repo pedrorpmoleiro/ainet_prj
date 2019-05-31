@@ -90,7 +90,7 @@
     <div class="col-md-6">
         <input type="time" class="form-control @error('hora_aterragem') is-invalid @enderror" name="hora_aterragem"
                value="{{ old('hora_aterragem', date('H:i',strtotime($movimento->hora_aterragem))) }}">
-        
+
         @error('hora_aterragem')
         <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

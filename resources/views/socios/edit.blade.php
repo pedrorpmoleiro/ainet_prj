@@ -35,7 +35,8 @@
                                 <label for="quota_paga" class="col-md-4 col-form-label text-md-right">Quota Paga</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="quota_paga">
+                                    <select class="form-control @error('quota_paga') is-invalid @enderror"
+                                            name="quota_paga" @cannot('direcao') disabled @endcannot >
                                         <option value="1" {{ old('quota_paga', (string) $socio->quota_paga) == '1' ? 'selected': '' }}>
                                             Sim
                                         </option>
@@ -44,13 +45,24 @@
                                             Não
                                         </option>
                                     </select>
+                                    @cannot('direcao')
+                                        <input type="hidden" name="quota_paga"
+                                               value="{{ old('quota_paga', (string) $socio->quota_paga) }}">
+                                    @endcannot
+
+                                    @error('quota_paga')
+                                    <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="direcao" class="col-md-4 col-form-label text-md-right">Direção</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="direcao">
+                                    <select class="form-control @error('direcao') is-invalid @enderror" name="direcao"
+                                            @cannot('direcao') disabled @endcannot >
                                         <option value="1" {{ old('direcao', (string) $socio->direcao) == '1' ? 'selected': '' }}>
                                             Sim
                                         </option>
@@ -59,13 +71,24 @@
                                             Não
                                         </option>
                                     </select>
+                                    @cannot('direcao')
+                                        <input type="hidden" name="direcao"
+                                               value="{{ old('direcao', (string) $socio->direcao) }}">
+                                    @endcannot
+
+                                    @error('direcao')
+                                    <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="ativo" class="col-md-4 col-form-label text-md-right">Ativo</label>
 
                                 <div class="col-md-6">
-                                    <select class="form-control" name="ativo"  >
+                                    <select class="form-control @error('ativo') is-invalid @enderror" name="ativo"
+                                            @cannot('direcao') disabled @endcannot >
                                         <option value="1" {{ old('ativo', (string) $socio->ativo) == '1' ? 'selected': '' }}>
                                             Sim
                                         </option>
@@ -74,6 +97,16 @@
                                             Não
                                         </option>
                                     </select>
+                                    @cannot('direcao')
+                                        <input type="hidden" name="ativo"
+                                               value="{{ old('ativo', (string) $socio->ativo) }}">
+                                    @endcannot
+
+                                    @error('ativo')
+                                    <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -84,8 +117,8 @@
                                            class="col-md-4 col-form-label text-md-right">Instrutor</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control" name="instrutor"
-                                                 >
+                                        <select class="form-control @error('instrutor') is-invalid @enderror"
+                                                name="instrutor" @cannot('direcao') disabled @endcannot >
                                             <option value="1" {{ old('instrutor', (string) $socio->instrutor) == '1' ? 'selected': '' }}>
                                                 Sim
                                             </option>
@@ -94,6 +127,16 @@
                                                 Não
                                             </option>
                                         </select>
+                                        @cannot('direcao')
+                                            <input type="hidden" name="instrutor"
+                                                   value="{{ old('instrutor', (string) $socio->instrutor) }}">
+                                        @endcannot
+
+                                        @error('instrutor')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -111,11 +154,18 @@
                                     <label class="col-md-4 col-form-label text-md-right">Tipo Licenca</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control" name="tipo_licenca">
+                                        <select class="form-control @error('tipo_licenca') is-invalid @enderror"
+                                                name="tipo_licenca">
                                             @foreach($tipos_licenca as $tipo)
                                                 <option value="{{ $tipo->code }}" {{ old('tipo_licenca', (string) $socio->tipo_licenca) == (string) $tipo->code ? 'selected' : '' }} >{{ $tipo->code }}</option>
                                             @endforeach
                                         </select>
+
+                                        @error('tipo_licenca')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -132,16 +182,26 @@
                                     <label class="col-md-4 col-form-label text-md-right">Licenca Confirmada</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control" name="licenca_confirmada"
+                                        <select class="form-control @error('licenca_confirmada') is-invalid @enderror"
+                                                name="licenca_confirmada"
                                                 @cannot('direcao') disabled @endcannot >
                                             <option value="1" {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '1' ? 'selected': '' }}>
                                                 Sim
                                             </option>
-
                                             <option value="0" {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '0' ? 'selected': '' }}>
                                                 Não
                                             </option>
                                         </select>
+                                        @cannot('direcao')
+                                            <input type="hidden" name="licenca_confirmada"
+                                                   value="{{ old('licenca_confirmada', (string) $socio->licenca_confirmada) }}">
+                                        @endcannot
+
+                                        @error('licenca_confirmada')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -165,13 +225,19 @@
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-md-4 col-form-label text-md-right">Classe do Certificado</label>
-
                                     <div class="col-md-6">
-                                        <select class="form-control" name="classe_certificado">
+                                        <select class="form-control @error('classe_certificado') is-invalid @enderror"
+                                                name="classe_certificado">
                                             @foreach($classes_certificados as $classe)
                                                 <option value="{{ $classe->code }}" {{ old('classe_certificado', (string) $socio->classe_certificado) == (string) $classe->code ? 'selected' : '' }} >{{ $classe->code }}</option>
                                             @endforeach
                                         </select>
+
+                                        @error('classe_certificado')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -189,7 +255,8 @@
                                     <label class="col-md-4 col-form-label text-md-right">Certificado Confirmado</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control" name="certificado_confirmado"
+                                        <select class="form-control @error('certificado_confirmado') is-invalid @enderror"
+                                                name="certificado_confirmado"
                                                 @cannot('direcao') disabled @endcannot >
                                             <option value="1" {{ old('certificado_confirmado', (string) $socio->certificado_confirmado) == '1' ? 'selected': '' }}>
                                                 Sim
@@ -199,6 +266,16 @@
                                                 Não
                                             </option>
                                         </select>
+                                        @cannot('direcao')
+                                            <input type="hidden" name="certificado_confirmado"
+                                                   value="{{ old('certificado_confirmado', (string) $socio->certificado_confirmado) }}">
+                                        @endcannot
+
+                                        @error('certificado_confirmado')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -217,7 +294,7 @@
                                     <label for="aluno" class="col-md-4 col-form-label text-md-right">Aluno</label>
 
                                     <div class="col-md-6">
-                                        <select class="form-control" name="aluno"
+                                        <select class="form-control @error('aluno') is-invalid @enderror" name="aluno"
                                                 @cannot('direcao') disabled @endcannot >
                                             <option value="1" {{ old('aluno', (string) $socio->aluno) == '1' ? 'selected': '' }}>
                                                 Sim
@@ -227,6 +304,16 @@
                                                 Não
                                             </option>
                                         </select>
+                                        @cannot('direcao')
+                                            <input type="hidden" name="aluno"
+                                                   value="{{ old('aluno', (string) $socio->aluno) }}">
+                                        @endcannot
+
+                                        @error('aluno')
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             @endcan

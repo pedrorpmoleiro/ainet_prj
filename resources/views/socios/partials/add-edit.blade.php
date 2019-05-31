@@ -122,11 +122,20 @@
     <label for="sexo" class="col-md-4 col-form-label text-md-right">Género</label>
 
     <div class="col-md-6">
-        <select class="form-control" name="sexo"  >
+        <select class="form-control @error('sexo') is-invalid @enderror" name="sexo" @cannot('direcao') disabled @endcannot>
             <option value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
             <option value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino</option>
         </select>
+        @cannot('direcao')
+            <input type="hidden" name="sexo" value="{{ old('sexo', (string) $socio->sexo) }}">
+        @endcannot
+
+        @error('sexo')
+        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 </div>
 
@@ -135,19 +144,23 @@
     <label for="tipo_socio" class="col-md-4 col-form-label text-md-right">Tipo de Sócio</label>
 
     <div class="col-md-6">
-        <input type="hidden" name="tipo_socio" value="NP">
-        <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror" >
-            <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>Piloto
+        <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror" @cannot('direcao') disabled @endcannot>
+            <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>
+                Piloto
             </option>
 
-            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não
-                Piloto
+            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>
+                Não Piloto
             </option>
 
             <option value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'selected': '' }}>
                 Aeromodelista
             </option>
         </select>
+        @cannot('direcao')
+            <input type="hidden" name="tipo_socio" value="{{ old('tipo_socio', (string) $socio->tipo_socio) }}">
+        @endcannot
+
         @error('tipo_socio')
         <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
