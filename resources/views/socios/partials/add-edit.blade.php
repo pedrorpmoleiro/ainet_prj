@@ -122,7 +122,7 @@
     <label for="sexo" class="col-md-4 col-form-label text-md-right">Género</label>
 
     <div class="col-md-6">
-        <select class="form-control" name="sexo" @cannot('direcao') disabled @endcannot >
+        <select class="form-control" name="sexo"  >
             <option value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
             <option value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino</option>
@@ -135,17 +135,24 @@
     <label for="tipo_socio" class="col-md-4 col-form-label text-md-right">Tipo de Sócio</label>
 
     <div class="col-md-6">
-        <select name="tipo_socio" class="form-control" @cannot('direcao') disabled @endcannot>
+        <input type="hidden" name="tipo_socio" value="NP">
+        <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror" >
             <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>Piloto
             </option>
 
-            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não Piloto
+            <option value="NP" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'NP' ? 'selected': '' }}>Não
+                Piloto
             </option>
 
             <option value="A" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'A' ? 'selected': '' }}>
                 Aeromodelista
             </option>
         </select>
+        @error('tipo_socio')
+        <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 </div>
 

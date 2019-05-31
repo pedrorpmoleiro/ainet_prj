@@ -25,7 +25,7 @@ class UpdateSocio extends FormRequest
     public function rules()
     {
         $id = (int)$this->route()->parameters()['socio']->id;
-
+       // dd($id);
         $rules = [
             'name' => ['required'],
             'num_socio' => ['required', 'numeric', 'min:1', "unique:users,num_socio,$id"],
