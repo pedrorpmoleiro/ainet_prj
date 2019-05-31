@@ -91,7 +91,7 @@
                                         </td>
                                         <td>{{ $movimento->observacoes }}</td>
 
-                                        @if(Auth::user()->direcao || Auth::user()->id==$movimento->piloto_id)
+                                        @if(Auth::user()->direcao || Auth::user()->id == $movimento->piloto_id)
                                             <td>
                                                 <div class="row justify-content-center">
                                                     @if ($movimento->confirmado == 0)
