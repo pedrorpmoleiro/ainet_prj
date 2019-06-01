@@ -16,7 +16,7 @@ class Instrutor implements Rule
     {
         $socio = User::find($value);
 
-        if (isset($socio)) {
+        if (isset($socio) && isset($socio->instrutor)) {
             return $socio->instrutor == 1;
         }
 
