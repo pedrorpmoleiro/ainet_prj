@@ -26,6 +26,10 @@ class UpdateMovimento extends FormRequest
      */
     public function rules()
     {
+        if ($this->request->has('confirmar')) {
+            return ['confirmar' => 'nullable'];
+        }
+
         $rules = [
             'data' => ['required', 'date_format:Y-m-d'],
             'aeronave' => ['required', 'exists:aeronaves,matricula'],

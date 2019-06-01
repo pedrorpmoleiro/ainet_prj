@@ -30,7 +30,6 @@ class MovimentoController extends Controller
         foreach ($query as $name => $value) {
             $$name = $value;
         }
-
         if (isset($id)) {
             $filters['id'] = $id;
             $movimentos = $movimentos->where('id', $id);
@@ -136,10 +135,10 @@ class MovimentoController extends Controller
             if (is_null($resolver)) {
                 if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
                     //SOBREPOSICAO
-                    Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
+                    $request->session()->flash('alert-warning', 'Movimento com conflito de um buraco!');
                     return redirect()->action('MovimentoController@create')->withInput();
                 } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
-                    Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
+                    $request->session()->flash('alert-danger', 'Movimento com conflito de sobreposicao!');
 
                 }
                 return redirect()->action('MovimentoController@create')->withInput();
@@ -272,11 +271,15 @@ class MovimentoController extends Controller
 
     public function update(UpdateMovimento $request, Movimento $movimento)
     {
-        $confirmar = $request->input('confirmar');
-        if (isset($confirmar)) {
-            $movimento->confirmado = 1;
-            $movimento->save();
-            return redirect()->action('MovimentoController@index');
+        //$confirmar = $request->input('confirmar');
+        if ($request->has('confirmar')) {
+            if ($movimento->tipo_conflito != 'S' && $movimento->tipo_conflito != 'B') {
+                $movimento->confirmado = 1;
+                $movimento->save();
+                return redirect()->action('MovimentoController@index')->with('status', 'Movimento confirmado com sucesso');
+            } else {
+                return redirect()->action('MovimentoController@index')->with('status', 'Movimento não pode ser confirmado');
+            }
         }
         Session::forget('alert-warning');
         Session::forget('alert-danger');

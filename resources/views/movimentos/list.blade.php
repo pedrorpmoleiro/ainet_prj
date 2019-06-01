@@ -18,6 +18,11 @@
                             <a class="btn btn-primary mb-4" href="{{ action('MovimentoController@create') }}">Adicionar
                                 Movimento</a>
                         @endcan
+                            @if(session('status'))
+                                <div class="alert alert-info">
+                                    {{session('status')}}
+                                </div>
+                            @endif
                         @if (count($movimentos))
                             <table class="table table-striped">
                                 <thead>
