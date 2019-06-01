@@ -6,6 +6,7 @@ use App\Rules\Instrutor;
 use App\Rules\Piloto;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\User;
 
 class StoreMovimento extends FormRequest
 {
@@ -49,12 +50,12 @@ class StoreMovimento extends FormRequest
             'tempo_voo' => ['required', 'integer', 'min:1'],
             'preco_voo' => ['required', 'numeric', 'min:1'],
             'instrutor_id' => ['nullable'],
-            'tipo_instrucao' => ['nullable']
+            'tipo_instrucao' => ['nullable', Rule::in(['D', 'S'])]
         ];
 
         if ($this->request->get('natureza') == 'I') {
-            $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
             $rules['instrutor_id'] = ['required', new Instrutor];
+            $rules['tipo_instrucao'] = ['required', Rule::in(['D', 'S'])];
         }
 
         return $rules;
