@@ -124,7 +124,9 @@
     <div class="col-md-6">
         <select class="form-control @error('sexo') is-invalid @enderror" name="sexo"
                 @cannot('direcao') disabled @endcannot>
-            <option value="-1">Selecione Opção</option>
+            <option value="-1" disabled {{ old('sexo', (string) $movimento->sexo) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
 
             <option value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
@@ -149,7 +151,9 @@
     <div class="col-md-6">
         <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror"
                 @cannot('direcao') disabled @endcannot>
-            <option value="-1">Selecione Opção</option>
+            <option value="-1" disabled {{ old('tipo_socio', (string) $movimento->tipo_socio) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
 
             <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>
                 Piloto

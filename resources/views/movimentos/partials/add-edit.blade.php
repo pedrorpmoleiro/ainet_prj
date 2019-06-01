@@ -50,13 +50,21 @@
     <label for="aeronave" class="col-md-4 col-form-label text-md-right">Aeronave</label>
 
     <div class="col-md-6">
-        <select class="form-control" name="aeronave">
-            <option value="-1">Selecione Opção</option>
+        <select class="form-control @error('aeronave') is-invalid @enderror" name="aeronave">
+            <option value="-1" disabled {{ old('aeronave', (string) $movimento->aeronave) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
 
             @foreach($aeronaves as $aeronave)
                 <option {{ old('aeronave', (string) $movimento->aeronave) == $aeronave->matricula ? 'selected' : '' }}> {{$aeronave->matricula}}</option>
             @endforeach
         </select>
+
+        @error('aeronave')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
@@ -65,7 +73,9 @@
 
     <div class="col-md-6">
         <select class="form-control @error('piloto_id') is-invalid @enderror" name="piloto_id" @cannot('direcao') disabled @endcannot>
-            <option value="-1">Selecione Opção</option>
+            <option value="-1" disabled {{ old('piloto_id', (string) $movimento->piloto_id) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
 
             @foreach($pilotos as $piloto)
                 <option {{ old('piloto_id', (string) $movimento->piloto_id) == $piloto->id ? 'selected' : '' }} value="{{$piloto->id}}"> {{ __("$piloto->num_socio - $piloto->nome_informal") }}</option>
@@ -144,8 +154,10 @@
     <label for="natureza" class="col-md-4 col-form-label text-md-right">Natureza </label>
 
     <div class="col-md-6">
-        <select class="form-control" name="natureza" onchange="mostrar(value)">
-            <option value="-1">Selecione Opção</option>
+        <select class="form-control @error('natureza') is-invalid @enderror" name="natureza" onchange="mostrar(value)">
+            <option value="-1" disabled {{ old('natureza', (string) $movimento->natureza) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
 
             <option value="T"
                     {{ old('natureza', (string) $movimento->natureza) == 'T' ? 'selected' : '' }} onclick="mostrar(1);">
@@ -162,6 +174,12 @@
                 Especial
             </option>
         </select>
+
+        @error('natureza')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 <div id="instrucao" style="display:none;">
@@ -169,13 +187,21 @@
         <label for="instrutor_id" class="col-md-4 col-form-label text-md-right">Número do Instrutor</label>
 
         <div class="col-md-6">
-            <select class="form-control" name="instrutor_id">
-                <option value="-1">Selecione Opção</option>
+            <select class="form-control @error('instrutor_id') is-invalid @enderror" name="instrutor_id">
+                <option value="-1" disabled {{ old('instrutor_id', (string) $movimento->instrutor_id) == '' ? 'selected': '' }}>
+                    Selecione Opção
+                </option>
 
                 @foreach($instrutores as $instrutor)
                     <option {{ old('instrutor_id', (string) $movimento->instrutor_id) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
                 @endforeach
             </select>
+
+            @error('instrutor_id')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
         </div>
     </div>
 
@@ -184,7 +210,9 @@
 
         <div class="col-md-6">
             <select name="tipo_instrucao" class="form-control @error('tipo_instrucao') is-invalid @enderror">
-                <option value="-1">Selecione Opção</option>
+                <option value="-1" disabled {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == '' ? 'selected': '' }}>
+                    Selecione Opção
+                </option>
 
                 <option value="D" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'D' ? 'selected' : '' }}>
                     Duplo Comando
@@ -205,11 +233,21 @@
 <div class="form-group row">
     <label for="aerodromo_partida" class="col-md-4 col-form-label text-md-right"> Aerodromo Partida</label>
     <div class="col-md-6">
-        <select class="form-control" name="aerodromo_partida">
+        <select class="form-control @error('aerodromo_partida') is-invalid @enderror" name="aerodromo_partida">
+            <option value="-1" disabled {{ old('aerodromo_partida', (string) $movimento->aerodromo_partida) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
+
             @foreach($aerodromos as $aerodromo)
                 <option {{ old('aerodromo_partida', (string) $movimento->aerodromo_partida) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}">{{ __("$aerodromo->code - $aerodromo->nome") }}</option>
             @endforeach
         </select>
+
+        @error('aerodromo_partida')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 
@@ -217,11 +255,21 @@
     <label for="aerodromo_chegada" class="col-md-4 col-form-label text-md-right"> Aerodromo Chegada</label>
 
     <div class="col-md-6">
-        <select class="form-control" name="aerodromo_chegada">
+        <select class="form-control @error('aerodromo_chegada') is-invalid @enderror" name="aerodromo_chegada">
+            <option value="-1" disabled {{ old('aerodromo_chegada', (string) $movimento->aerodromo_chegada) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
+
             @foreach($aerodromos as $aerodromo)
                 <option {{ old('aerodromo_chegada', (string) $movimento->aerodromo_chegada) == $aerodromo->code ? 'selected' : '' }} value="{{ $aerodromo->code}}">{{ __("$aerodromo->code - $aerodromo->nome") }}</option>
             @endforeach
         </select>
+
+        @error('aerodromo_chegada')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 <div class="form-group row">
@@ -307,8 +355,10 @@
     <label for="modo_pagamento" class="col-md-4 col-form-label text-md-right">Modo Pagamento </label>
 
     <div class="col-md-6">
-        <select name="modo_pagamento" class="form-control">
-            <option value="-1">Selecione Opção</option>
+        <select name="modo_pagamento" class="form-control @error('modo_pagamento') is-invalid @enderror">
+            <option value="-1" disabled {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == '' ? 'selected': '' }}>
+                Selecione Opção
+            </option>
 
             <option value="N" {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == 'N' ? 'selected': '' }}>
                 Numerário
@@ -326,6 +376,12 @@
                 Pacote de horas
             </option>
         </select>
+
+        @error('modo_pagamento')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
 <div class="form-group row">
