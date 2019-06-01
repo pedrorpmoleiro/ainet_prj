@@ -24,7 +24,7 @@ class StoreSocio extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules= [
             'name' => ['required', 'regex:/^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/'],
             'num_socio' => ['required', 'integer', 'min:1', 'unique:users,num_socio'],
             'email' => ['required', 'email', 'unique:users,email'],
@@ -37,6 +37,12 @@ class StoreSocio extends FormRequest
             'tipo_socio' => ['required', Rule::in(['P', 'NP', 'A'])],
             'file_foto' => ['nullable', 'image']
         ];
+        if($this->request->get('tipo_socio') == 'P'){
+            $rules['aluno']=['nullable','notIgual:instrutor'];
+            $rules['instrutor']=['nullable','notIgual:aluno'];
+        }
+        return $rules;
+
     }
 
     public function messages()

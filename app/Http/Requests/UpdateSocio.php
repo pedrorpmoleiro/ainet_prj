@@ -56,7 +56,8 @@ class UpdateSocio extends FormRequest
             $rules['validade_certificado'] = ['nullable', 'date_format:Y-m-d'];
             $rules['file_licenca'] = ['nullable', 'file', 'mimes:pdf'];
             $rules['file_certificado'] = ['nullable', 'file', 'mimes:pdf'];
-            $rules['aluno'] = ['required', Rule::in(['1', '0'])];
+            $rules['aluno'] = ['nullable', Rule::in(['1', '0']),'notIgual:'.$this->request->get('instrutor')];
+            $rules['instrutor']=['nullable','notIgual:'.$this->request->get('aluno'),Rule::in(['1', '0'])];
         }
 
         return $rules;
