@@ -152,12 +152,6 @@ class UserController extends Controller
             $socioEdit['certificado_confirmado'] = 0;
         }
 
-        $keys = array_keys($socioEdit, null, true);
-
-        foreach ($keys as $key) {
-            unset($socioEdit[$key]);
-        }
-
         $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
 
         if ($socio->tipo_socio == 'P') {
@@ -189,6 +183,12 @@ class UserController extends Controller
             if (isset($socioEdit['aluno'])) unset($socioEdit['aluno']);
             if (isset($socioEdit['certificado_confirmado'])) unset($socioEdit['certificado_confirmado']);
             if (isset($socioEdit['licenca_confirmada'])) unset($socioEdit['licenca_confirmada']);
+        }
+
+        $keys = array_keys($socioEdit, null, true);
+
+        foreach ($keys as $key) {
+            unset($socioEdit[$key]);
         }
 
         $socio->fill($socioEdit);
