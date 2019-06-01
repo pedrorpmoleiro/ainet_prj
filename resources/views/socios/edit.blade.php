@@ -37,7 +37,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control @error('quota_paga') is-invalid @enderror"
                                             name="quota_paga" @cannot('direcao') disabled @endcannot >
-                                        <option value="-1" disabled {{ old('quota_paga', (string) $movimento->quota_paga) == '' ? 'selected': '' }}>
+                                        <option value="-1" disabled {{ old('quota_paga', (string) $socio->quota_paga) == '' ? 'selected': '' }}>
                                             Selecione Opção
                                         </option>
 
@@ -67,7 +67,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control @error('direcao') is-invalid @enderror" name="direcao"
                                             @cannot('direcao') disabled @endcannot >
-                                        <option value="-1" disabled {{ old('direcao', (string) $movimento->direcao) == '' ? 'selected': '' }}>
+                                        <option value="-1" disabled {{ old('direcao', (string) $socio->direcao) == '' ? 'selected': '' }}>
                                             Selecione Opção
                                         </option>
 
@@ -97,7 +97,7 @@
                                 <div class="col-md-6">
                                     <select class="form-control @error('ativo') is-invalid @enderror" name="ativo"
                                             @cannot('direcao') disabled @endcannot >
-                                        <option value="-1" disabled {{ old('ativo', (string) $movimento->ativo) == '' ? 'selected': '' }}>
+                                        <option value="-1" disabled {{ old('ativo', (string) $socio->ativo) == '' ? 'selected': '' }}>
                                             Selecione Opção
                                         </option>
 
@@ -131,7 +131,7 @@
                                     <div class="col-md-6">
                                         <select class="form-control @error('instrutor') is-invalid @enderror"
                                                 name="instrutor" @cannot('direcao') disabled @endcannot >
-                                            <option value="-1" disabled {{ old('instrutor', (string) $movimento->instrutor) == '' ? 'selected': '' }}>
+                                            <option value="-1" disabled {{ old('instrutor', (string) $socio->instrutor) == '' ? 'selected': '' }}>
                                                 Selecione Opção
                                             </option>
 
@@ -172,7 +172,7 @@
                                     <div class="col-md-6">
                                         <select class="form-control @error('tipo_licenca') is-invalid @enderror"
                                                 name="tipo_licenca">
-                                            <option value="-1" disabled {{ old('tipo_licenca', (string) $movimento->tipo_licenca) == '' ? 'selected': '' }}>
+                                            <option value="-1" disabled {{ old('tipo_licenca', (string) $socio->tipo_licenca) == '' ? 'selected': '' }}>
                                                 Selecione Opção
                                             </option>
 
@@ -205,7 +205,7 @@
                                         <select class="form-control @error('licenca_confirmada') is-invalid @enderror"
                                                 name="licenca_confirmada"
                                                 @cannot('direcao') disabled @endcannot >
-                                            <option value="-1" disabled {{ old('licenca_confirmada', (string) $movimento->licenca_confirmada) == '' ? 'selected': '' }}>
+                                            <option value="-1" disabled {{ old('licenca_confirmada', (string) $socio->licenca_confirmada) == '' ? 'selected': '' }}>
                                                 Selecione Opção
                                             </option>
 
@@ -252,7 +252,7 @@
                                     <div class="col-md-6">
                                         <select class="form-control @error('classe_certificado') is-invalid @enderror"
                                                 name="classe_certificado">
-                                            <option value="-1" disabled {{ old('classe_certificado', (string) $movimento->classe_certificado) == '' ? 'selected': '' }}>
+                                            <option value="-1" disabled {{ old('classe_certificado', (string) $socio->classe_certificado) == '' ? 'selected': '' }}>
                                                 Selecione Opção
                                             </option>
 
@@ -286,7 +286,7 @@
                                         <select class="form-control @error('certificado_confirmado') is-invalid @enderror"
                                                 name="certificado_confirmado"
                                                 @cannot('direcao') disabled @endcannot >
-                                            <option value="-1" disabled {{ old('certificado_confirmado', (string) $movimento->certificado_confirmado) == '' ? 'selected': '' }}>
+                                            <option value="-1" disabled {{ old('certificado_confirmado', (string) $socio->certificado_confirmado) == '' ? 'selected': '' }}>
                                                 Selecione Opção
                                             </option>
 
@@ -325,7 +325,7 @@
 
                                     <div class="col-md-6">
                                         <select class="form-control @error('aluno') is-invalid @enderror" name="aluno" @cannot('direcao') disabled @endcannot>
-                                            <option value="-1" disabled {{ old('aluno', (string) $movimento->aluno) == '' ? 'selected': '' }}>
+                                            <option value="-1" disabled {{ old('aluno', (string) $socio->aluno) == '' ? 'selected': '' }}>
                                                 Selecione Opção
                                             </option>
 
