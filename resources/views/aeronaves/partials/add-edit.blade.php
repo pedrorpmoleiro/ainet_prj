@@ -6,7 +6,7 @@
                value="{{ old('matricula', (string) $aeronave->matricula) }}" autofocus>
 
         @error('matricula')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -21,7 +21,7 @@
                value="{{ old('marca', (string) $aeronave->marca) }}">
 
         @error('marca')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -36,7 +36,7 @@
                value="{{ old('modelo', (string) $aeronave->modelo) }}">
 
         @error('marca')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -51,7 +51,7 @@
                value="{{ old('num_lugares', (string) $aeronave->num_lugares) }}">
 
         @error('num_lugares')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -66,7 +66,7 @@
                value="{{ old('conta_horas', (string) $aeronave->conta_horas) }}">
 
         @error('conta_horas')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -81,7 +81,7 @@
                value="{{ old('preco_hora', (string) $aeronave->preco_hora) }}">
 
         @error('preco_hora')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -108,7 +108,7 @@
                         <input type="text" class="form-control @error("minutos.$i") is-invalid @enderror"
                                name="tempos[]" value="{{ old("minutos.$i", $minutos[$i]) }}">
                         @error("minutos.$i")
-                        <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
@@ -117,7 +117,7 @@
                         <input type="text" class="form-control @error("precos.$i") is-invalid @enderror" name="precos[]"
                                value="{{ old("precos.$i", $precos[$i]) }}">
                         @error("precos.$i")
-                        <span class="invalid-feedback" role="alert">
+                            <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror

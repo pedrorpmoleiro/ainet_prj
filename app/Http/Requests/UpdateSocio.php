@@ -99,8 +99,6 @@ class UpdateSocio extends FormRequest
             'certificado_confirmado.in' => 'O valor é inválido',
             'aluno.required' => 'O valor tem de ser preenchido',
             'aluno.in' => 'O valor é inválido',
-            //'aluno.different' => 'Não é possível ser instrutor e aluno ao mesmo tempo',
-            //'instrutor.different' => 'Não é possível ser instrutor e aluno ao mesmo tempo',
             'num_licenca.max' => 'O número de licença não pode ter mais de 30 caracteres',
             'tipo_licenca.exists' => 'Tipo de licença inválida',
             'validade_licenca.date_format' => 'O formato da data está inválido',

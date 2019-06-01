@@ -87,7 +87,6 @@ class MovimentoController extends Controller
         $movimentos = $movimentos->paginate(24);
 
         return view('movimentos.list', compact('title', 'movimentos', 'filters'));
-
     }
 
 
@@ -107,7 +106,6 @@ class MovimentoController extends Controller
 
         $instrutores = User::where('instrutor', 1)->get();
 
-
         return view('movimentos.add', compact('title', 'movimento', 'aerodromos', 'pilotos', 'aeronaves', 'instrutores'));
     }
 
@@ -119,28 +117,32 @@ class MovimentoController extends Controller
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
+
         $movimento = $request->validated();
-        //TODO LO QUE TIENE QUE VER COM EL PILOTO
+
         $movimento = $this->preencherDadosPiloto($movimento);
-        //TODO PREENCHER HORA DESCOLAGEM
+
         $movimento['hora_descolagem'] = $movimento['data'] . ' ' . $movimento['hora_descolagem'];
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
-        //TODO INSTRUCAO
+
         $movimento = $this->preencherDadosInstrucao($movimento);
-        //CONTA HORAS US19
-        //TODO CONFLITOS
+
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
+
         if (isset($ultMovimento)) {
             if (is_null($resolver)) {
                 if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
                     //SOBREPOSICAO
                     $request->session()->flash('alert-warning', 'Movimento com conflito de um buraco!');
+
                     return redirect()->action('MovimentoController@create')->withInput();
                 } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
+
                     $request->session()->flash('alert-danger', 'Movimento com conflito de sobreposicao!');
 
                 }
+
                 return redirect()->action('MovimentoController@create')->withInput();
             } else {
                 if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
@@ -150,7 +152,7 @@ class MovimentoController extends Controller
                 }
             }
         }
-        //TODO PRECO E TEMPO
+
         $movimento = $this->preencherPrecoTempo($movimento);
         //NAO CONFIRMAR
         $movimento['confirmado'] = 0;
@@ -281,8 +283,10 @@ class MovimentoController extends Controller
                 return redirect()->action('MovimentoController@index')->with('status', 'Movimento não pode ser confirmado');
             }
         }
+
         Session::forget('alert-warning');
         Session::forget('alert-danger');
+
         if ($request->has('cancel')) {
             return redirect()->action('MovimentoController@index');
         }
@@ -293,19 +297,22 @@ class MovimentoController extends Controller
         $movimento['hora_descolagem'] = $movimento['data'] . ' ' . $movimento['hora_descolagem'];
         $movimento['hora_aterragem'] = $movimento['data'] . ' ' . $movimento['hora_aterragem'];
 
-        //TODO PREENCHER INSTRUCAO
+
         $movimento = $this->preencherDadosInstrucao($movimento);
-        //TODO PREENCHER CONFLITO
+
         $ultMovimento = Movimento::where('aeronave', $movimento['aeronave'])->orderBy('conta_horas_fim', 'desc')->first();
         $resolver = $request->input('resolver');
+
         if (isset($ultMovimento)) {
             if (is_null($resolver)) {
                 if ($movimento['conta_horas_inicio'] > $ultMovimento->conta_horas_fim) {
                     //SOBREPOSICAO
                     Session::flash('alert-warning', 'Movimento com conflito de um buraco!');
+
                     return redirect()->action('MovimentoController@edit', ['movimento' => $movimento->id])->withInput();
                 } elseif ($movimento['conta_horas_inicio'] < $ultMovimento->conta_horas_fim) {
                     Session::flash('alert-danger', 'Movimento com conflito de sobreposicao!');
+
                     return redirect()->action('MovimentoController@edit', ['movimento' => $movimento->id])->withInput();
                 }
             } else {
@@ -316,7 +323,7 @@ class MovimentoController extends Controller
                 }
             }
         }
-        //TODO PREENCHER TEMPO E PRECO
+        
         $movimento = $this->preencherPrecoTempo($movimento);
         $movimento['confirmado'] = 0;
         $movimento->save();

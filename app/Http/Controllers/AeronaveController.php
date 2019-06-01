@@ -45,7 +45,11 @@ class AeronaveController extends Controller
         $tempos = $aeronave['tempos'];
 
         for ($i = 0; $i < 10; $i++) {
-            $insert[] = ['matricula' => $aeronave['matricula'], 'unidade_conta_horas' => ($i + 1), 'minutos' => $tempos[$i], 'preco' => $precos[$i]];
+            $insert[] = [
+                'matricula' => $aeronave['matricula'],
+                'unidade_conta_horas' => ($i + 1),
+                'minutos' => $tempos[$i], 'preco' => $precos[$i]
+            ];
         }
 
         DB::table('aeronaves_valores')->insert($insert);
@@ -123,10 +127,12 @@ class AeronaveController extends Controller
 
     public function addPiloto(Aeronave $aeronave, User $piloto)
     {
-        DB::table('aeronaves_pilotos')->insert([
-            'matricula' => $aeronave->matricula,
-            'piloto_id' => $piloto->id
-        ]);
+        DB::table('aeronaves_pilotos')->insert(
+            [
+                'matricula' => $aeronave->matricula,
+                'piloto_id' => $piloto->id
+            ]
+        );
 
         return redirect()->back();
     }

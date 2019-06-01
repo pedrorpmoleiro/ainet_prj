@@ -6,7 +6,7 @@
                value="{{ old('num_socio', (string) $socio->num_socio) }}" autofocus>
 
         @error('num_socio')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -21,7 +21,7 @@
                value="{{ old('name', (string) $socio->name) }}">
 
         @error('name')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -36,7 +36,7 @@
                value="{{ old('email', (string) $socio->email) }}">
 
         @error('email')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -51,7 +51,7 @@
                value="{{ old('nome_informal', (string) $socio->nome_informal) }}">
 
         @error('nome_informal')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -66,7 +66,7 @@
                value="{{ old('data_nascimento', (string) $socio->data_nascimento) }}">
 
         @error('data_nascimento')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -81,7 +81,7 @@
                value="{{ old('nif', (string) $socio->nif) }}">
 
         @error('nif')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -96,7 +96,7 @@
                value="{{ old('telefone', (string) $socio->telefone) }}">
 
         @error('telefone')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -111,7 +111,7 @@
                   class="form-control @error('endereco') is-invalid @enderror">{{ old('endereco', (string) $socio->endereco) }}</textarea>
 
         @error('endereco')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -124,6 +124,8 @@
     <div class="col-md-6">
         <select class="form-control @error('sexo') is-invalid @enderror" name="sexo"
                 @cannot('direcao') disabled @endcannot>
+            <option value="-1">Selecione Opção</option>
+
             <option value="M" {{ old('sexo', (string) $socio->sexo) == 'M' ? 'selected': '' }}>Masculino</option>
 
             <option value="F" {{ old('sexo', (string) $socio->sexo) == 'F' ? 'selected': '' }}>Feminino</option>
@@ -133,9 +135,9 @@
         @endcannot
 
         @error('sexo')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
-        </span>
+            </span>
         @enderror
     </div>
 </div>
@@ -147,6 +149,8 @@
     <div class="col-md-6">
         <select name='tipo_socio' class="form-control @error('tipo_socio') is-invalid @enderror"
                 @cannot('direcao') disabled @endcannot>
+            <option value="-1">Selecione Opção</option>
+
             <option value="P" {{ old('tipo_socio', (string) $socio->tipo_socio) == 'P' ? 'selected': '' }}>
                 Piloto
             </option>
@@ -164,9 +168,9 @@
         @endcannot
 
         @error('tipo_socio')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
-        </span>
+            </span>
         @enderror
     </div>
 </div>

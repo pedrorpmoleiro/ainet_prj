@@ -26,16 +26,22 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('direcao', function ($user) {
-            return $user->direcao == 1;
-        });
+        Gate::define('direcao',
+            function ($user) {
+                return $user->direcao == 1;
+            }
+        );
 
-        Gate::define('pilotoDirecao', function ($user) {
-            return $user->tipo_socio == 'P' || $user->direcao;
-        });
+        Gate::define('pilotoDirecao',
+            function ($user) {
+                return $user->tipo_socio == 'P' || $user->direcao;
+            }
+        );
 
-        Gate::define('piloto', function ($user) {
-            return $user->tipo_socio == 'P';
-        });
+        Gate::define('piloto',
+            function ($user) {
+                return $user->tipo_socio == 'P';
+            }
+        );
     }
 }

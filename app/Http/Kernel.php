@@ -62,7 +62,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isAtivo' => \App\Http\Middleware\isAtivo::class,
         'isDirecao' => \App\Http\Middleware\isDirecao::class,
-        'isNotDeleted' => \App\Http\Middleware\isNotDeleted::class
+        'isNotDeleted' => \App\Http\Middleware\isNotDeleted::class,
+        'isPasswordInicial' => \App\Http\Middleware\isPasswordInicial::class
     ];
 
     /**

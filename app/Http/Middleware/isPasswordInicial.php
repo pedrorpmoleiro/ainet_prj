@@ -3,24 +3,15 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class isPasswordInicial
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure $next
-     * @return mixed
-     */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->password_inicial == 0) {
-
+        if ($request->user() && !$request->user()->password_inicial) {
             return $next($request);
+        } else {
+            return redirect()->action('UserController@alterarPassword');
         }
-
-        throw new AccessDeniedHttpException('Unauthorized.');
     }
 }

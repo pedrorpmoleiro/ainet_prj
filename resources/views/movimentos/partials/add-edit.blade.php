@@ -40,7 +40,7 @@
                value="{{ old('data', (string) $movimento->data) }}">
 
         @error('data')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -51,6 +51,8 @@
 
     <div class="col-md-6">
         <select class="form-control" name="aeronave">
+            <option value="-1">Selecione Opção</option>
+
             @foreach($aeronaves as $aeronave)
                 <option {{ old('aeronave', (string) $movimento->aeronave) == $aeronave->matricula ? 'selected' : '' }}> {{$aeronave->matricula}}</option>
             @endforeach
@@ -63,6 +65,8 @@
 
     <div class="col-md-6">
         <select class="form-control @error('piloto_id') is-invalid @enderror" name="piloto_id" @cannot('direcao') disabled @endcannot>
+            <option value="-1">Selecione Opção</option>
+
             @foreach($pilotos as $piloto)
                 <option {{ old('piloto_id', (string) $movimento->piloto_id) == $piloto->id ? 'selected' : '' }} value="{{$piloto->id}}"> {{ __("$piloto->num_socio - $piloto->nome_informal") }}</option>
             @endforeach
@@ -72,9 +76,9 @@
         @endcannot
 
         @error('piloto_id')
-        <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
         @enderror
     </div>
 </div>
@@ -87,7 +91,7 @@
                value="{{ old('hora_descolagem', date('H:i',strtotime($movimento->hora_descolagem))) }}">
 
         @error('hora_descolagem')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -101,7 +105,7 @@
                value="{{ old('hora_aterragem', date('H:i',strtotime($movimento->hora_aterragem))) }}">
 
         @error('hora_aterragem')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -116,7 +120,7 @@
                value="{{ old('num_diario', (string) $movimento->num_diario) }}">
 
         @error('num_diario')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -130,7 +134,7 @@
                value="{{ old('num_servico', (string) $movimento->num_servico) }}">
 
         @error('num_servico')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -141,6 +145,8 @@
 
     <div class="col-md-6">
         <select class="form-control" name="natureza" onchange="mostrar(value)">
+            <option value="-1">Selecione Opção</option>
+
             <option value="T"
                     {{ old('natureza', (string) $movimento->natureza) == 'T' ? 'selected' : '' }} onclick="mostrar(1);">
                 Treino
@@ -164,6 +170,8 @@
 
         <div class="col-md-6">
             <select class="form-control" name="instrutor_id">
+                <option value="-1">Selecione Opção</option>
+
                 @foreach($instrutores as $instrutor)
                     <option {{ old('instrutor_id', (string) $movimento->instrutor_id) == $instrutor->id ? 'selected' : '' }} value="{{ $instrutor->id}}"> {{$instrutor->id.'-'.$instrutor->name}}</option>
                 @endforeach
@@ -176,12 +184,18 @@
 
         <div class="col-md-6">
             <select name="tipo_instrucao" class="form-control @error('tipo_instrucao') is-invalid @enderror">
-                <option value="D" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'D' ? 'selected' : '' }}>Duplo Comando </option>
-                <option value="S" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'S' ? 'selected' : '' }}>Solo</option>
+                <option value="-1">Selecione Opção</option>
+
+                <option value="D" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'D' ? 'selected' : '' }}>
+                    Duplo Comando
+                </option>
+                <option value="S" {{ old('tipo_instrucao', (string) $movimento->tipo_instrucao) == 'S' ? 'selected' : '' }}>
+                    Solo
+                </option>
             </select>
 
             @error('tipo_instrucao')
-            <span class="invalid-feedback" role="alert">
+                <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
@@ -218,7 +232,7 @@
                value="{{ old('num_aterragens', (string) $movimento->num_aterragens) }}">
 
         @error('num_aterragens')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -232,7 +246,7 @@
                value="{{ old('num_descolagens', (string) $movimento->num_descolagens) }}">
 
         @error('num_descolagens')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -246,7 +260,7 @@
                value="{{ old('num_pessoas', (string) $movimento->num_pessoas) }}">
 
         @error('num_pessoas')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -261,7 +275,7 @@
                value="{{ old('conta_horas_inicio', (string) $movimento->conta_horas_inicio) }}">
 
         @error('conta_horas_inicio')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -275,11 +289,12 @@
                value="{{ old('conta_horas_fim', (string) $movimento->conta_horas_fim) }}">
 
         @error('conta_horas_fim')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
-        <div class="flash-message">
+
+        <div class="flash-message mt-1">
             @foreach (['danger', 'warning'] as $msg)
                 @if(Session::has('alert-' . $msg))
                     <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}</p>
@@ -293,6 +308,8 @@
 
     <div class="col-md-6">
         <select name="modo_pagamento" class="form-control">
+            <option value="-1">Selecione Opção</option>
+
             <option value="N" {{ old('modo_pagamento', (string) $movimento->modo_pagamento) == 'N' ? 'selected': '' }}>
                 Numerário
             </option>
@@ -319,7 +336,7 @@
                value="{{ old('num_recibo', (string) $movimento->num_recibo) }}">
 
         @error('num_recibo')
-        <span class="invalid-feedback" role="alert">
+            <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>
         @enderror
@@ -328,37 +345,43 @@
 <!-- si for DE INSTRUCAO  -->
 <div class="form-group row">
     <label for="observacoes" class="col-md-4 col-form-label text-md-right"> Observacoes</label>
+
     <div class="col-md-6">
-    <textarea rows="3" class="form-control @error('observacoes') is-invalid @enderror" name="observacoes">
-{{ old('observacoes', (string) $movimento->observacoes) }}
+        <textarea rows="3" class="form-control @error('observacoes') is-invalid @enderror" name="observacoes">
+            {{ old('observacoes', (string) $movimento->observacoes) }}
+        </textarea>
+
         @error('observacoes')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-    </textarea>
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
     </div>
 </div>
+
 @foreach (['danger', 'warning'] as $msg)
     @if(Session::has('alert-' . $msg))
         <div>
             <label for="resolver" class="col-md-4 col-form-label text-md-right">Guardar com conflitos</label>
+
             <input type="checkbox" id="resolve" class="form-control-input" name="resolver" onclick="mostrarC()">
         </div>
     @endif
 @endforeach
+
 <div id="conflito" style="display:none;">
     <div class="form-group row">
         <label for="justificacao_conflito" class="col-md-4 col-form-label text-md-right">Justificacao conflito</label>
+
         <div class="col-md-6">
-        <textarea rows="3" class="form-control @error('justificacao_conflito') is-invalid @enderror"
-                  name="justificacao_conflito">
-            {{ old('justificacao_conflito', (string) $movimento->justificacao_conflito) }}
-        </textarea>
+            <textarea rows="3" class="form-control @error('justificacao_conflito') is-invalid @enderror" name="justificacao_conflito">
+                {{ old('justificacao_conflito', (string) $movimento->justificacao_conflito) }}
+            </textarea>
+
             @error('justificacao_conflito')
-            <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
             @enderror
         </div>
     </div>

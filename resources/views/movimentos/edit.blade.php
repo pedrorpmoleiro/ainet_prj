@@ -27,9 +27,9 @@
                                            value="{{ old('tempo_voo', (string) $movimento->tempo_voo) }}">
 
                                     @error('tempo_voo')
-                                    <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
                                            value="{{ old('preco_voo', (string) $movimento->preco_voo) }}">
 
                                     @error('preco_voo')
-                                    <span class="invalid-feedback" role="alert">
+                                        <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror

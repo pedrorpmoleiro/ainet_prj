@@ -21,6 +21,7 @@ class UserController extends Controller
         $socios = User::orderBy('id');
         $query = $request->query();
         $title = 'Sócios';
+
         $filters = [
             'num_socio' => '', 'nome_informal' => '', 'email' => '', 'tipo' => '',
             'direcao' => '', 'quotas_pagas' => '', 'ativo' => ''
@@ -32,31 +33,44 @@ class UserController extends Controller
 
         if (isset($num_socio)) {
             $filters['num_socio'] = $num_socio;
+
             $socios = $socios->where('num_socio', $num_socio);
         }
+
         if (isset($nome_informal)) {
             $filters['nome_informal'] = $nome_informal;
+
             $socios = $socios->where('nome_informal', 'like', '%' . $nome_informal . '%');
         }
+
         if (isset($email)) {
             $filters['email'] = $email;
+
+
             $socios = $socios->where('email', 'like', '%' . $email . '%');
         }
         if (isset($tipo)) {
             $filters['tipo'] = $tipo;
+
             if ($tipo != "Todos") $socios = $socios->where('tipo_socio', $tipo);
         }
+
         if (isset($direcao)) {
             $filters['direcao'] = $direcao;
+
             if ($direcao != 'A') $socios = $socios->where('direcao', $direcao);
         }
+
         if (isset($quotas_pagas)) {
             $filters['quotas_pagas'] = $quotas_pagas;
+
             if ($quotas_pagas != 'A') $socios = $socios->where('quota_paga', $quotas_pagas);
         }
+
         if (Auth::user()->direcao == 1) {
             if (isset($ativo)) {
                 $filters['ativo'] = $ativo;
+
                 if ($ativo != 'A') $socios = $socios->where('ativo', $ativo);
             }
         } else {
@@ -147,13 +161,17 @@ class UserController extends Controller
         $socioEdit['data_nascimento'] = date('Y-m-d', strtotime($socioEdit['data_nascimento'])) ?? $socioEdit['data_nascimento'];
 
         if ($socio->tipo_socio == 'P') {
-            if ($socioEdit['num_licenca'] != (string)$socio->num_licenca || $socioEdit['tipo_licenca'] != (string)$socio->tipo_licenca
-                || $socioEdit['validade_licenca'] != (string)$socio->validade_licenca) {
+            if ($socioEdit['num_licenca'] != (string)$socio->num_licenca
+                || $socioEdit['tipo_licenca'] != (string)$socio->tipo_licenca
+                || $socioEdit['validade_licenca'] != (string)$socio->validade_licenca
+            ) {
                 $socioEdit['licenca_confirmada'] = '0';
             }
 
-            if ($socioEdit['num_certificado'] != (string)$socio->num_certificado || $socioEdit['classe_certificado'] != (string)$socio->classe_certificado
-                || $socioEdit['validade_certificado'] != (string)$socio->validade_certificado) {
+            if ($socioEdit['num_certificado'] != (string)$socio->num_certificado
+                || $socioEdit['classe_certificado'] != (string)    $socio->classe_certificado
+                || $socioEdit['validade_certificado'] != (string)$socio->validade_certificado
+            ) {
                 $socioEdit['certificado_confirmado'] = '0';
             }
 
@@ -185,7 +203,9 @@ class UserController extends Controller
     {
         Storage::delete("public/fotos/$socio->foto_url");
 
-        if (Movimento::where('piloto_id', $socio->id)->count() == 0 && Movimento::where('instrutor_id', $socio->id)->count() == 0) {
+        if (Movimento::where('piloto_id', $socio->id)->count() == 0
+            && Movimento::where('instrutor_id', $socio->id)->count() == 0
+        ) {
             $socio->forceDelete();
         } else {
             $socio->delete();

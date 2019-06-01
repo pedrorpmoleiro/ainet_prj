@@ -22,7 +22,8 @@ class MovimentoPolicy
 
     public function canUpdate(User $user, Movimento $movimento)
     {
-        return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
+        return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P'
+            && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
     }
 
     public function canCreate(User $user)
@@ -32,6 +33,7 @@ class MovimentoPolicy
 
     public function canDestroy(User $user, Movimento $movimento)
     {
-        return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
+        return !$movimento->confirmado && ($user->direcao || ($user->tipo_socio == 'P' 
+            && ($user->id == $movimento->piloto_id || $user->id == $movimento->instrutor_id)));
     }
 }

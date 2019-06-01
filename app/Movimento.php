@@ -33,15 +33,12 @@ class Movimento extends Model
     public static function toString($natureza)
     {
         switch ($natureza) {
-            case "T":
-                return "Treino";
-                break;
-            case "I":
-                return "Instrucao";
-                break;
-            case "E":
-                return "Especial";
-                break;
+        case "T":
+            return "Treino";
+        case "I":
+            return "Instrucao";
+        case "E":
+            return "Especial";
         }
     }
 }
